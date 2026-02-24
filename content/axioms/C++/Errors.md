@@ -1,0 +1,1 @@
+There are two main category of errors, either a [[Compiler]] error or a [[Linker]] error, these are pretty clear as they're shown in the terminal or the id of a Compiler error starts with a C and Linker with LNK, It's important to understand what type of error you get, that way you can actually work on fixing it.

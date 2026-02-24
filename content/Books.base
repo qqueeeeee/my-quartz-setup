@@ -1,0 +1,12 @@
+views:
+  - type: cards
+    name: Books
+    filters:
+      and:
+        - file.folder == "exposure"
+    order:
+      - file.name
+      - authors
+    image: note.image
+    imageFit: contain
+    imageAspectRatio: 1.5
