@@ -1,0 +1,1 @@
+This is the thing that comes into play after the [[Compiler]] compilers our C++ code, it's job is to find where each symbol and function through the .obj files and link them together. This is called Linking (duh)

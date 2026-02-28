@@ -3,7 +3,7 @@ views:
     name: Books
     filters:
       and:
-        - file.folder == "exposure"
+        - file.tags.contains("books")
     order:
       - file.name
       - authors

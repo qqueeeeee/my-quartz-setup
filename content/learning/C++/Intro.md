@@ -1,0 +1,3 @@
+I've always found C++ to be a "cool" programming language, I first used it when I was trying to reverse engineer a game called [[Superfighters Deluxe]] which failed miserably so I switched to C# later on but regardless, that little time with C++ showed me how cool of a language it is and the main thing - how much control it gives me, I found it kinda crazy that I could do the stuff I did like straight up putting things inside a running program (DLL Injection) etc. It was very surprising and mind-opening.
+
+Now I'm going to spend the next few weeks learning and trying to master C++ to the best of my ability.

@@ -1,3 +1,13 @@
+declare global {
+	interface Window {
+		quartzGraph: {
+			nodes: NodeData[]
+			links: LinkData[]
+			slug: SimpleSlug
+		}
+	}
+}
+
 import type { ContentDetails } from "../../plugins/emitters/contentIndex"
 import {
   SimulationNodeDatum,
@@ -161,6 +171,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       })),
   }
 
+	window.quartzGraph = { nodes: graphData.nodes, links: graphData.links, slug }
   const width = graph.offsetWidth
   const height = Math.max(graph.offsetHeight, 250)
 
