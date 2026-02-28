@@ -1,5 +1,3 @@
-# Heaps
-
 A heap is a complete binary tree that satisfies the heap property. It's the data structure behind priority queues and one of the most useful structures for problems involving "find the min/max efficiently."
 
 There are two types:

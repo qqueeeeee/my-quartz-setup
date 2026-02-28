@@ -1,5 +1,3 @@
-# Two Pointers
-
 Two pointers is a technique where you maintain two indices into an array and move them strategically to solve a problem in O(n) that would naively require O(n²).
 
 It's not a data structure, it's a pattern. Once you recognize it, a whole class of problems becomes obvious.

@@ -1,5 +1,3 @@
-# Graphs
-
 A graph is a collection of nodes (vertices) connected by edges. It's the most general data structure, everything else is a special case of a graph. A [[Trees|tree]] is just a graph with no cycles and one root.
 
 Graphs model anything with relationships — social networks, maps, the internet, dependencies between tasks, flight routes. If your problem involves connections between things, it's probably a graph problem.
