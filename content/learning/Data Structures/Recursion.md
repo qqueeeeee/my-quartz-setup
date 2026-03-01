@@ -1,3 +1,8 @@
+---
+created:
+tags:
+  - cs/concepts
+---
 Recursion is when a function calls itself to solve a smaller version of the same problem. It's not a data structure, it's a problem-solving technique. But it's foundational enough that you need to understand it deeply before tackling trees, graphs, and dynamic programming.
 
 The core idea: if you can solve a small version of a problem, and you can reduce the big version into smaller versions, you can solve anything.

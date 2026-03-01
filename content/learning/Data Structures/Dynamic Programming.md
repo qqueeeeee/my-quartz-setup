@@ -1,3 +1,8 @@
+---
+created:
+tags:
+  - cs/concepts
+---
 Dynamic programming (DP) is an optimization technique for problems where the same subproblems keep appearing. Instead of solving them repeatedly, you solve each one once and store the result. That's the entire idea.
 
 It sounds simple but DP is consistently the hardest topic in DSA because recognizing when and how to apply it takes practice. The mechanics are simple, the insight is hard.

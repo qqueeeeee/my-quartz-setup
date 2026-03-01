@@ -1,3 +1,8 @@
+---
+created:
+tags:
+  - cs/concepts
+---
 
 Sliding window is a technique for problems that involve a contiguous subarray or substring. Instead of recomputing from scratch each time you move, you maintain a window and update it incrementally as it slides.
 

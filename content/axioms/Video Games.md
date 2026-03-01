@@ -1,4 +1,10 @@
+---
+tags:
+  - hobbies
+  - philosophy
+---
 I grew up with games, these are what I spent most of my time on. Though, I've been being way more productive in the past ~1 year, my love for them never died and I doubt it will ever die.   
+
 
 These are the games I truly love and will always love:
  1) [[Superfighters Deluxe]]

@@ -1,3 +1,8 @@
+---
+created:
+tags:
+  - cs/concepts
+---
 
 An array is a contiguous block of memory where elements are stored one after another. This isn't just an implementation detail, it's the reason arrays behave the way they do.
 

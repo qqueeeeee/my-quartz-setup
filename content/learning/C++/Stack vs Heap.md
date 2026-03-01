@@ -1,3 +1,8 @@
+---
+created:
+tags:
+  - cs/concepts
+---
 In C++ it is very important to understand Stack and Heap as they serve different purposes and are used very often.
 
 Stack memory is automatic when we declare int x = 5; in a function it is stored in the stack and gets automatically destroyed when the function returns. It's super fast but has limited size.

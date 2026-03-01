@@ -1,4 +1,10 @@
-#seed
+---
+created:
+tags:
+  - philosophy
+source:
+related:
+---
 ### How you do one thing, dictates how you do everything.
 
 I noticed this about myself and I can't ignore it anymore. There's a pattern that shows up in everything I do, and once you see it you can't unsee it.

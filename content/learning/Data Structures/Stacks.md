@@ -1,3 +1,8 @@
+---
+created:
+tags:
+  - cs/concepts
+---
 A stack is a linear data structure that follows one rule: **Last In, First Out (LIFO)**. The last thing you put in is the first thing you get out. That's the entire idea.
 
 Think of a stack of plates. You add plates to the top, you take plates from the top. You never pull from the middle or the bottom. The structure enforces this.

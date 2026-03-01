@@ -1,3 +1,9 @@
+---
+created:
+tags:
+  - forge
+related:
+---
 In a crowded café, two people sit across from each other. To most observers, it’s just a casual meeting. But someone trained in perception notices the subtle lean of one person’s torso, the tension in the jaw, the way the hand grips the coffee cup just a little too tightly. From these small cues, a deeper story emerges: there’s conflict under the surface.
 
 This isn’t intuition. It’s perception — an ability to gather and interpret information that others overlook. While it can look like something insane, it’s really the refinement of ordinary senses through discipline. And like any discipline, it can be learned.

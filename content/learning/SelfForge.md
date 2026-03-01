@@ -1,3 +1,14 @@
+---
+categories:
+  - "[[Projects]]"
+type: []
+org: []
+start:
+year:
+url:
+status:
+---
+
 1/28/2026 
 
 This will be my project for the upcoming few days, I want to work on this as it not only improves my resume but also improves my skills and helps me improve my day-to-day life. 

@@ -1,3 +1,8 @@
+---
+created:
+tags:
+  - cs/concepts
+---
 Backtracking is a technique for solving problems by building a solution incrementally, and abandoning a path as soon as you determine it can't lead to a valid solution. You go forward when things look promising, backtrack when they don't.
 
 It's essentially [[Recursion]] with an undo step. At each point you make a choice, recurse to explore it, then unmake the choice and try the next option.

@@ -1,3 +1,9 @@
+---
+created:
+tags:
+  - forge
+related:
+---
 #forge
 
 This is a 3 step process, skipping any of the steps is really bad it's like trying to run a marathon while you can't even jog a mile. So it is not recommended to skip any of these steps, go one after the other. Having a clear roadmap will help you understand where you are and what you're working on and when you're ready to progress and this will remove most of the ambiguity that causes people to either push too hard or not push hard enough. 

@@ -1,3 +1,8 @@
+---
+created:
+tags:
+  - cs/concepts
+---
 A pointer stores the memory address of *something*, this can be anything in our memory - or not in memory, pointers are simply just int variable holding a memory address.
 
 int a = 10;

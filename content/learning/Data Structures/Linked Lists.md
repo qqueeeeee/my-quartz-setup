@@ -1,3 +1,8 @@
+---
+created:
+tags:
+  - cs/concepts
+---
 A linked list is a collection of nodes where each node holds some data and a pointer to the next node. Unlike [[Arrays]], the elements are not stored contiguously in memory. Each node can be anywhere in memory, and the pointers are what connect them together.
 
 ---

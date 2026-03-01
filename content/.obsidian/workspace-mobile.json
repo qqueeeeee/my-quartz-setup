@@ -1,0 +1,204 @@
+{
+  "main": {
+    "id": "f157ca6c0183723d",
+    "type": "split",
+    "children": [
+      {
+        "id": "e5f5db9c892ca4eb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f4379e95bc3e119e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Find your own theme..md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Find your own theme."
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "41796d173e143005",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "2024c5f2b4750d75",
+        "type": "leaf",
+        "state": {
+          "type": "file-explorer",
+          "state": {
+            "sortOrder": "alphabetical",
+            "autoReveal": false
+          },
+          "icon": "lucide-folder-closed",
+          "title": "Files"
+        }
+      },
+      {
+        "id": "9918bfc241aa0b2d",
+        "type": "leaf",
+        "state": {
+          "type": "search",
+          "state": {
+            "query": "",
+            "matchingCase": false,
+            "explainSearch": false,
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical"
+          },
+          "icon": "lucide-search",
+          "title": "Search"
+        }
+      },
+      {
+        "id": "7422bfdb2777210f",
+        "type": "leaf",
+        "state": {
+          "type": "tag",
+          "state": {
+            "sortOrder": "frequency",
+            "useHierarchy": true,
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-tags",
+          "title": "Tags"
+        }
+      },
+      {
+        "id": "995d6137019c5706",
+        "type": "leaf",
+        "state": {
+          "type": "all-properties",
+          "state": {
+            "sortOrder": "frequency",
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-archive",
+          "title": "All properties"
+        }
+      },
+      {
+        "id": "d7f3289168d6a3a6",
+        "type": "leaf",
+        "state": {
+          "type": "bookmarks",
+          "state": {},
+          "icon": "lucide-bookmark",
+          "title": "Bookmarks"
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "right": {
+    "id": "1fa8ed6976fca7bb",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "7cff4ee31ccdfda8",
+        "type": "leaf",
+        "state": {
+          "type": "backlink",
+          "state": {
+            "file": "axioms/Neovim.md",
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical",
+            "showSearch": false,
+            "searchQuery": "",
+            "backlinkCollapsed": false,
+            "unlinkedCollapsed": true
+          },
+          "icon": "links-coming-in",
+          "title": "Backlinks"
+        }
+      },
+      {
+        "id": "232a9e441077cb42",
+        "type": "leaf",
+        "state": {
+          "type": "outgoing-link",
+          "state": {
+            "file": "glazewm.md",
+            "linksCollapsed": false,
+            "unlinkedCollapsed": true
+          },
+          "icon": "links-going-out",
+          "title": "Outgoing links"
+        }
+      },
+      {
+        "id": "04108ad61a6b00d6",
+        "type": "leaf",
+        "state": {
+          "type": "outline",
+          "state": {
+            "file": "glazewm.md",
+            "followCursor": false,
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-list",
+          "title": "Outline"
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "zk-prefixer:Create new unique note": false
+    }
+  },
+  "active": "f4379e95bc3e119e",
+  "lastOpenFiles": [
+    "vagabond reading.md",
+    "learn about journaling.md",
+    "index.md",
+    "Find your own theme..md",
+    "learning/SelfForge.md",
+    "learning/projects/Writing a ML Library in C/Intro.md",
+    "learning/Writing a ML Library in C/Untitled.md",
+    "learning/projects/Quartz.md",
+    "learning/Data Structures/What are Data Structures.md",
+    "learning/Data Structures/Two Pointers.md",
+    "learning/Data Structures/Tries.md",
+    "learning/Data Structures/Stacks.md",
+    "learning/Data Structures/Sliding Window.md",
+    "learning/Data Structures/Recursion.md",
+    "learning/Data Structures/Linked Lists.md",
+    "learning/Data Structures/Heaps.md",
+    "learning/Data Structures/Dynamic Programming.md",
+    "learning/Data Structures/Graphs.md",
+    "learning/Data Structures/Greedy.md",
+    "learning/Data Structures/Backtracking.md",
+    "learning/Data Structures/Arrays.md",
+    "learning/C++/Stack vs Heap.md",
+    "learning/C++/Reference.md",
+    "learning/C++/Pointers.md",
+    "learning/C++/Linker.md",
+    "learning/C++/Intro.md",
+    "learning/C++/0 - Index.base",
+    "Templates/Bases/Books.base",
+    "Templates/Bases/Games.base"
+  ]
+}
