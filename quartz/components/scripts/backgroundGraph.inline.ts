@@ -47,6 +47,7 @@ type TweenNode = { update: (time: number) => void; stop: () => void }
 
 let history: FullSlug[] = []
 let index = -1 
+let showAllLabels = false
 
 
 const localStorageKey = "graph-visited"
@@ -233,9 +234,8 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 			}
 	if (e.key === "Tab") {
 		e.preventDefault()
-		for (const n of nodeRenderData) {
-			n.label.alpha = n.label.alpha === 0 ? 1 : 0
-		}
+		showAllLabels = !showAllLabels
+		renderAll()
 	}
 		})
 
@@ -304,8 +304,10 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 
 				// labels
 				for (const n of nodeRenderData) {
-					n.label.alpha = n.simulationData.id === hoveredNodeId || (n.simulationData as any).isFolder ? 1 : 0
+					const isHovered = n.simulationData.id === hoveredNodeId
+						n.label.alpha = isHovered || showAllLabels ? 1 : 0
 				}
+
 			}
 
 			// drag
@@ -326,6 +328,7 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 					const p = event.subject.__initialDragPos
 					event.subject.fx = p.x + (event.x - p.x) / currentTransform.k
 					event.subject.fy = p.y + (event.y - p.y) / currentTransform.k
+
 				})
 				.on("end", async (event) => {
 					if (!event.active) simulation.alphaTarget(0)
@@ -355,9 +358,6 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 					currentTransform = transform
 					stage.scale.set(transform.k, transform.k)
 					stage.position.set(transform.x, transform.y)
-					for (const n of nodeRenderData) {
-						n.label.alpha = transform.k >= 2 ? 1 : 0
-					}
 				}),
 			)
 
@@ -392,12 +392,12 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 
 // History for NoteModals
 async function openNoteModal(slug: FullSlug, pushToHistory = true) {
-		if (pushToHistory){
-			history.push(slug)
-			console.log(history)
-			console.log(index)
-			index += 1
-		}
+	if (pushToHistory){
+		history.push(slug)
+		console.log(history)
+		console.log(index)
+		index += 1
+	}
 	const response = await fetch("/" + slug)
 	const html = await response.text()
 	const parser = new DOMParser()
@@ -432,24 +432,24 @@ async function openNoteModal(slug: FullSlug, pushToHistory = true) {
 			}
 		}, { once: true })
 		document.getElementById("modal-back")?.addEventListener("click", async () => {
-  index -= 1
-  await openNoteModal(history[index] as FullSlug, false) // false = don't push to history
-})
+			index -= 1
+			await openNoteModal(history[index] as FullSlug, false) // false = don't push to history
+		})
 
-document.getElementById("modal-forward")?.addEventListener("click", async () => {
-  index += 1
-  await openNoteModal(history[index] as FullSlug, false)
-})
+		document.getElementById("modal-forward")?.addEventListener("click", async () => {
+			index += 1
+			await openNoteModal(history[index] as FullSlug, false)
+		})
 
 }
 
 document.getElementById("bg-note-modal")?.addEventListener("click", async (e) => {
-  const target = (e.target as HTMLElement).closest("a")
-  if (!target) return
-  e.preventDefault()
-  e.stopPropagation()
-  const slug = target.href.replace(window.location.origin + "/", "")
-  await openNoteModal(slug as FullSlug, true)
+	const target = (e.target as HTMLElement).closest("a")
+	if (!target) return
+		e.preventDefault()
+	e.stopPropagation()
+	const slug = target.href.replace(window.location.origin + "/", "")
+	await openNoteModal(slug as FullSlug, true)
 })
 
 function closeModal() {
