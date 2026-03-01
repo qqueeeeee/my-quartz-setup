@@ -1,14 +1,46 @@
 @use "./base.scss";
 
 // put your custom CSS here!
+// brighter node colors
+:root {
+  --gray: #888888;      // was probably darker
+  --lightgray: #444444;
+  --dark: #e8e8e8;      // text inside modal
+}
+
+// modal text specifically
+#bg-note-modal {
+  color: #e8e8e8;
+}
+
+#bg-note-modal h1,
+#bg-note-modal h2,
+#bg-note-modal h3 {
+  color: #c8c8c8;
+}
+
+#bg-note-modal p,
+#bg-note-modal li {
+  color: #999999;
+}
+
+#bg-note-modal a {
+  color: #fffafo;
+  text-decoration: underline;
+  text-decoration-color: #444;
+}
+
+#bg-note-modal a:hover {
+  text-decoration-color: #fffafo;
+}
 /* Background graph */
 #background-graph {
+  top: 48px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-
-  height: 100vh;
+  height: calc(100vh - 48px);
   z-index: 0;
   pointer-events: all;
 }
@@ -68,9 +100,6 @@
   height: 100%;
 }
 
-#quartz-root {
-  display: none;
-}
 
 #bg-note-modal {
   display: none;
@@ -222,4 +251,69 @@ kbd {
   padding: 0.1em 0.4em;
   font-size: 0.7rem;
   color: #666;
+}
+#welcome-tooltip {
+  display: none;
+  position: fixed;
+  z-index: 5;
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.75rem;
+  color: #e8e8e8;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+#top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  z-index: 5;
+  background: rgba(10, 10, 10, 0.9);
+  border-bottom: 1px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+#top-bar-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e8e8e8;
+}
+
+#top-bar-center {
+  font-size: 0.75rem;
+  color: #444;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#top-bar-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#top-bar-actions button {
+  background: transparent;
+  border: 1px solid #222;
+  color: #666;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+}
+
+#top-bar-actions button:hover {
+  border-color: #555;
+  color: #e8e8e8;
 }
