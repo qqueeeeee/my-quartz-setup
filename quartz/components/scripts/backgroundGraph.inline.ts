@@ -76,15 +76,18 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 
 	const links: SimpleLinkData[] = []
 	const validLinks = new Set(data.keys())
+	const tags: SimpleSlug[] = []
 
 	for (const [source, details] of data.entries()) {
-		for (const dest of details.links ?? []) {
-			if (validLinks.has(dest)) {
-				links.push({ source, target: dest })
-			}
+		const localTags = (details.tags ?? [])
+		.map((tag) => simplifySlug(("tags/" + tag) as FullSlug))
+
+		tags.push(...localTags.filter((tag) => !tags.includes(tag)))
+
+		for (const tag of localTags) {
+			links.push({ source, target: tag })
 		}
 	}
-
 	const nodes = [...data.keys()].map((url) => ({
 		id: url,
 		text: data.get(url)?.title ?? url,
@@ -104,103 +107,112 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 		const name = folder.split("/").pop() ?? folder
 		nodes.push({ id: folder as any, text: name, tags: [], isFolder: true })
 	}
+	for (const tag of tags) {
+		nodes.push({
+			id: tag as any,
+			text: "#" + tag.substring(5), // remove "tags/" prefix
+			tags: [],
+			isFolder: false,
+		})
+	}
 
 	const graphData = {
 		nodes,
 		links: links
-			.map((l) => ({
-				source: nodes.find((n) => n.id === l.source)!,
+		.map((l) => ({
+			source: nodes.find((n) => n.id === l.source)!,
 				target: nodes.find((n) => n.id === l.target)!,
-			}))
+		}))
 			.filter((l) => l.source && l.target),
 	}
 
-	const width = container.offsetWidth
-	const height = container.offsetHeight
+			const width = container.offsetWidth
+			const height = container.offsetHeight
 
-	const cssVars = [
-		"--secondary", "--tertiary", "--gray", "--light",
-		"--lightgray", "--dark", "--darkgray", "--bodyFont",
-	] as const
-	const style = cssVars.reduce((acc, key) => {
-		acc[key] = getComputedStyle(document.documentElement).getPropertyValue(key)
-		return acc
-	}, {} as Record<(typeof cssVars)[number], string>)
+			const cssVars = [
+				"--secondary", "--tertiary", "--gray", "--light",
+				"--lightgray", "--dark", "--darkgray", "--bodyFont",
+			] as const
+			const style = cssVars.reduce((acc, key) => {
+				acc[key] = getComputedStyle(document.documentElement).getPropertyValue(key)
+				return acc
+			}, {} as Record<(typeof cssVars)[number], string>)
 
-	function nodeRadius(d: NodeData & { isFolder?: boolean }) {
-		if ((d as any).isFolder) return 8
-		return 2 + Math.sqrt(graphData.links.filter((l) => l.source.id === d.id || l.target.id === d.id).length)
-	}
+			function nodeRadius(d: NodeData & { isFolder?: boolean }) {
+				if ((d as any).isFolder) return 8
+					return 2 + Math.sqrt(graphData.links.filter((l) => l.source.id === d.id || l.target.id === d.id).length)
+			}
 
-	const color = (d: NodeData) => {
-		if (d.id === slug) return style["--secondary"]
-		if (visited.has(d.id)) return style["--tertiary"]
-		return style["--gray"]
-	}
+			const color = (d: NodeData) => {
+				if (d.id === slug) return style["--secondary"]
+					if (d.id.startsWith("tags/")) return style["--tertiary"]
+						if (visited.has(d.id)) return style["--tertiary"]
+							return style["--gray"]
+			}
 
-	const simulation = forceSimulation<NodeData>(graphData.nodes as NodeData[])
-		.force("charge", forceManyBody().strength(-80))
-		.force("center", forceCenter().strength(0.7))
-		.force("link", forceLink(graphData.links).distance(60))
-		.force("collide", forceCollide<NodeData>((n) => nodeRadius(n)).iterations(3))
-		.force("radial", forceRadial((Math.min(width, height) / 2) * 0.8).strength(0.15))
+			const simulation = forceSimulation<NodeData>(graphData.nodes as NodeData[])
+			.force("charge", forceManyBody().strength(-80))
+			.force("center", forceCenter().strength(0.7))
+			.force("link", forceLink(graphData.links).distance(60))
+			.force("collide", forceCollide<NodeData>((n) => nodeRadius(n)).iterations(3))
+			.force("radial", forceRadial((Math.min(width, height) / 2) * 0.8).strength(0.15))
 
-	const tweens = new Map<string, TweenNode>()
-	const linkRenderData: LinkRenderData[] = []
-	let hoveredNodeId: string | null = null
-	let dragging = false
-	let dragStartTime = 0
+			const tweens = new Map<string, TweenNode>()
+			const linkRenderData: LinkRenderData[] = []
+			let hoveredNodeId: string | null = null
+			let dragging = false
+			let dragStartTime = 0
 
-	const app = new Application()
-	await app.init({
-		width,
-		height,
-		antialias: true,
-		autoStart: false,
-		autoDensity: true,
-		backgroundAlpha: 0,
-		preference: "webgpu",
-		resolution: window.devicePixelRatio,
-		eventMode: "static",
-	})
-	container.appendChild(app.canvas)
-
-	const stage = app.stage
-	const labelsContainer = new Container<Text>({ zIndex: 3, isRenderGroup: true })
-	const nodesContainer = new Container<Graphics>({ zIndex: 2, isRenderGroup: true })
-	const linkContainer = new Container<Graphics>({ zIndex: 1, isRenderGroup: true })
-	stage.addChild(nodesContainer, labelsContainer, linkContainer)
-
-	for (const n of graphData.nodes) {
-		const label = new Text({
-			interactive: false,
-			eventMode: "none",
-			text: n.text,
-			alpha: 0,
-			anchor: { x: 0.5, y: 1.2 },
-			style: {
-				fontSize: 10,
-				fill: style["--dark"],
-				fontFamily: style["--bodyFont"],
-			},
-			resolution: window.devicePixelRatio * 4,
-		})
-		label.scale.set(1)
-
-		const gfx = new Graphics({
-			interactive: true,
-			label: n.id,
-			eventMode: "static",
-			hitArea: new Circle(0, 0, nodeRadius(n)),
-			cursor: "pointer",
-		})
-			.circle(0, 0, nodeRadius(n))
-			.fill({ color: color(n) })
-			.on("pointerover", (e) => {
-				hoveredNodeId = e.target.label
-				updateHover()
-				if (!dragging) renderAll()
+			const app = new Application()
+			await app.init({
+				width,
+				height,
+				antialias: true,
+				autoStart: false,
+				autoDensity: true,
+				backgroundAlpha: 0,
+				preference: "webgpu",
+				resolution: window.devicePixelRatio,
+				eventMode: "static",
 			})
+			container.appendChild(app.canvas)
+
+			const stage = app.stage
+			const labelsContainer = new Container<Text>({ zIndex: 3, isRenderGroup: true })
+			const nodesContainer = new Container<Graphics>({ zIndex: 2, isRenderGroup: true })
+			const linkContainer = new Container<Graphics>({ zIndex: 1, isRenderGroup: true })
+			stage.addChild(nodesContainer, labelsContainer, linkContainer)
+
+			for (const n of graphData.nodes) {
+				const label = new Text({
+					interactive: false,
+					eventMode: "none",
+					text: n.text,
+					alpha: 0,
+					anchor: { x: 0.5, y: 1.2 },
+					style: {
+						fontSize: 10,
+						fill: style["--dark"],
+						fontFamily: style["--bodyFont"],
+					},
+					resolution: window.devicePixelRatio * 4,
+				})
+				label.scale.set(1)
+
+				const gfx = new Graphics({
+					interactive: true,
+					label: n.id,
+					eventMode: "static",
+					hitArea: new Circle(0, 0, nodeRadius(n)),
+					cursor: "pointer",
+				})
+				.circle(0, 0, nodeRadius(n))
+				.fill({ color: color(n) })
+				.on("pointerover", (e) => {
+					hoveredNodeId = e.target.label
+					updateHover()
+					if (!dragging) renderAll()
+				})
 			.on("pointerleave", () => {
 				hoveredNodeId = null
 				updateHover()
@@ -210,151 +222,151 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 		nodesContainer.addChild(gfx)
 		labelsContainer.addChild(label)
 		nodeRenderData.push({ simulationData: n as NodeData, gfx, label, color: color(n), alpha: 1, active: false })
-	}
-
-	for (const l of graphData.links) {
-		const gfx = new Graphics({ interactive: false, eventMode: "none" })
-		linkContainer.addChild(gfx)
-		linkRenderData.push({ simulationData: l as LinkData, gfx, color: style["--lightgray"], alpha: 1, active: false })
-	}
-
-	function updateHover() {
-		if (!hoveredNodeId) {
-			for (const n of nodeRenderData) n.active = false
-			for (const l of linkRenderData) l.active = false
-			return
-		}
-		for (const l of linkRenderData) {
-			l.active = l.simulationData.source.id === hoveredNodeId || l.simulationData.target.id === hoveredNodeId
-		}
-		for (const n of nodeRenderData) {
-			n.active =
-				n.simulationData.id === hoveredNodeId ||
-				linkRenderData.some(
-					(l) =>
-						l.active &&
-						(l.simulationData.source.id === n.simulationData.id ||
-							l.simulationData.target.id === n.simulationData.id),
-				)
-		}
-	}
-
-	// assign to global so keydown listener can call it
-	renderAll = function () {
-		const nodeTweens = new TweenGroup()
-		for (const n of nodeRenderData) {
-			const alpha = hoveredNodeId ? (n.active ? 1 : 0.2) : 1
-			nodeTweens.add(new Tweened<Graphics>(n.gfx, nodeTweens).to({ alpha }, 200))
-		}
-		nodeTweens.getAll().forEach((t) => t.start())
-		tweens.set("nodes", {
-			update: nodeTweens.update.bind(nodeTweens),
-			stop: () => nodeTweens.getAll().forEach((t) => t.stop()),
-		})
-
-		const linkTweens = new TweenGroup()
-		for (const l of linkRenderData) {
-			const alpha = hoveredNodeId ? (l.active ? 1 : 0.1) : 1
-			l.color = l.active ? style["--gray"] : style["--lightgray"]
-			linkTweens.add(new Tweened<LinkRenderData>(l).to({ alpha }, 200))
-		}
-		linkTweens.getAll().forEach((t) => t.start())
-		tweens.set("links", {
-			update: linkTweens.update.bind(linkTweens),
-			stop: () => linkTweens.getAll().forEach((t) => t.stop()),
-		})
-
-		for (const n of nodeRenderData) {
-			const isHovered = n.simulationData.id === hoveredNodeId
-			if (!dragging) {
-				n.label.alpha = isHovered || showAllLabels ? 1 : 0
 			}
-		}
-	}
 
-	let currentTransform = zoomIdentity
-	select<HTMLCanvasElement, NodeData | undefined>(app.canvas).call(
-		drag<HTMLCanvasElement, NodeData | undefined>()
-			.container(() => app.canvas)
-			.subject(() => graphData.nodes.find((n) => n.id === hoveredNodeId) as NodeData)
-			.on("start", (event) => {
-				if (!event.active) simulation.alphaTarget(1).restart()
-				event.subject.fx = event.subject.x
-				event.subject.fy = event.subject.y
-				event.subject.__initialDragPos = {
-					x: event.subject.x,
-					y: event.subject.y,
-					fx: event.subject.fx,
-					fy: event.subject.fy,
+			for (const l of graphData.links) {
+				const gfx = new Graphics({ interactive: false, eventMode: "none" })
+				linkContainer.addChild(gfx)
+				linkRenderData.push({ simulationData: l as LinkData, gfx, color: style["--lightgray"], alpha: 1, active: false })
+			}
+
+			function updateHover() {
+				if (!hoveredNodeId) {
+					for (const n of nodeRenderData) n.active = false
+						for (const l of linkRenderData) l.active = false
+							return
 				}
-				dragStartTime = Date.now()
-				dragging = true
-			})
-			.on("drag", (event) => {
-				const p = event.subject.__initialDragPos
-				event.subject.fx = p.x + (event.x - p.x) / currentTransform.k
-				event.subject.fy = p.y + (event.y - p.y) / currentTransform.k
-			})
-			.on("end", async (event) => {
-				if (!event.active) simulation.alphaTarget(0)
-				event.subject.fx = null
-				event.subject.fy = null
-				dragging = false
-				renderAll()
-
-				if (Date.now() - dragStartTime < 300) {
-					const node = graphData.nodes.find((n) => n.id === event.subject.id)
-					if (node) await openNoteModal(node.id as FullSlug)
+				for (const l of linkRenderData) {
+					l.active = l.simulationData.source.id === hoveredNodeId || l.simulationData.target.id === hoveredNodeId
 				}
-			}),
-	)
-
-	select<HTMLCanvasElement, NodeData>(app.canvas).call(
-		zoom<HTMLCanvasElement, NodeData>()
-			.extent([[0, 0], [width, height]])
-			.scaleExtent([0.7, 4])
-			.translateExtent([[-200, -200], [width + 200, height + 200]])
-			.on("zoom", ({ transform }) => {
-				currentTransform = transform
-				stage.scale.set(transform.k, transform.k)
-				stage.position.set(transform.x, transform.y)
-				// show labels when zoomed in enough
 				for (const n of nodeRenderData) {
-					const isHovered = n.simulationData.id === hoveredNodeId
-					n.label.alpha = isHovered || showAllLabels || transform.k >= 2 ? 1 : 0
+					n.active =
+						n.simulationData.id === hoveredNodeId ||
+						linkRenderData.some(
+							(l) =>
+							l.active &&
+								(l.simulationData.source.id === n.simulationData.id ||
+								 l.simulationData.target.id === n.simulationData.id),
+					)
 				}
-			}),
-	)
+			}
 
-	let stopAnimation = false
-	function animate(time: number) {
-		if (stopAnimation) return
-		for (const n of nodeRenderData) {
-			const { x, y } = n.simulationData
-			if (!x || !y) continue
-			n.gfx.position.set(x + width / 2, y + height / 2)
-			n.label.position.set(x + width / 2, y + height / 2)
-		}
-		for (const l of linkRenderData) {
-			const d = l.simulationData
-			l.gfx.clear()
-			l.gfx.moveTo(d.source.x! + width / 2, d.source.y! + height / 2)
-			l.gfx.lineTo(d.target.x! + width / 2, d.target.y! + height / 2).stroke({
-				alpha: l.alpha,
-				width: 1,
-				color: l.color,
-			})
-		}
-		tweens.forEach((t) => t.update(time))
-		app.renderer.render(stage)
-		requestAnimationFrame(animate)
-	}
-	requestAnimationFrame(animate)
+			// assign to global so keydown listener can call it
+			renderAll = function () {
+				const nodeTweens = new TweenGroup()
+				for (const n of nodeRenderData) {
+					const alpha = hoveredNodeId ? (n.active ? 1 : 0.2) : 1
+					nodeTweens.add(new Tweened<Graphics>(n.gfx, nodeTweens).to({ alpha }, 200))
+				}
+				nodeTweens.getAll().forEach((t) => t.start())
+				tweens.set("nodes", {
+					update: nodeTweens.update.bind(nodeTweens),
+					stop: () => nodeTweens.getAll().forEach((t) => t.stop()),
+				})
 
-	return () => {
-		stopAnimation = true
-		app.destroy()
-	}
+					const linkTweens = new TweenGroup()
+					for (const l of linkRenderData) {
+						const alpha = hoveredNodeId ? (l.active ? 1 : 0.1) : 1
+						l.color = l.active ? style["--gray"] : style["--lightgray"]
+						linkTweens.add(new Tweened<LinkRenderData>(l).to({ alpha }, 200))
+					}
+					linkTweens.getAll().forEach((t) => t.start())
+					tweens.set("links", {
+						update: linkTweens.update.bind(linkTweens),
+						stop: () => linkTweens.getAll().forEach((t) => t.stop()),
+					})
+
+						for (const n of nodeRenderData) {
+							const isHovered = n.simulationData.id === hoveredNodeId
+							if (!dragging) {
+								n.label.alpha = isHovered || showAllLabels ? 1 : 0
+							}
+						}
+			}
+
+			let currentTransform = zoomIdentity
+			select<HTMLCanvasElement, NodeData | undefined>(app.canvas).call(
+				drag<HTMLCanvasElement, NodeData | undefined>()
+				.container(() => app.canvas)
+				.subject(() => graphData.nodes.find((n) => n.id === hoveredNodeId) as NodeData)
+				.on("start", (event) => {
+					if (!event.active) simulation.alphaTarget(1).restart()
+						event.subject.fx = event.subject.x
+					event.subject.fy = event.subject.y
+					event.subject.__initialDragPos = {
+						x: event.subject.x,
+						y: event.subject.y,
+						fx: event.subject.fx,
+						fy: event.subject.fy,
+					}
+					dragStartTime = Date.now()
+					dragging = true
+				})
+				.on("drag", (event) => {
+					const p = event.subject.__initialDragPos
+					event.subject.fx = p.x + (event.x - p.x) / currentTransform.k
+					event.subject.fy = p.y + (event.y - p.y) / currentTransform.k
+				})
+				.on("end", async (event) => {
+					if (!event.active) simulation.alphaTarget(0)
+						event.subject.fx = null
+					event.subject.fy = null
+					dragging = false
+					renderAll()
+
+					if (Date.now() - dragStartTime < 300) {
+						const node = graphData.nodes.find((n) => n.id === event.subject.id)
+						if (node) await openNoteModal(node.id as FullSlug)
+					}
+				}),
+			)
+
+			select<HTMLCanvasElement, NodeData>(app.canvas).call(
+				zoom<HTMLCanvasElement, NodeData>()
+				.extent([[0, 0], [width, height]])
+				.scaleExtent([0.7, 4])
+				.translateExtent([[-200, -200], [width + 200, height + 200]])
+				.on("zoom", ({ transform }) => {
+					currentTransform = transform
+					stage.scale.set(transform.k, transform.k)
+					stage.position.set(transform.x, transform.y)
+					// show labels when zoomed in enough
+					for (const n of nodeRenderData) {
+						const isHovered = n.simulationData.id === hoveredNodeId
+						n.label.alpha = isHovered || showAllLabels || transform.k >= 2 ? 1 : 0
+					}
+				}),
+			)
+
+			let stopAnimation = false
+			function animate(time: number) {
+				if (stopAnimation) return
+					for (const n of nodeRenderData) {
+						const { x, y } = n.simulationData
+						if (!x || !y) continue
+							n.gfx.position.set(x + width / 2, y + height / 2)
+						n.label.position.set(x + width / 2, y + height / 2)
+					}
+					for (const l of linkRenderData) {
+						const d = l.simulationData
+						l.gfx.clear()
+						l.gfx.moveTo(d.source.x! + width / 2, d.source.y! + height / 2)
+						l.gfx.lineTo(d.target.x! + width / 2, d.target.y! + height / 2).stroke({
+							alpha: l.alpha,
+							width: 1,
+							color: l.color,
+						})
+					}
+					tweens.forEach((t) => t.update(time))
+					app.renderer.render(stage)
+					requestAnimationFrame(animate)
+			}
+			requestAnimationFrame(animate)
+
+			return () => {
+				stopAnimation = true
+				app.destroy()
+			}
 }
 
 // ─── modal ──────────────────────────────────────────────────────────────────
@@ -375,41 +387,41 @@ async function openNoteModal(slug: FullSlug, pushToHistory = true) {
 	const pageHeader = doc.querySelector(".page-header")
 	if (!article && !pageListing) return
 
-	const modal = document.getElementById("bg-note-modal")
-	if (!modal) return
+		const modal = document.getElementById("bg-note-modal")
+		if (!modal) return
 
-	modal.innerHTML = `
-		<div id="modal-nav">
+			modal.innerHTML = `
+			<div id="modal-nav">
 			<button id="modal-back" ${historyIndex <= 0 ? "disabled" : ""}>←</button>
 			<button id="modal-forward" ${historyIndex >= history.length - 1 ? "disabled" : ""}>→</button>
-		</div>
-		<button id="bg-modal-close">✕</button>
-		${pageHeader ? pageHeader.outerHTML : ""}
-		${article ? article.outerHTML : ""}
-		${pageListing ? pageListing.outerHTML : ""}
-	`
+			</div>
+			<button id="bg-modal-close">✕</button>
+			${pageHeader ? pageHeader.outerHTML : ""}
+			${article ? article.outerHTML : ""}
+			${pageListing ? pageListing.outerHTML : ""}
+			`
 
-	modal.classList.add("active")
-	document.getElementById("background-graph")?.classList.add("dimmed")
+			modal.classList.add("active")
+			document.getElementById("background-graph")?.classList.add("dimmed")
 
-	document.getElementById("bg-modal-close")?.addEventListener("click", closeModal)
-	document.getElementById("modal-back")?.addEventListener("click", async () => {
-		historyIndex -= 1
-		await openNoteModal(history[historyIndex] as FullSlug, false)
-	})
-	document.getElementById("modal-forward")?.addEventListener("click", async () => {
-		historyIndex += 1
-		await openNoteModal(history[historyIndex] as FullSlug, false)
-	})
+			document.getElementById("bg-modal-close")?.addEventListener("click", closeModal)
+			document.getElementById("modal-back")?.addEventListener("click", async () => {
+				historyIndex -= 1
+				await openNoteModal(history[historyIndex] as FullSlug, false)
+			})
+			document.getElementById("modal-forward")?.addEventListener("click", async () => {
+				historyIndex += 1
+				await openNoteModal(history[historyIndex] as FullSlug, false)
+			})
 
-	// close on outside click
-	setTimeout(() => {
-		document.addEventListener("click", (e) => {
-			if (!modal.contains(e.target as Node) && modal.classList.contains("active")) {
-				closeModal()
-			}
-		}, { once: true })
-	}, 100)
+			// close on outside click
+			setTimeout(() => {
+				document.addEventListener("click", (e) => {
+					if (!modal.contains(e.target as Node) && modal.classList.contains("active")) {
+						closeModal()
+					}
+				}, { once: true })
+			}, 100)
 }
 
 function closeModal() {
@@ -423,14 +435,14 @@ function closeModal() {
 function toggleSearch() {
 	const container = document.getElementById("graph-search-container")
 	if (!container) return
-	searchActive = !searchActive
+		searchActive = !searchActive
 	container.classList.toggle("active", searchActive)
 	if (searchActive) {
 		document.getElementById("graph-search")?.focus()
 	} else {
 		const input = document.getElementById("graph-search") as HTMLInputElement
 		if (input) input.value = ""
-		for (const n of nodeRenderData) n.gfx.alpha = 1
+			for (const n of nodeRenderData) n.gfx.alpha = 1
 	}
 }
 
@@ -445,18 +457,18 @@ document.addEventListener("keydown", (e) => {
 	if (e.ctrlKey && e.key === "f") {
 		e.preventDefault()
 		if (document.activeElement?.id !== "graph-search") toggleSearch()
-		return
+			return
 	}
 	if (e.key === "Escape") {
 		if (searchActive) toggleSearch()
-		else closeModal()
+			else closeModal()
 	}
 })
 
 document.getElementById("bg-note-modal")?.addEventListener("click", async (e) => {
 	const target = (e.target as HTMLElement).closest("a")
 	if (!target) return
-	e.preventDefault()
+		e.preventDefault()
 	e.stopPropagation()
 	const slug = target.href.replace(window.location.origin + "/", "")
 	await openNoteModal(slug as FullSlug, true)
@@ -489,7 +501,7 @@ document.getElementById("graph-search")?.addEventListener("input", (e) => {
 document.addEventListener("nav", async () => {
 	for (const id of [
 		"background-graph", "bg-note-modal", "graph-search-container",
-		"graph-search-btn", "graph-keybinds", "top-bar",
+	"graph-search-btn", "graph-keybinds", "top-bar",
 	]) {
 		const el = document.getElementById(id)
 		if (el && el.parentElement !== document.body) {
@@ -500,13 +512,13 @@ document.addEventListener("nav", async () => {
 	const container = document.getElementById("background-graph-canvas-container")
 	if (!container) return
 
-	if (bgGraphCleanup) {
-		bgGraphCleanup()
-		bgGraphCleanup = null
-	}
+		if (bgGraphCleanup) {
+			bgGraphCleanup()
+			bgGraphCleanup = null
+		}
 
-	const slug = getFullSlug(window)
-	bgGraphCleanup = (await renderBgGraph(container, slug)) ?? null
+		const slug = getFullSlug(window)
+		bgGraphCleanup = (await renderBgGraph(container, slug)) ?? null
 })
 
 // ─── first visit ─────────────────────────────────────────────────────────────
