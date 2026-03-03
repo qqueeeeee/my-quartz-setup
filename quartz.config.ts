@@ -16,7 +16,7 @@ const config: QuartzConfig = {
 			provider: "plausible",
 		},
 		locale: "en-US",
-		baseUrl: "quartz.jzhao.xyz",
+		baseUrl: "my-quartz-setup.shotzling.workers.dev",
 		ignorePatterns: ["private", "Templates", ".obsidian"],
 		defaultDateType: "modified",
 		theme: {
