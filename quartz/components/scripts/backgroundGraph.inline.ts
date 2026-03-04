@@ -60,6 +60,8 @@ function getVisited(): Set<SimpleSlug> {
 }
 
 // ─── graph rendering ────────────────────────────────────────────────────────
+let mouseX = 0
+let mouseY = 0
 async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 	removeAllChildren(container)
 	nodeRenderData = []
@@ -156,8 +158,21 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 			.force("link", forceLink(graphData.links).distance(60))
 			.force("collide", forceCollide<NodeData>((n) => nodeRadius(n)).iterations(3))
 			.force("radial", forceRadial((Math.min(width, height) / 2) * 0.8).strength(0.15))
-
-			const tweens = new Map<string, TweenNode>()
+			.force("mouse", () => {
+  for (const node of graphData.nodes as any[]) {
+    const dx = (node.x ?? 0) - mouseX
+    const dy = (node.y ?? 0) - mouseY
+    const dist = Math.sqrt(dx * dx + dy * dy)
+    const radius = 80
+    const deadzone = 20  // within this distance, don't repel
+    if (dist < radius && dist > deadzone) {
+      const strength = ((radius - dist) / radius) * 0.15
+      node.vx = (node.vx ?? 0) + (dx / dist) * strength
+      node.vy = (node.vy ?? 0) + (dy / dist) * strength
+    }
+  }
+})
+					const tweens = new Map<string, TweenNode>()
 			const linkRenderData: LinkRenderData[] = []
 			let hoveredNodeId: string | null = null
 			let dragging = false
@@ -337,6 +352,15 @@ async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
 					}
 				}),
 			)
+			app.canvas.addEventListener("mousemove", (e) => {
+				const rect = app.canvas.getBoundingClientRect()
+				mouseX = (e.clientX - rect.left - currentTransform.x) / currentTransform.k - width / 2
+				mouseY = (e.clientY - rect.top - currentTransform.y) / currentTransform.k - height / 2
+				simulation.alpha(0.1).restart()
+			})
+			app.canvas.addEventListener("mouseleave", () => {
+				simulation.alphaTarget(0)
+			})
 
 			let stopAnimation = false
 			function animate(time: number) {
@@ -481,8 +505,8 @@ document.getElementById("top-bar-help")?.addEventListener("click", () => {
 })
 
 document.getElementById("top-bar-labels")?.addEventListener("click", () => {
-  showAllLabels = !showAllLabels
-  renderAll()
+	showAllLabels = !showAllLabels
+	renderAll()
 })
 
 document.getElementById("graph-search")?.addEventListener("input", (e) => {
