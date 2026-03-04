@@ -11,7 +11,7 @@ const BackgroundGraph: QuartzComponent = () => {
 		<div id="top-bar-actions">
 		<button id="top-bar-search" aria-label="Search">⌕</button>
 		<button id="top-bar-help" aria-label="Help">?</button>
-		<button id="top-bar-theme" aria-label="Toggle theme">◑</button>
+		<button id="top-bar-labels" aria-label="Toggle labels">⊹</button>
 		</div>
 		</div>
 		<div id="graph-search-container">

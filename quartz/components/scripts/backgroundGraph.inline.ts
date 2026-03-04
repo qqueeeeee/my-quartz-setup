@@ -479,8 +479,10 @@ document.getElementById("top-bar-search")?.addEventListener("click", toggleSearc
 document.getElementById("top-bar-help")?.addEventListener("click", () => {
 	openNoteModal("index" as FullSlug)
 })
-document.getElementById("top-bar-theme")?.addEventListener("click", () => {
-	document.querySelector(".darkmode")?.dispatchEvent(new MouseEvent("click"))
+
+document.getElementById("top-bar-labels")?.addEventListener("click", () => {
+  showAllLabels = !showAllLabels
+  renderAll()
 })
 
 document.getElementById("graph-search")?.addEventListener("input", (e) => {
