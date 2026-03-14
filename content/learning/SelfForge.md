@@ -7,7 +7,11 @@ start:
 year:
 url:
 status:
+excalidraw-plugin: parsed
+tags:
+  - excalidraw
 ---
+
 
 1/28/2026 
 
@@ -22,3 +26,12 @@ This will be my project for the upcoming few days, I want to work on this as it 
  - [[RAG]] on notes: Feed my notes to it so that it develops an even better understanding of me. 
  - Simple modern looking UI - current idea to use [[Tauri]] + [[Python]] as I hate web-apps and want actual good desktop apps.
  - Start with some cloud LLM but eventually add a picker/option to switch between a cloud LLM or a installed LLM if the user wishes to do so.
+
+==⚠  Switch to EXCALIDRAW VIEW in the MORE OPTIONS menu of this document. ⚠== You can decompress Drawing data with the command palette: 'Decompress current Excalidraw file'. For more info check in plugin settings under 'Saving'
+
+
+## Drawing
+```json
+{"type":"excalidraw","version":2,"source":"https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.20.6","elements":[],"appState":{"gridSize":null,"viewBackgroundColor":"#ffffff"}}
+```
+%%

@@ -17,7 +17,7 @@ const config: QuartzConfig = {
 		},
 		locale: "en-US",
 		baseUrl: "my-quartz-setup.shotzling.workers.dev",
-		ignorePatterns: ["private", "Templates", ".obsidian"],
+		ignorePatterns: ["private", ".obsidian"],
 		defaultDateType: "modified",
 		theme: {
 			fontOrigin: "googleFonts",
