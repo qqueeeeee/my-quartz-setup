@@ -3,32 +3,49 @@ import { QuartzComponent, QuartzComponentConstructor } from "./types"
 import script from "./scripts/backgroundGraph.inline"
 
 const BackgroundGraph: QuartzComponent = () => {
-	return (
-		<>
-		<div id="top-bar">
-		<span id="top-bar-title">Que's Notes</span>
-		<span id="top-bar-center">Graph View</span>
-		<div id="top-bar-actions">
-		<button id="top-bar-search" aria-label="Search">⌕</button>
-		<button id="top-bar-help" aria-label="Help">?</button>
-		<button id="top-bar-labels" aria-label="Toggle labels">⊹</button>
-		</div>
-		</div>
-		<div id="graph-search-container">
-		<input id="graph-search" type="text" placeholder="Search notes..." />
-		</div>
-		<button id="graph-search-btn">⌕</button>
-		<div id="background-graph">
-		<div id="background-graph-canvas-container" style="width:100%;height:100%"></div>
-		</div>
-		<div id="bg-note-modal"></div>
-		<div id="graph-keybinds">
-		<span><kbd>Ctrl + F</kbd> search</span>
-		<span><kbd>Tab</kbd> labels</span>
-		<span><kbd>Esc</kbd> close</span>
-		</div>
-		</>
-	)
+  return (
+    <>
+      <div id="starfield"></div>
+      <div id="top-bar">
+        <span id="top-bar-title">Que's Notes</span>
+        <span id="top-bar-center">Graph View</span>
+        <div id="top-bar-actions">
+          <button id="top-bar-notes" aria-label="All Notes">
+            ☰
+          </button>
+          <button id="top-bar-search" aria-label="Search">
+            ⌕
+          </button>
+          <button id="top-bar-help" aria-label="Help">
+            ?
+          </button>
+          <button id="top-bar-labels" aria-label="Toggle labels">
+            ⊹
+          </button>
+        </div>
+      </div>
+      <div id="notes-dropdown"></div>
+      <div id="graph-search-container">
+        <input id="graph-search" type="text" placeholder="Search notes..." />
+      </div>
+      <button id="graph-search-btn">⌕</button>
+      <div id="background-graph">
+        <div id="background-graph-canvas-container" style="width:100%;height:100%"></div>
+      </div>
+      <div id="bg-note-modal"></div>
+      <div id="graph-keybinds">
+        <span>
+          <kbd>Ctrl + F</kbd> search
+        </span>
+        <span>
+          <kbd>Tab</kbd> labels
+        </span>
+        <span>
+          <kbd>Esc</kbd> close
+        </span>
+      </div>
+    </>
+  )
 }
 
 BackgroundGraph.afterDOMLoaded = script

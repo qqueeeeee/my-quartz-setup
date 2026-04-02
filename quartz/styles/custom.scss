@@ -1,92 +1,204 @@
 @use "./base.scss";
 
-// put your custom CSS here!
-// brighter node colors
-:root {
-  --gray: #888888;      // was probably darker
-  --lightgray: #444444;
-  --dark: #e8e8e8;      // text inside modal
+html:not(.modal-iframe) .page-content,
+html:not(.modal-iframe) #quartz-root {
+  display: none;
+  :root {
+    --gray: #888888;
+    --lightgray: #444444;
+    --dark: #e8e8e8;
+  }
+
+  #starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 25%, #0a0a2a 50%, #0a0a0a 100%);
+    background-size: 400% 400%;
+    animation: nebulaShift 30s ease infinite;
+  }
+
+  #starfield::before,
+  #starfield::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  #starfield::before {
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(100, 50, 150, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(50, 100, 150, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 40% 60%, rgba(150, 50, 100, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 40%, rgba(100, 150, 50, 0.05) 0%, transparent 50%);
+    animation: nebulaDrift 60s ease infinite;
+    opacity: 0.3;
+  }
+
+  #starfield::after {
+    background-image:
+      radial-gradient(circle at 30% 30%, rgba(200, 100, 250, 0.03) 0%, transparent 30%),
+      radial-gradient(circle at 70% 70%, rgba(100, 200, 250, 0.02) 0%, transparent 30%),
+      radial-gradient(circle at 50% 50%, rgba(250, 150, 100, 0.01) 0%, transparent 30%);
+    animation: nebulaPulse 90s ease infinite;
+    opacity: 0.2;
+  }
+
+  .starfield-stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .starfield-stars.layer1 {
+    background-image:
+      radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.9), transparent),
+      radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.7), transparent),
+      radial-gradient(1px 1px at 50px 160px, rgba(255, 255, 255, 0.8), transparent),
+      radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.85), transparent),
+      radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+      radial-gradient(1px 1px at 160px 120px, rgba(255, 255, 255, 0.7), transparent),
+      radial-gradient(2px 2px at 200px 50px, rgba(0, 212, 255, 0.3), transparent),
+      radial-gradient(1px 1px at 250px 180px, rgba(255, 255, 255, 0.8), transparent),
+      radial-gradient(1px 1px at 300px 90px, rgba(255, 255, 255, 0.6), transparent),
+      radial-gradient(2px 2px at 350px 140px, rgba(168, 85, 247, 0.25), transparent),
+      radial-gradient(1px 1px at 400px 60px, rgba(255, 255, 255, 0.8), transparent),
+      radial-gradient(1px 1px at 450px 200px, rgba(255, 255, 255, 0.9), transparent),
+      radial-gradient(1px 1px at 500px 30px, rgba(255, 255, 255, 0.6), transparent),
+      radial-gradient(2px 2px at 550px 170px, rgba(0, 212, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 600px 80px, rgba(255, 255, 255, 0.8), transparent),
+      radial-gradient(1px 1px at 650px 220px, rgba(255, 255, 255, 0.5), transparent),
+      radial-gradient(1px 1px at 700px 50px, rgba(255, 255, 255, 0.9), transparent),
+      radial-gradient(1px 1px at 750px 150px, rgba(168, 85, 247, 0.2), transparent),
+      radial-gradient(1px 1px at 800px 100px, rgba(255, 255, 255, 0.6), transparent),
+      radial-gradient(2px 2px at 850px 180px, rgba(255, 255, 255, 0.5), transparent);
+    background-size: 900px 250px;
+    animation: starDrift 120s linear infinite;
+    opacity: 0.8;
+  }
+
+  .starfield-stars.layer2 {
+    background-image:
+      radial-gradient(1px 1px at 10px 10px, rgba(255, 255, 255, 0.3), transparent),
+      radial-gradient(1px 1px at 80px 50px, rgba(255, 255, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 120px 90px, rgba(255, 255, 255, 0.25), transparent),
+      radial-gradient(1px 1px at 180px 20px, rgba(255, 255, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 220px 130px, rgba(255, 255, 255, 0.3), transparent),
+      radial-gradient(1px 1px at 280px 60px, rgba(255, 255, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 340px 110px, rgba(255, 255, 255, 0.25), transparent),
+      radial-gradient(1px 1px at 400px 30px, rgba(255, 255, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 460px 140px, rgba(255, 255, 255, 0.3), transparent),
+      radial-gradient(1px 1px at 520px 70px, rgba(255, 255, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 580px 120px, rgba(255, 255, 255, 0.25), transparent),
+      radial-gradient(1px 1px at 640px 40px, rgba(255, 255, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 700px 100px, rgba(255, 255, 255, 0.3), transparent),
+      radial-gradient(1px 1px at 760px 160px, rgba(255, 255, 255, 0.2), transparent),
+      radial-gradient(1px 1px at 820px 80px, rgba(255, 255, 255, 0.25), transparent);
+    background-size: 850px 200px;
+    animation: starDrift 180s linear infinite reverse;
+    opacity: 0.5;
+  }
+
+  #background-graph {
+    top: 48px;
+    position: fixed;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 48px);
+    z-index: 0;
+    pointer-events: all;
+  }
+
+  #background-graph-canvas {
+    width: 100%;
+    height: 100%;
+  }
+
+  .note-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100vh;
+    z-index: 10;
+    background: rgba(10, 10, 10, 0.95);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    overflow-y: auto;
+    padding: 2rem;
+    border-left: 1px solid #222222;
+  }
+
+  .note-panel.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+
+  @keyframes nebulaShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes nebulaDrift {
+    0% {
+      transform: translate(0, 0);
+    }
+    33% {
+      transform: translate(20px, 10px);
+    }
+    66% {
+      transform: translate(-10px, 20px);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  @keyframes nebulaPulse {
+    0%,
+    100% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  @keyframes starDrift {
+    from {
+      transform: translateX(0) translateY(0);
+    }
+    to {
+      transform: translateX(-900px) translateY(-50px);
+    }
+  }
 }
 
-// modal text specifically
-#bg-note-modal {
-  color: #e8e8e8;
-}
-
-#bg-note-modal h1,
-#bg-note-modal h2,
-#bg-note-modal h3 {
-  color: #c8c8c8;
-}
-
-#bg-note-modal p,
-#bg-note-modal li {
-  color: #999999;
-}
-
-#bg-note-modal a {
-  color: #fffafo;
-  text-decoration: underline;
-  text-decoration-color: #444;
-}
-
-#bg-note-modal a:hover {
-  text-decoration-color: #fffafo;
-}
-/* Background graph */
 #background-graph {
-  top: 48px;
   position: fixed;
-  top: 0;
+  top: 48px;
   left: 0;
   width: 100vw;
   height: calc(100vh - 48px);
-  z-index: 0;
-  pointer-events: all;
-}
-
-#background-graph-canvas {
-  width: 100%;
-  height: 100%;
-}
-
-/* Note panel */
-.note-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100vh;
-  z-index: 10;
-  background: rgba(10, 10, 10, 0.95);
-  opacity: 0;
-  transform: translateX(100%);
-  transition: all 0.3s ease;
-  pointer-events: none;
-  overflow-y: auto;
-  padding: 2rem;
-  border-left: 1px solid #222222;
-}
-
-.note-panel.active {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: all;
-}
-
-/* Hide default Quartz page content since graph is our main UI */
-.page-content {
-  display: none;
-}
-#quartz-root {
-  display: none;
-}
-#background-graph {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
   z-index: 0;
   transition: opacity 0.3s ease;
 }
@@ -100,50 +212,10 @@
   height: 100%;
 }
 
-
-#bg-note-modal {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 65%;
-  max-height: 80vh;
-  z-index: 10;
-  background: rgba(10, 10, 10, 0.97);
-  overflow-y: auto;
-  border: 1px solid #222222;
-  border-radius: 8px;
-  padding: 3rem;
-  box-shadow: 0 0 80px rgba(0, 0, 0, 0.9);
-}
-
-#bg-note-modal.active {
-  display: block;
-}
-
-#bg-modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: transparent;
-  border: 1px solid #333;
-  color: #888;
-  cursor: pointer;
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  transition: all 0.15s ease;
-}
-
-#bg-modal-close:hover {
-  border-color: #888;
-  color: #fff;
-}
 #graph-identity {
   position: fixed;
   top: 1.5rem;
-  left: 250px; 
+  left: 250px;
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -163,6 +235,7 @@
   color: #555555;
   letter-spacing: 0.05em;
 }
+
 .sidebar.left {
   position: fixed;
   top: 0;
@@ -176,6 +249,7 @@
   padding: 1.5rem 1rem;
   backdrop-filter: blur(10px);
 }
+
 #graph-search-container {
   position: fixed;
   bottom: 2rem;
@@ -190,30 +264,30 @@
 }
 
 #graph-search {
-  background: rgba(10, 10, 10, 0.9);
-  border: 1px solid #333;
-  color: #e8e8e8;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
   font-size: 0.9rem;
-  width: 280px;
+  width: 300px;
   outline: none;
+  transition: all 0.2s ease;
 }
 
 #graph-search:focus {
-  border-color: #888;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* mobile button */
 #graph-search-btn {
   display: none;
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   z-index: 5;
-  background: rgba(10,10,10,0.9);
-  border: 1px solid #333;
-  color: #e8e8e8;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -222,8 +296,13 @@
 }
 
 @media (max-width: 768px) {
-  #graph-search-btn { display: flex; align-items: center; justify-content: center; }
+  #graph-search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
+
 #graph-keybinds {
   position: fixed;
   bottom: 1.5rem;
@@ -231,27 +310,34 @@
   z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
   align-items: flex-end;
   pointer-events: none;
 }
 
 #graph-keybinds span {
-  color: #333;
-  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.7rem;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+#graph-keybinds span:hover {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 kbd {
-  background: #111;
-  border: 1px solid #333;
-  border-radius: 3px;
-  padding: 0.1em 0.4em;
-  font-size: 0.7rem;
-  color: #666;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.15em 0.5em;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--codeFont);
 }
+
 #welcome-tooltip {
   display: none;
   position: fixed;
@@ -273,27 +359,29 @@ kbd {
   right: 0;
   height: 48px;
   z-index: 5;
-  background: rgba(10, 10, 10, 0.9);
-  border-bottom: 1px solid #1a1a1a;
+  background: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem;
-  backdrop-filter: blur(10px);
 }
 
 #top-bar-title {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #e8e8e8;
+  color: #ffffff;
+  letter-spacing: -0.02em;
 }
 
 #top-bar-center {
   font-size: 0.75rem;
-  color: #444;
+  color: rgba(255, 255, 255, 0.4);
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 #top-bar-actions {
@@ -303,17 +391,170 @@ kbd {
 
 #top-bar-actions button {
   background: transparent;
-  border: 1px solid #222;
-  color: #666;
-  width: 32px;
-  height: 32px;
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.15s ease;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
 #top-bar-actions button:hover {
-  border-color: #555;
-  color: #e8e8e8;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+#notes-dropdown {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+#notes-dropdown.active {
+  display: block;
+}
+
+#notes-dropdown .dropdown-section {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+#notes-dropdown .dropdown-section:last-child {
+  border-bottom: none;
+}
+
+#notes-dropdown .dropdown-header {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
+  padding: 0.4rem 1rem;
+}
+
+#notes-dropdown .dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+#notes-dropdown .dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+#notes-dropdown .dropdown-item.folder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+}
+
+#notes-dropdown .dropdown-item.tag {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+}
+
+#bg-note-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.35);
+  align-items: center;
+  justify-content: center;
+}
+
+#bg-note-modal.active {
+  display: flex;
+}
+
+#modal-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(1100px, 92vw);
+  height: min(88vh, 960px);
+  background: #13151a;
+  border: 1px solid rgba(126, 200, 227, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  transform: translateY(18px) scale(0.98);
+  transition:
+    opacity 0.28s ease,
+    transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#bg-note-modal.active #modal-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+#modal-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(126, 200, 227, 0.03);
+  border-bottom: 1px solid rgba(126, 200, 227, 0.12);
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+#modal-nav {
+  display: flex;
+  gap: 5px;
+}
+
+#modal-chrome button {
+  background: rgba(126, 200, 227, 0.07);
+  border: 1px solid rgba(126, 200, 227, 0.14);
+  color: rgba(126, 200, 227, 0.6);
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.14s;
+  font-family: "Courier New", monospace;
+}
+
+#modal-chrome button:hover {
+  background: rgba(126, 200, 227, 0.16);
+  color: rgba(126, 200, 227, 1);
+  border-color: rgba(126, 200, 227, 0.38);
+}
+
+#modal-chrome button:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+#bg-modal-close {
+  margin-left: auto;
+}
+
+#modal-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  display: block;
+  background: #13151a;
 }
