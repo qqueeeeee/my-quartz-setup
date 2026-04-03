@@ -1,33 +1,57 @@
-// quartz/components/scripts/backgroundGraph.inline.ts
 import { FullSlug, SimpleSlug, getFullSlug, simplifySlug } from "../../util/path"
 import type { ContentDetails } from "../../plugins/emitters/contentIndex"
 
 if (window.self !== window.top) {
-  // Still need to inject hide styles for the graph/top-bar elements
   const style = document.createElement("style")
   style.textContent = `
-	#top-bar,
-	#background-graph,
-	#bg-note-modal,
-	#graph-search-container,
-	#graph-search-btn,
-	#graph-keybinds { display: none !important; }
-	`
+  #top-bar,
+  #background-graph,
+  #bg-note-modal,
+  #graph-search-container,
+  #graph-search-btn,
+  #graph-keybinds,
+  #graph-nav-panel,
+  #graph-focus-panel,
+  #graph-panel-scrim { display: none !important; }
+  `
   document.head.appendChild(style)
-  // Stop — don't run any graph logic
   throw new Error("modal-iframe-bail")
 } else {
+  type NodeKind = "note" | "folder" | "tag"
+
   type NodeData = {
     id: SimpleSlug
     text: string
     tags: string[]
-    isFolder: boolean
-    isTag: boolean
+    description: string
+    kind: NodeKind
+    folder?: string
     val: number
     x?: number
     y?: number
     z?: number
   }
+
+  type GraphLink = {
+    source: string | NodeData
+    target: string | NodeData
+    kind: "link" | "tag" | "folder"
+  }
+
+  type BrowseItem = {
+    id: string
+    label: string
+    meta: string
+    kind: "note" | "folder" | "tag" | "collection"
+    value: string
+  }
+
+  type FocusState =
+    | { kind: "note"; slug: SimpleSlug }
+    | { kind: "folder"; value: string }
+    | { kind: "tag"; value: string }
+    | { kind: "collection"; value: "popular" | "recent" | "home" }
+    | { kind: "none" }
 
   let navHistory: FullSlug[] = []
   let historyIndex = -1
@@ -36,15 +60,69 @@ if (window.self !== window.top) {
   let bgGraphCleanup: (() => void) | null = null
   let Graph3D: any = null
   let nodeMap = new Map<string, NodeData>()
+  let nodeNeighbors = new Map<string, Set<string>>()
+  let graphDetails = new Map<SimpleSlug, ContentDetails>()
+  let graphLinks: GraphLink[] = []
+  let graphDataReady = false
   let currentHighlighted = new Set<string>()
+  let hoveredNodeId: string | null = null
   let modalOpen = false
+  let currentSlug = simplifySlug(getFullSlug(window))
+  let currentFocus: FocusState = { kind: "none" }
+  let autoRotate = true
+  let rotAngle = 0
+  let rotTimer: ReturnType<typeof setTimeout> | null = null
+  let nodeObjects = new Map<string, any>()
+  let visitedListCache: SimpleSlug[] | null = null
+  let visitedSetCache: Set<SimpleSlug> | null = null
+  let visitedSnapshot = new Set<SimpleSlug>()
+  let popularItemsCache: BrowseItem[] = []
+  let folderMarkupCache = ""
+  let tagMarkupCache = ""
+  let searchRenderFrame = 0
+
+  // @ts-ignore loaded from CDN
+  let sharedCoreGeometry: any = null
+  // @ts-ignore loaded from CDN
+  let sharedHaloGeometry: any = null
+  // @ts-ignore loaded from CDN
+  let sharedFlareGeometry: any = null
+  // @ts-ignore loaded from CDN
+  let sharedRingGeometry: any = null
 
   const localStorageKey = "graph-visited"
+
   function getVisited(): Set<SimpleSlug> {
-    return new Set(JSON.parse(localStorage.getItem(localStorageKey) ?? "[]"))
+    if (visitedSetCache) return new Set(visitedSetCache)
+    const list = getVisitedList()
+    visitedSetCache = new Set(list)
+    return new Set(visitedSetCache)
   }
 
-  // ΓöÇΓöÇ CDN loader ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+  function getVisitedList(): SimpleSlug[] {
+    if (visitedListCache) return [...visitedListCache]
+    visitedListCache = JSON.parse(localStorage.getItem(localStorageKey) ?? "[]")
+    return [...visitedListCache]
+  }
+
+  function isFirstVisit() {
+    return getVisitedList().length === 0
+  }
+
+  function defaultLandingSlug(): SimpleSlug | null {
+    if (graphDetails.has("/" as SimpleSlug)) return "/" as SimpleSlug
+    if (graphDetails.has("index" as SimpleSlug)) return "index" as SimpleSlug
+    return Array.from(graphDetails.keys())[0] ?? null
+  }
+
+  function trackVisited(slug: SimpleSlug) {
+    const existing = getVisitedList().filter((entry) => entry !== slug)
+    existing.push(slug)
+    visitedListCache = existing.slice(-25)
+    visitedSetCache = new Set(visitedListCache)
+    visitedSnapshot = new Set(visitedListCache)
+    localStorage.setItem(localStorageKey, JSON.stringify(visitedListCache))
+  }
 
   function loadScript(src: string): Promise<void> {
     return new Promise((res, rej) => {
@@ -60,24 +138,397 @@ if (window.self !== window.top) {
     })
   }
 
-  function nodeColor(d: NodeData, slug: SimpleSlug, visited: Set<SimpleSlug>): string {
-    if (currentHighlighted.size > 0) {
-      return currentHighlighted.has(d.id) ? "#ffffff" : "rgba(60,60,60,0.4)"
+  function escapeHtml(value: string): string {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;")
+  }
+
+  function el<T extends HTMLElement>(id: string): T | null {
+    return document.getElementById(id) as T | null
+  }
+
+  function fileSummary(details: ContentDetails | undefined): string {
+    if (!details) return "No preview available yet."
+    const source = details.description || details.content || ""
+    return source.replace(/\s+/g, " ").trim().slice(0, 180) || "No preview available yet."
+  }
+
+  function folderPath(slug: SimpleSlug): string {
+    const parts = slug.split("/")
+    parts.pop()
+    return parts.join("/")
+  }
+
+  function neighborhoodForNote(slug: SimpleSlug): SimpleSlug[] {
+    const neighborIds = Array.from(nodeNeighbors.get(slug) ?? []).filter((id) => graphDetails.has(id))
+    return [slug, ...neighborIds]
+  }
+
+  function collectionNoteIds(kind: FocusState["kind"], value?: string): SimpleSlug[] {
+    if (!graphDataReady) return []
+    const noteIds = Array.from(graphDetails.keys())
+    if (kind === "folder" && value) {
+      return noteIds.filter((slug) => slug === value || slug.startsWith(value + "/"))
     }
-    if (d.id === slug) return "#ffffff"
-    if (d.isTag) return "#cccccc"
-    if (d.isFolder) return "#888888"
-    if (visited.has(d.id)) return "#aaaaaa"
-    return "#666666"
+    if (kind === "tag" && value) {
+      const bareTag = value.replace(/^tags\//, "")
+      return noteIds.filter((slug) => graphDetails.get(slug)?.tags?.includes(bareTag))
+    }
+    if (kind === "collection" && value === "recent") {
+      return getVisitedList()
+        .filter((slug) => graphDetails.has(slug))
+        .reverse()
+        .slice(0, 12)
+    }
+    if (kind === "collection" && value === "popular") {
+      return noteIds
+        .sort((a, b) => (nodeNeighbors.get(b)?.size ?? 0) - (nodeNeighbors.get(a)?.size ?? 0))
+        .slice(0, 12)
+    }
+    if (kind === "collection" && value === "home") {
+      return noteIds
+    }
+    return []
+  }
+
+  async function ensureGraphData() {
+    if (graphDataReady) return
+
+    const data = new Map<SimpleSlug, ContentDetails>(
+      Object.entries<ContentDetails>(await fetchData).map(([k, v]) => [
+        simplifySlug(k as FullSlug),
+        v,
+      ]),
+    )
+
+    graphDetails = data
+    nodeMap = new Map()
+    nodeNeighbors = new Map()
+    graphLinks = []
+
+    const edgeKeys = new Set<string>()
+
+    function registerNode(node: NodeData) {
+      if (!nodeMap.has(node.id)) nodeMap.set(node.id, node)
+    }
+
+    function registerNeighbor(a: string, b: string) {
+      if (!nodeNeighbors.has(a)) nodeNeighbors.set(a, new Set())
+      if (!nodeNeighbors.has(b)) nodeNeighbors.set(b, new Set())
+      nodeNeighbors.get(a)!.add(b)
+      nodeNeighbors.get(b)!.add(a)
+    }
+
+    function registerEdge(source: SimpleSlug, target: SimpleSlug, kind: GraphLink["kind"]) {
+      if (source === target) return
+      const key =
+        kind === "link"
+          ? [source, target].sort().join("::") + "::" + kind
+          : `${source}::${target}::${kind}`
+      if (edgeKeys.has(key)) return
+      edgeKeys.add(key)
+      graphLinks.push({ source, target, kind })
+      registerNeighbor(source, target)
+    }
+
+    for (const [slug, details] of data.entries()) {
+      registerNode({
+        id: slug,
+        text: details.title ?? slug,
+        tags: details.tags ?? [],
+        description: fileSummary(details),
+        folder: folderPath(slug),
+        kind: "note",
+        val: 3,
+      })
+
+      const folder = folderPath(slug)
+      if (folder) {
+        const folderNodeId = `folder:${folder}` as SimpleSlug
+        registerNode({
+          id: folderNodeId,
+          text: folder.split("/").pop() ?? folder,
+          tags: [],
+          description: `Folder cluster for ${folder}`,
+          folder,
+          kind: "folder",
+          val: 5,
+        })
+        registerEdge(slug, folderNodeId, "folder")
+      }
+
+      for (const tag of details.tags ?? []) {
+        const tagSlug = simplifySlug(("tags/" + tag) as FullSlug)
+        registerNode({
+          id: tagSlug,
+          text: "#" + tag,
+          tags: [],
+          description: `Notes tagged with ${tag}`,
+          kind: "tag",
+          val: 4,
+        })
+        registerEdge(slug, tagSlug, "tag")
+      }
+
+      for (const rawLink of details.links ?? []) {
+        const target = simplifySlug(rawLink as FullSlug)
+        if (data.has(target)) registerEdge(slug, target, "link")
+      }
+    }
+
+    for (const id of graphDetails.keys()) {
+      const neighbors = nodeNeighbors.get(id)?.size ?? 0
+      const node = nodeMap.get(id)
+      if (node) node.val = Math.max(2.4, 2 + Math.sqrt(neighbors))
+    }
+
+    popularItemsCache = Array.from(graphDetails.keys())
+      .sort((a, b) => (nodeNeighbors.get(b)?.size ?? 0) - (nodeNeighbors.get(a)?.size ?? 0))
+      .slice(0, 6)
+      .map((slug) => {
+        const details = graphDetails.get(slug)
+        return {
+          id: slug,
+          label: details?.title ?? slug,
+          meta: `${nodeNeighbors.get(slug)?.size ?? 0} connections`,
+          kind: "note" as const,
+          value: slug,
+        }
+      })
+
+    folderMarkupCache = Array.from(
+      new Map(
+        Array.from(graphDetails.keys())
+          .map((slug) => folderPath(slug))
+          .filter(Boolean)
+          .map((folder) => [folder, collectionNoteIds("folder", folder).length]),
+      ),
+    )
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([folder, count]) => {
+        const shortName = folder.split("/").pop() ?? folder
+        return `<button class="graph-chip" data-graph-item="folder" data-graph-value="${escapeHtml(folder)}">${escapeHtml(shortName)} <span>${count}</span></button>`
+      })
+      .join("")
+
+    const tagCounts = new Map<string, number>()
+    for (const details of graphDetails.values()) {
+      for (const tag of details.tags ?? []) {
+        tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1)
+      }
+    }
+    tagMarkupCache = Array.from(tagCounts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12)
+      .map(([tag, count]) => {
+        const tagSlug = "tags/" + tag
+        return `<button class="graph-chip" data-graph-item="tag" data-graph-value="${escapeHtml(tagSlug)}">#${escapeHtml(tag)} <span>${count}</span></button>`
+      })
+      .join("")
+
+    graphDataReady = true
+  }
+
+  function labelTextForNode(node: NodeData): string {
+    if (node.kind === "folder") return `Folder: ${node.text}`
+    return node.text
+  }
+
+  function nodeColor(d: NodeData): string {
+    const isHighlighted = currentHighlighted.size === 0 || currentHighlighted.has(d.id)
+    if (!isHighlighted) return "rgba(90, 100, 116, 0.12)"
+    if (currentFocus.kind === "note" && currentFocus.slug === d.id) return "#ffffff"
+    if (d.kind === "folder") return "#cfd5de"
+    if (d.kind === "tag") return "#b7bec9"
+    if (d.id === currentSlug) return "#e9edf2"
+    if (visitedSnapshot.has(d.id)) return "#ccd3dc"
+    return "#8e97a3"
   }
 
   function nodeVal(d: NodeData): number {
-    if (d.isFolder) return 4
-    if (currentHighlighted.size > 0 && currentHighlighted.has(d.id)) return d.val * 1.5
-    return Math.max(1.5, d.val * 0.8)
+    if (currentHighlighted.size > 0 && currentHighlighted.has(d.id)) return d.val * 1.1
+    if (currentHighlighted.size > 0) return Math.max(1.8, d.val * 0.55)
+    return d.val
   }
 
-  // ΓöÇΓöÇ zoom helpers ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+  function nodeRadius(node: NodeData): number {
+    const liveVal = nodeVal(node)
+    const hoverBoost = hoveredNodeId === node.id ? 1.16 : 1
+    if (node.kind === "folder") return Math.max(4.6, liveVal * 1.75) * hoverBoost
+    if (node.kind === "tag") return Math.max(3.8, liveVal * 1.42) * hoverBoost
+    if (currentFocus.kind === "note" && currentFocus.slug === node.id) return Math.max(4.6, liveVal * 1.65) * hoverBoost
+    return Math.max(3.2, liveVal * 1.32) * hoverBoost
+  }
+
+  function linkColor(link: GraphLink): string {
+    if (currentFocus.kind === "none") return "rgba(255, 255, 255, 0.012)"
+    const sourceId = typeof link.source === "string" ? link.source : link.source.id
+    const targetId = typeof link.target === "string" ? link.target : link.target.id
+    const active =
+      currentHighlighted.size === 0 ||
+      (currentHighlighted.has(sourceId) && currentHighlighted.has(targetId))
+    if (!active) return "rgba(255, 255, 255, 0.035)"
+    if (currentFocus.kind === "note" && (sourceId === currentFocus.slug || targetId === currentFocus.slug))
+      return "rgba(230, 236, 232, 0.28)"
+    if (link.kind === "link") return "rgba(210, 216, 222, 0.16)"
+    if (link.kind === "tag") return "rgba(173, 180, 190, 0.1)"
+    return "rgba(184, 192, 202, 0.11)"
+  }
+
+  function linkWidth(link: GraphLink): number {
+    if (currentFocus.kind === "none") return 0.05
+    const sourceId = typeof link.source === "string" ? link.source : link.source.id
+    const targetId = typeof link.target === "string" ? link.target : link.target.id
+    const active =
+      currentHighlighted.size === 0 ||
+      (currentHighlighted.has(sourceId) && currentHighlighted.has(targetId))
+    if (!active) return 0.12
+    if (currentFocus.kind === "note") {
+      const sourceId = typeof link.source === "string" ? link.source : link.source.id
+      const targetId = typeof link.target === "string" ? link.target : link.target.id
+      if (sourceId === currentFocus.slug || targetId === currentFocus.slug) return 1
+    }
+    if (link.kind === "link") return 0.62
+    return 0.28
+  }
+
+  function nodeHaloColor(node: NodeData): string {
+    if (currentFocus.kind === "note" && currentFocus.slug === node.id) return "#f7fbff"
+    if (node.kind === "folder") return "#c9d1db"
+    if (node.kind === "tag") return "#aeb6c2"
+    if (visitedSnapshot.has(node.id)) return "#d8dee6"
+    return "#9aa3af"
+  }
+
+  function ensureSharedNodeGeometry() {
+    if (sharedCoreGeometry) return
+    // @ts-ignore loaded from CDN
+    sharedCoreGeometry = new THREE.SphereGeometry(1, 10, 10)
+    // @ts-ignore loaded from CDN
+    sharedHaloGeometry = new THREE.SphereGeometry(1, 12, 12)
+    // @ts-ignore loaded from CDN
+    sharedFlareGeometry = new THREE.OctahedronGeometry(1, 0)
+    // @ts-ignore loaded from CDN
+    sharedRingGeometry = new THREE.TorusGeometry(1, 0.08, 8, 28)
+  }
+
+  function updateNodeObjectAppearance(node: NodeData, group: any) {
+    const highlighted = currentHighlighted.size === 0 || currentHighlighted.has(node.id)
+    const muted = !highlighted
+    const isHovered = hoveredNodeId === node.id
+    const pulse = isHovered ? 1 + (Math.sin(Date.now() / 170) + 1) * 0.06 : 1
+    const baseRadius = nodeRadius(node)
+    const core = group.userData?.core
+    const halo = group.userData?.halo
+    const ring = group.userData?.ring
+    const flare = group.userData?.flare
+    const baseHaloOpacity = muted ? 0.03 : node.kind === "note" ? 0.08 : 0.05
+
+    if (core) {
+      core.scale.setScalar(baseRadius * (isHovered ? pulse * 1.03 : 1))
+      core.material.color.set(nodeColor(node))
+      core.material.opacity = muted ? 0.22 : 0.96
+    }
+
+    if (halo) {
+      halo.scale.setScalar(baseRadius * 2.25 * (isHovered ? pulse * 1.18 : 1.08))
+      halo.material.color.set(nodeHaloColor(node))
+      halo.material.opacity = isHovered ? 0.18 : baseHaloOpacity
+    }
+
+    if (ring) {
+      ring.visible = node.kind !== "note"
+      ring.scale.setScalar(baseRadius * 1.9)
+      ring.material.color.set(nodeHaloColor(node))
+      ring.material.opacity = muted ? 0.08 : 0.34
+    }
+
+    if (flare) {
+      flare.visible = node.kind === "note"
+      flare.scale.set(baseRadius * 1.7, baseRadius * 0.4, baseRadius * 0.4)
+      flare.material.opacity = muted ? 0.08 : 0.18
+    }
+  }
+
+  function buildNodeObject(node: NodeData) {
+    ensureSharedNodeGeometry()
+    // @ts-ignore loaded from CDN
+    const group = new THREE.Group()
+
+    // @ts-ignore loaded from CDN
+    const core = new THREE.Mesh(
+      sharedCoreGeometry,
+      // @ts-ignore loaded from CDN
+      new THREE.MeshBasicMaterial({
+        color: "#ffffff",
+        transparent: true,
+        opacity: 1,
+      }),
+    )
+    group.add(core)
+
+    // @ts-ignore loaded from CDN
+    const halo = new THREE.Mesh(
+      sharedHaloGeometry,
+      // @ts-ignore loaded from CDN
+      new THREE.MeshBasicMaterial({
+        color: "#ffffff",
+        transparent: true,
+        opacity: 1,
+      }),
+    )
+    group.add(halo)
+
+    // @ts-ignore loaded from CDN
+    const ring = new THREE.Mesh(
+      sharedRingGeometry,
+      // @ts-ignore loaded from CDN
+      new THREE.MeshBasicMaterial({
+        color: "#ffffff",
+        transparent: true,
+        opacity: 1,
+      }),
+    )
+    ring.rotation.x = Math.PI / 2
+    group.add(ring)
+
+    // @ts-ignore loaded from CDN
+    const flare = new THREE.Mesh(
+      sharedFlareGeometry,
+      // @ts-ignore loaded from CDN
+      new THREE.MeshBasicMaterial({
+        color: "#ffffff",
+        transparent: true,
+        opacity: 1,
+      }),
+    )
+    group.add(flare)
+
+    group.userData = { core, halo, ring, flare }
+    updateNodeObjectAppearance(node, group)
+    nodeObjects.set(node.id, group)
+
+    return group
+  }
+
+  function updateNodeObjects() {
+    for (const [id, object] of nodeObjects.entries()) {
+      const node = nodeMap.get(id)
+      if (node) updateNodeObjectAppearance(node, object)
+    }
+  }
+
+  function animateNodeObjects() {
+    if (!hoveredNodeId) return
+    const hovered = nodeObjects.get(hoveredNodeId)
+    const hoveredNode = hoveredNodeId ? nodeMap.get(hoveredNodeId) : null
+    if (hovered && hoveredNode) updateNodeObjectAppearance(hoveredNode, hovered)
+  }
 
   function zoomToNodes(ids: string[], duration = 900) {
     if (!Graph3D || ids.length === 0) return
@@ -89,19 +540,20 @@ if (window.self !== window.top) {
 
     if (positioned.length === 1) {
       const n = positioned[0]
-      const dist = 120
+      const dist = 135
       const mag = Math.hypot(n.x!, n.y ?? 0, n.z ?? 0) || 1
       const r = 1 + dist / mag
       Graph3D.cameraPosition({ x: n.x! * r, y: (n.y ?? 0) * r, z: (n.z ?? 0) * r }, n, duration)
       return
     }
 
-    let minX = Infinity,
-      maxX = -Infinity
-    let minY = Infinity,
-      maxY = -Infinity
-    let minZ = Infinity,
-      maxZ = -Infinity
+    let minX = Infinity
+    let maxX = -Infinity
+    let minY = Infinity
+    let maxY = -Infinity
+    let minZ = Infinity
+    let maxZ = -Infinity
+
     for (const n of positioned) {
       minX = Math.min(minX, n.x!)
       maxX = Math.max(maxX, n.x!)
@@ -110,72 +562,331 @@ if (window.self !== window.top) {
       minZ = Math.min(minZ, n.z ?? 0)
       maxZ = Math.max(maxZ, n.z ?? 0)
     }
+
     const cx = (minX + maxX) / 2
     const cy = (minY + maxY) / 2
     const cz = (minZ + maxZ) / 2
     const spread = Math.max(maxX - minX, maxY - minY, maxZ - minZ)
     Graph3D.cameraPosition(
-      { x: cx, y: cy, z: cz + Math.max(180, spread * 1.4) },
+      { x: cx, y: cy + 16, z: cz + Math.max(220, spread * 1.55) },
       { x: cx, y: cy, z: cz },
       duration,
     )
   }
 
-  function zoomToNode(slug: string, duration = 1000) {
-    zoomToNodes([slug], duration)
+  function zoomToOverview(duration = 1200) {
+    zoomToNodes(Array.from(graphDetails.keys()), duration)
   }
 
-  function refreshGraph(slug: SimpleSlug, visited: Set<SimpleSlug>) {
+  function refreshGraph() {
     if (!Graph3D) return
-    Graph3D.nodeColor((n: NodeData) => nodeColor(n, slug, visited))
+    Graph3D.nodeColor((n: NodeData) => nodeColor(n))
       .nodeVal((n: NodeData) => nodeVal(n))
-      .nodeLabel((n: NodeData) => (showAllLabels || currentHighlighted.has(n.id) ? n.text : ""))
+      .linkColor((link: GraphLink) => linkColor(link))
+      .linkWidth((link: GraphLink) => linkWidth(link))
+      .nodeLabel((n: NodeData) =>
+        showAllLabels || currentHighlighted.has(n.id) ? labelTextForNode(n) : "",
+      )
+    updateNodeObjects()
   }
 
-  // ΓöÇΓöÇ modal ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+  function pauseRotation() {
+    autoRotate = false
+    if (rotTimer) clearTimeout(rotTimer)
+    rotTimer = setTimeout(() => {
+      if (!modalOpen && currentFocus.kind === "none") autoRotate = true
+    }, 4200)
+  }
+
+  function setIdentity(title: string, subtitle: string) {
+    const center = el<HTMLSpanElement>("top-bar-center")
+    if (center) center.textContent = subtitle
+  }
+
+  function browseItemMarkup(item: BrowseItem): string {
+    const meta = item.meta
+      .split(" • ")
+      .filter(Boolean)
+      .map((part) => `<span class="graph-meta-pill">${escapeHtml(part)}</span>`)
+      .join("")
+    return `<button class="graph-list-item" data-graph-item="${item.kind}" data-graph-value="${escapeHtml(item.value)}">
+      <strong>${escapeHtml(item.label)}</strong>
+      <small class="graph-list-meta">${meta || escapeHtml(item.meta)}</small>
+    </button>`
+  }
+
+  function renderNavPanel() {
+    const recent = getVisitedList()
+      .filter((slug, index, all) => graphDetails.has(slug) && all.lastIndexOf(slug) === index)
+      .reverse()
+      .slice(0, 6)
+      .map((slug) => {
+        const details = graphDetails.get(slug)
+        return {
+          id: slug,
+          label: details?.title ?? slug,
+          meta: details?.tags?.slice(0, 2).join(" • ") || "Recently opened",
+          kind: "note" as const,
+          value: slug,
+        }
+      })
+
+    const recentEl = el<HTMLDivElement>("graph-recent-list")
+    const popularEl = el<HTMLDivElement>("graph-popular-list")
+    const folderEl = el<HTMLDivElement>("graph-folder-list")
+    const tagEl = el<HTMLDivElement>("graph-tag-list")
+
+    if (recentEl) recentEl.innerHTML = recent.map(browseItemMarkup).join("")
+    if (popularEl) popularEl.innerHTML = popularItemsCache.map(browseItemMarkup).join("")
+    if (folderEl)
+      folderEl.innerHTML =
+        folderMarkupCache ||
+        `<div class="graph-empty-state">As your notes group into folders, they’ll appear here.</div>`
+    if (tagEl)
+      tagEl.innerHTML =
+        tagMarkupCache ||
+        `<div class="graph-empty-state">Add tags to notes to create thematic constellations.</div>`
+  }
+
+  function focusPanelMeta(lines: string[]): string {
+    return lines.map((line) => `<span>${escapeHtml(line)}</span>`).join("")
+  }
+
+  function signalMarkup(label: string, value: number): string {
+    const pct = Math.max(8, Math.min(100, Math.round(value)))
+    return `<div class="graph-signal-row">
+      <span>${escapeHtml(label)}</span>
+      <div class="graph-signal-bar"><i style="width:${pct}%"></i></div>
+    </div>`
+  }
+
+  function relatedNoteIdsFromFocus(): SimpleSlug[] {
+    if (currentFocus.kind === "note") {
+      return Array.from(nodeNeighbors.get(currentFocus.slug) ?? [])
+        .filter((id) => graphDetails.has(id))
+        .slice(0, 8)
+    }
+    if (currentFocus.kind === "folder") return collectionNoteIds("folder", currentFocus.value).slice(0, 8)
+    if (currentFocus.kind === "tag") return collectionNoteIds("tag", currentFocus.value).slice(0, 8)
+    if (currentFocus.kind === "collection") return collectionNoteIds("collection", currentFocus.value).slice(0, 8)
+    return []
+  }
+
+  function updateFocusPanel() {
+    const eyebrow = el<HTMLSpanElement>("graph-focus-eyebrow")
+    const title = el<HTMLHeadingElement>("graph-focus-title")
+    const description = el<HTMLParagraphElement>("graph-focus-description")
+    const meta = el<HTMLDivElement>("graph-focus-meta")
+    const related = el<HTMLDivElement>("graph-related-list")
+    const openBtn = el<HTMLButtonElement>("graph-open-note")
+    const centerBtn = el<HTMLButtonElement>("graph-center-note")
+    const signal = el<HTMLDivElement>("graph-focus-signal")
+    if (!eyebrow || !title || !description || !meta || !related || !openBtn || !centerBtn || !signal)
+      return
+
+    if (currentFocus.kind === "note") {
+      const details = graphDetails.get(currentFocus.slug)
+      const folder = folderPath(currentFocus.slug) || "Root"
+      const tags = (details?.tags ?? []).slice(0, 3)
+      const connections = nodeNeighbors.get(currentFocus.slug)?.size ?? 0
+      eyebrow.textContent = "Focused note"
+      title.textContent = details?.title ?? currentFocus.slug
+      description.textContent = fileSummary(details)
+      meta.innerHTML = focusPanelMeta([
+        `${connections} direct connections`,
+        folder,
+        tags.length > 0 ? tags.join(" • ") : "No tags yet",
+      ])
+      signal.innerHTML = [
+        signalMarkup("Links", Math.min(100, connections * 9)),
+        signalMarkup("Tags", Math.min(100, (details?.tags?.length ?? 0) * 22)),
+        signalMarkup("Depth", Math.min(100, Math.max(14, (details?.content?.length ?? 0) / 18))),
+      ].join("")
+      openBtn.disabled = false
+      openBtn.dataset.slug = currentFocus.slug
+      centerBtn.dataset.kind = "note"
+      centerBtn.dataset.value = currentFocus.slug
+      setIdentity(details?.title ?? "Focused note", "Open the note and branch into its nearby constellation")
+    } else if (currentFocus.kind === "folder") {
+      const ids = collectionNoteIds("folder", currentFocus.value)
+      eyebrow.textContent = "Folder cluster"
+      title.textContent = currentFocus.value.split("/").pop() ?? currentFocus.value
+      description.textContent = `This cluster gathers ${ids.length} notes from the ${currentFocus.value} folder. Start anywhere inside it and expand outward through related notes.`
+      meta.innerHTML = focusPanelMeta([`${ids.length} notes`, "Folder constellation"])
+      signal.innerHTML = [
+        signalMarkup("Density", Math.min(100, ids.length * 8)),
+        signalMarkup("Reach", Math.min(100, ids.reduce((sum, id) => sum + (nodeNeighbors.get(id)?.size ?? 0), 0) / Math.max(1, ids.length) * 6)),
+      ].join("")
+      openBtn.disabled = ids.length === 0
+      openBtn.dataset.slug = ids[0] ?? ""
+      centerBtn.dataset.kind = "folder"
+      centerBtn.dataset.value = currentFocus.value
+      setIdentity("Folder cluster", currentFocus.value)
+    } else if (currentFocus.kind === "tag") {
+      const ids = collectionNoteIds("tag", currentFocus.value)
+      const bareTag = currentFocus.value.replace(/^tags\//, "")
+      eyebrow.textContent = "Tag cluster"
+      title.textContent = `#${bareTag}`
+      description.textContent = `This theme links ${ids.length} notes. It’s a strong way to browse when you know the topic but not the exact destination.`
+      meta.innerHTML = focusPanelMeta([`${ids.length} tagged notes`, "Theme constellation"])
+      signal.innerHTML = [
+        signalMarkup("Coverage", Math.min(100, ids.length * 9)),
+        signalMarkup("Reach", Math.min(100, ids.reduce((sum, id) => sum + (nodeNeighbors.get(id)?.size ?? 0), 0) / Math.max(1, ids.length) * 6)),
+      ].join("")
+      openBtn.disabled = ids.length === 0
+      openBtn.dataset.slug = ids[0] ?? ""
+      centerBtn.dataset.kind = "tag"
+      centerBtn.dataset.value = currentFocus.value
+      setIdentity(`#${bareTag}`, "Topic cluster")
+    } else if (currentFocus.kind === "collection") {
+      const ids = collectionNoteIds("collection", currentFocus.value)
+      const label =
+        currentFocus.value === "popular"
+          ? "Popular constellation"
+          : currentFocus.value === "recent"
+            ? "Visited trail"
+            : "Graph overview"
+      eyebrow.textContent = "Collection"
+      title.textContent = label
+      description.textContent =
+        currentFocus.value === "popular"
+          ? "These notes are highly connected and make strong launch points into the graph."
+          : currentFocus.value === "recent"
+            ? "Pick up where you left off or retrace your trail through the graph."
+            : "The full graph stays lit here, so you can read the whole space before drilling into a local cluster."
+      meta.innerHTML = focusPanelMeta([`${ids.length} notes in view`])
+      signal.innerHTML = [
+        signalMarkup("Span", Math.min(100, ids.length * 8)),
+        signalMarkup(
+          "Intensity",
+          Math.min(100, ids.reduce((sum, id) => sum + (nodeNeighbors.get(id)?.size ?? 0), 0) / Math.max(1, ids.length) * 6),
+        ),
+      ].join("")
+      openBtn.disabled = ids.length === 0
+      openBtn.dataset.slug = ids[0] ?? ""
+      centerBtn.dataset.kind = "collection"
+      centerBtn.dataset.value = currentFocus.value
+      setIdentity(label, "Start broad, then zoom into a local constellation only when you want to")
+    } else {
+      eyebrow.textContent = "Focus"
+      title.textContent = "Graph overview"
+      description.textContent =
+        "The graph starts fully lit and zoomed out. Click a node once to open it, center it, and reveal its nearest connections."
+      meta.innerHTML = ""
+      signal.innerHTML = [
+        signalMarkup("Coverage", 100),
+        signalMarkup("Context", 78),
+        signalMarkup("Focus", 32),
+      ].join("")
+      openBtn.disabled = true
+      openBtn.dataset.slug = ""
+      centerBtn.dataset.kind = "collection"
+      centerBtn.dataset.value = "home"
+      setIdentity("Que's Notes", "Explore the full map first, then drop into whichever note pulls you in")
+    }
+
+    const relatedIds = relatedNoteIdsFromFocus()
+    related.innerHTML =
+      relatedIds.length > 0
+        ? relatedIds
+            .map((slug) => {
+              const details = graphDetails.get(slug)
+              return browseItemMarkup({
+                id: slug,
+                label: details?.title ?? slug,
+                meta: fileSummary(details),
+                kind: "note",
+                value: slug,
+              })
+            })
+            .join("")
+        : `<div class="graph-empty-state">Focus a note or cluster to see nearby ideas.</div>`
+  }
+
+  function applyCurrentFocus(zoom = false) {
+    if (currentFocus.kind === "note") {
+      currentHighlighted = new Set(neighborhoodForNote(currentFocus.slug))
+    } else if (currentFocus.kind === "folder") {
+      currentHighlighted = new Set(collectionNoteIds("folder", currentFocus.value))
+    } else if (currentFocus.kind === "tag") {
+      currentHighlighted = new Set(collectionNoteIds("tag", currentFocus.value))
+    } else if (currentFocus.kind === "collection") {
+      currentHighlighted = new Set(collectionNoteIds("collection", currentFocus.value))
+    } else {
+      currentHighlighted = new Set()
+    }
+
+    refreshGraph()
+    updateFocusPanel()
+    if (zoom) {
+      if (currentFocus.kind === "none" || currentHighlighted.size === 0) zoomToOverview()
+      else zoomToNodes(Array.from(currentHighlighted))
+    }
+  }
+
+  function focusNote(slug: SimpleSlug, zoom = true) {
+    currentFocus = { kind: "note", slug }
+    pauseRotation()
+    applyCurrentFocus(zoom)
+  }
+
+  function focusCollection(kind: "folder" | "tag" | "collection", value: string, zoom = true) {
+    currentFocus =
+      kind === "collection" ? { kind, value: value as "popular" | "recent" | "home" } : { kind, value }
+    pauseRotation()
+    applyCurrentFocus(zoom)
+  }
+
+  function formatDisplayLabel(value: string) {
+    const segment = value.split("/").filter(Boolean).pop() ?? value
+    return segment
+      .replace(/[-_]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/\b\w/g, (char) => char.toUpperCase())
+  }
 
   function ensureModalDOM() {
-    // Modal wrapper
-    let modal = document.getElementById("bg-note-modal")
+    let modal = el<HTMLDivElement>("bg-note-modal")
     if (!modal) {
       modal = document.createElement("div")
       modal.id = "bg-note-modal"
       document.body.appendChild(modal)
     }
 
-    // Only build internals once
-    if (modal.querySelector("#modal-iframe")) {
-      return modal
-    }
+    if (modal.querySelector("#modal-iframe")) return modal
 
     modal.innerHTML = `
-		<div id="modal-panel">
-		<div id="modal-chrome">
-		<div id="modal-nav">
-		<button id="modal-back" disabled>ΓåÉ</button>
-		<button id="modal-forward" disabled>ΓåÆ</button>
-		</div>
-		<button id="bg-modal-close">Γ£ò</button>
-		</div>
-		<iframe id="modal-iframe" src="about:blank"></iframe>
-		</div>
-		`
+      <div id="modal-panel">
+        <div id="modal-chrome">
+          <div id="modal-nav">
+            <button id="modal-back" disabled>&larr;</button>
+            <button id="modal-forward" disabled>&rarr;</button>
+          </div>
+          <div id="modal-header">
+            <span id="modal-kicker">Node view</span>
+            <strong id="modal-title">Loading</strong>
+            <small id="modal-subtitle">Preparing note</small>
+          </div>
+          <a id="modal-open-page" href="/" target="_self">Open page</a>
+          <button id="bg-modal-close">&times;</button>
+        </div>
+        <iframe id="modal-iframe" src="about:blank"></iframe>
+      </div>
+    `
 
-    // Close on backdrop (clicking outside the panel)
     modal.addEventListener("click", (e) => {
       if (e.target === modal) closeModal()
     })
 
-    document.getElementById("bg-modal-close")!.addEventListener("click", closeModal)
-
-    document.getElementById("modal-back")!.addEventListener("click", () => {
+    el<HTMLButtonElement>("bg-modal-close")?.addEventListener("click", closeModal)
+    el<HTMLButtonElement>("modal-back")?.addEventListener("click", () => {
       if (historyIndex > 0) {
         historyIndex--
         navigateIframe(navHistory[historyIndex], false)
       }
     })
-
-    document.getElementById("modal-forward")!.addEventListener("click", () => {
+    el<HTMLButtonElement>("modal-forward")?.addEventListener("click", () => {
       if (historyIndex < navHistory.length - 1) {
         historyIndex++
         navigateIframe(navHistory[historyIndex], false)
@@ -185,53 +896,165 @@ if (window.self !== window.top) {
     return modal
   }
 
+  function syncModalMeta(slug: FullSlug) {
+    const simple = simplifySlug(slug)
+    const details = graphDetails.get(simple)
+    const folder = folderPath(simple) || "root"
+    const title = el<HTMLElement>("modal-title")
+    const kicker = el<HTMLElement>("modal-kicker")
+    const subtitle = el<HTMLElement>("modal-subtitle")
+    const openLink = el<HTMLAnchorElement>("modal-open-page")
+    const primaryTitle = details?.title?.trim() || formatDisplayLabel(simple)
+    const tagLabel =
+      details?.tags && details.tags.length > 0
+        ? details.tags
+            .slice(0, 2)
+            .map((tag) => tag.replace(/^#/, ""))
+            .join(" • ")
+        : "linked note"
+    if (kicker) kicker.textContent = `${folder.toUpperCase()} NODE`
+    if (title) title.textContent = primaryTitle
+    if (subtitle) {
+      subtitle.textContent = `${tagLabel.toUpperCase()} • ${simple.toUpperCase()}`
+    }
+    if (openLink) openLink.href = slug === ("/" as FullSlug) ? "/" : `/${slug}`
+  }
+
   function syncNavButtons() {
-    const back = document.getElementById("modal-back") as HTMLButtonElement | null
-    const forward = document.getElementById("modal-forward") as HTMLButtonElement | null
+    const back = el<HTMLButtonElement>("modal-back")
+    const forward = el<HTMLButtonElement>("modal-forward")
     if (back) back.disabled = historyIndex <= 0
     if (forward) forward.disabled = historyIndex >= navHistory.length - 1
   }
 
-  // Hides top-bar / background graph elements inside the iframe
+  function sizeModalToContent(iframe?: HTMLIFrameElement | null) {
+    const modalPanel = el<HTMLDivElement>("modal-panel")
+    const chrome = el<HTMLDivElement>("modal-chrome")
+    const modalIframe = iframe ?? el<HTMLIFrameElement>("modal-iframe")
+    if (!modalPanel || !chrome || !modalIframe) return
+
+    try {
+      const iDoc = modalIframe.contentDocument ?? modalIframe.contentWindow?.document
+      if (!iDoc) return
+      const body = iDoc.body
+      const docEl = iDoc.documentElement
+      const contentHeight = Math.max(
+        body?.scrollHeight ?? 0,
+        body?.offsetHeight ?? 0,
+        docEl?.scrollHeight ?? 0,
+        docEl?.offsetHeight ?? 0,
+      )
+
+      const chromeHeight = chrome.getBoundingClientRect().height
+      const viewportCap = Math.min(window.innerHeight * 0.86, 920)
+      const iframeHeight = Math.max(220, Math.min(contentHeight + 8, viewportCap - chromeHeight))
+      modalIframe.style.height = `${iframeHeight}px`
+      modalPanel.style.height = `${Math.min(viewportCap, chromeHeight + iframeHeight)}px`
+    } catch {}
+  }
+
   function injectIframeStyles(iDoc: Document) {
     iDoc.documentElement.classList.add("modal-iframe")
     iDoc.getElementById("__modal-styles")?.remove()
     const style = iDoc.createElement("style")
     style.id = "__modal-styles"
     style.textContent = `
-  #top-bar,
-  #background-graph,
-  #bg-note-modal,
-  #graph-search-container,
-  #graph-search-btn,
-  #graph-keybinds,
-  .sidebar,
-  .page > header,
-  .page > footer,
-  .toc,
-  .backlinks {
-    display: none !important;
-  }
-  body {
-    background: #000000 !important;
-  }
-  .page {
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-  .page > #quartz-body {
-    display: block !important;
-  }
-  .page > #quartz-body > .center {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 3rem 2rem;
-  }
-  .page > #quartz-body > .center article {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-  `
+    #top-bar,
+    #background-graph,
+    #bg-note-modal,
+    #graph-search-container,
+    #graph-search-btn,
+    #graph-keybinds,
+    #graph-nav-panel,
+    #graph-focus-panel,
+    #graph-panel-scrim,
+    .sidebar,
+    .page > header,
+    .page > footer,
+    .toc,
+    .backlinks {
+      display: none !important;
+    }
+    body {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+        #060707 !important;
+    }
+    .page {
+      max-width: 100% !important;
+      margin: 0 !important;
+    }
+    .page .page-title,
+    .page .page-title a,
+    .page .page-header > .popover-hint,
+    .page .page-footer,
+    #quartz-body > footer,
+    .page footer {
+      display: none !important;
+    }
+    .page > #quartz-body > .center > hr,
+    .page article + hr {
+      display: none !important;
+    }
+    .page .page-header {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .page > #quartz-body {
+      display: block !important;
+    }
+    .page > #quartz-body > .center {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0.8rem 1.25rem 2rem;
+      box-sizing: border-box;
+    }
+    .page article {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0)),
+        rgba(255, 255, 255, 0.01);
+      padding: 0.95rem 1.15rem 1.4rem;
+      margin-top: 0 !important;
+    }
+    .page article > h1:first-child,
+    .page article > .article-title:first-child,
+    .page article > .content-meta:first-of-type,
+    .page article > .article-meta:first-of-type {
+      display: none !important;
+    }
+    .page article h1,
+    .page article .article-title {
+      display: none !important;
+    }
+    .page article p,
+    .page article li,
+    .page article blockquote {
+      color: rgba(220, 224, 220, 0.82) !important;
+    }
+    .page article hr {
+      border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    .page article a {
+      color: #e8ece8 !important;
+      text-decoration-color: rgba(198, 206, 216, 0.36) !important;
+    }
+    .page article blockquote {
+      border-left: 1px solid rgba(198, 206, 216, 0.44) !important;
+      background: rgba(255, 255, 255, 0.015) !important;
+      padding: 0.8rem 1rem !important;
+    }
+    .page article pre,
+    .page article code {
+      border-radius: 0 !important;
+    }
+    .page article pre {
+      border: 1px solid rgba(255, 255, 255, 0.09) !important;
+      background: rgba(0, 0, 0, 0.34) !important;
+    }
+    `
     iDoc.head.appendChild(style)
   }
 
@@ -240,30 +1063,37 @@ if (window.self !== window.top) {
       const iDoc = iframe.contentDocument ?? iframe.contentWindow?.document
       if (!iDoc) return
       injectIframeStyles(iDoc)
-
-      // Remove previous handler
+      sizeModalToContent(iframe)
       const prev = (iframe as any).__clickHandler
       if (prev) iDoc.removeEventListener("click", prev)
+      const prevResize = (iframe as any).__resizeObserver
+      prevResize?.disconnect?.()
 
       const handler = (e: MouseEvent) => {
-        const a = (e.target as HTMLElement).closest("a[href]") as HTMLAnchorElement | null
-        if (!a) return
-        const href = a.getAttribute("href")!
+        const anchor = (e.target as HTMLElement).closest("a[href]") as HTMLAnchorElement | null
+        if (!anchor) return
+        const href = anchor.getAttribute("href")!
         if (href.startsWith("http") || href.startsWith("//") || href.startsWith("#")) return
         e.preventDefault()
         e.stopPropagation()
         const slug = href.replace(/^\//, "").replace(/\.html$/, "") as FullSlug
         openNoteModal(slug, true)
       }
+
       ;(iframe as any).__clickHandler = handler
       iDoc.addEventListener("click", handler)
-    } catch {
-      // cross-origin guard
-    }
+      if ("ResizeObserver" in window) {
+        const observer = new ResizeObserver(() => sizeModalToContent(iframe))
+        if (iDoc.body) observer.observe(iDoc.body)
+        const article = iDoc.querySelector(".page article")
+        if (article) observer.observe(article)
+        ;(iframe as any).__resizeObserver = observer
+      }
+    } catch {}
   }
 
-  function navigateIframe(slug: FullSlug, push = true) {
-    const iframe = document.getElementById("modal-iframe") as HTMLIFrameElement | null
+  function navigateIframe(slug: FullSlug, push = true, focusGraph = true, zoomGraph = true) {
+    const iframe = el<HTMLIFrameElement>("modal-iframe")
     if (!iframe) return
 
     if (push) {
@@ -273,205 +1103,278 @@ if (window.self !== window.top) {
     }
     syncNavButtons()
 
-    // Track visited
-    const visited = getVisited()
-    visited.add(simplifySlug(slug))
-    localStorage.setItem(localStorageKey, JSON.stringify([...visited]))
+    const simple = simplifySlug(slug)
+    trackVisited(simple)
+    visitedSnapshot = getVisited()
+    syncModalMeta(slug)
 
-    // Build URL - no query params, just the plain slug path
     const path = slug === ("/" as FullSlug) ? "/" : "/" + slug
-
-    // Only navigate if different
     if (!iframe.src.endsWith(path) && !iframe.src.endsWith(path + "/")) {
       iframe.src = path
-
-      iframe.onload = () => {
-        attachIframeInterceptor(iframe)
-      }
+      iframe.onload = () => attachIframeInterceptor(iframe)
     }
 
-    // Update graph
-    currentHighlighted.clear()
-    refreshGraph(simplifySlug(getFullSlug(window)), getVisited())
-    zoomToNode(simplifySlug(slug))
+    if (focusGraph) focusNote(simple, zoomGraph)
+    renderNavPanel()
   }
 
-  async function openNoteModal(slug: FullSlug, push = true) {
+  async function openNoteModal(
+    slug: FullSlug,
+    push = true,
+    options?: { focusGraph?: boolean; zoomGraph?: boolean },
+  ) {
     const modal = ensureModalDOM()
-    navigateIframe(slug, push)
+    navigateIframe(slug, push, options?.focusGraph ?? true, options?.zoomGraph ?? true)
     modal.classList.add("active")
-    document.getElementById("background-graph")?.classList.add("dimmed")
+    el<HTMLDivElement>("background-graph")?.classList.add("dimmed")
     modalOpen = true
   }
 
   function closeModal() {
-    document.getElementById("bg-note-modal")?.classList.remove("active")
-    document.getElementById("background-graph")?.classList.remove("dimmed")
+    el<HTMLDivElement>("bg-note-modal")?.classList.remove("active")
+    el<HTMLDivElement>("background-graph")?.classList.remove("dimmed")
+    const iframe = el<HTMLIFrameElement>("modal-iframe")
+    const panel = el<HTMLDivElement>("modal-panel")
+    if (iframe) iframe.style.height = ""
+    if (panel) panel.style.height = ""
     modalOpen = false
-    navHistory = []
-    historyIndex = -1
   }
 
-  // ΓöÇΓöÇ search ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+  function searchResults(query: string): BrowseItem[] {
+    const q = query.toLowerCase().trim()
+    const entries: Array<BrowseItem & { score: number }> = []
 
-  function toggleSearch() {
-    const container = document.getElementById("graph-search-container")
+    for (const [slug, details] of graphDetails.entries()) {
+      const haystack = `${details.title} ${details.content} ${(details.tags ?? []).join(" ")} ${folderPath(slug)}`
+      if (!q || haystack.toLowerCase().includes(q)) {
+        const titleHit = q && details.title.toLowerCase().includes(q) ? 3 : 0
+        const tagHit = q && (details.tags ?? []).some((tag) => tag.toLowerCase().includes(q)) ? 2 : 0
+        const folderHit = q && folderPath(slug).toLowerCase().includes(q) ? 1 : 0
+        const degree = nodeNeighbors.get(slug)?.size ?? 0
+        entries.push({
+          id: slug,
+          label: details.title ?? slug,
+          meta: `${folderPath(slug) || "Root"} • ${details.tags?.slice(0, 3).join(" • ") || "note"}`,
+          kind: "note",
+          value: slug,
+          score: titleHit + tagHit + folderHit + degree / 20,
+        })
+      }
+    }
+
+    return entries.sort((a, b) => b.score - a.score).slice(0, q ? 12 : 8)
+  }
+
+  function renderSearchResults(query: string) {
+    const container = el<HTMLDivElement>("graph-search-results")
     if (!container) return
-    searchActive = !searchActive
-    container.classList.toggle("active", searchActive)
-    if (searchActive) {
-      document.getElementById("graph-search")?.focus()
+    const results = searchResults(query)
+    container.innerHTML =
+      results.length > 0
+        ? results.map(browseItemMarkup).join("")
+        : `<div class="graph-empty-state">No exact match. Try a folder name, tag, or broader term.</div>`
+
+    if (query) {
+      currentHighlighted = new Set(results.map((item) => item.value))
+      refreshGraph()
     } else {
-      const input = document.getElementById("graph-search") as HTMLInputElement
-      if (input) input.value = ""
-      currentHighlighted.clear()
-      refreshGraph(simplifySlug(getFullSlug(window)), getVisited())
+      applyCurrentFocus(false)
     }
   }
 
-  function handleSearch(query: string) {
-    const slug = simplifySlug(getFullSlug(window))
-    if (!query) {
-      currentHighlighted.clear()
-      refreshGraph(slug, getVisited())
+  function queueSearchResults(query: string) {
+    if (searchRenderFrame) cancelAnimationFrame(searchRenderFrame)
+    searchRenderFrame = requestAnimationFrame(() => {
+      searchRenderFrame = 0
+      renderSearchResults(query)
+    })
+  }
+
+  function toggleSearch(force?: boolean) {
+    const next = force ?? !searchActive
+    const container = el<HTMLDivElement>("graph-search-container")
+    if (!container) return
+    searchActive = next
+    container.classList.toggle("active", next)
+    updateScrim()
+    if (next) {
+      renderSearchResults("")
+      el<HTMLInputElement>("graph-search")?.focus()
+    } else {
+      const input = el<HTMLInputElement>("graph-search")
+      if (input) input.value = ""
+      applyCurrentFocus(false)
+    }
+    syncTopBarButtons()
+  }
+
+  function updateScrim() {
+    const overlayActive =
+      searchActive ||
+      !!el<HTMLDivElement>("graph-nav-panel")?.classList.contains("open") ||
+      !!el<HTMLDivElement>("graph-focus-panel")?.classList.contains("open")
+    el<HTMLDivElement>("graph-panel-scrim")?.classList.toggle("active", overlayActive)
+  }
+
+  function isDesktopLayout(): boolean {
+    return window.matchMedia("(min-width: 981px)").matches
+  }
+
+  function syncTopBarButtons() {
+    const navButton = el<HTMLButtonElement>("top-bar-notes")
+    const focusButton = el<HTMLButtonElement>("top-bar-help")
+    const searchButton = el<HTMLButtonElement>("top-bar-search")
+    navButton?.classList.toggle("active", !!el<HTMLDivElement>("graph-nav-panel")?.classList.contains("open"))
+    focusButton?.classList.toggle("active", !!el<HTMLDivElement>("graph-focus-panel")?.classList.contains("open"))
+    searchButton?.classList.toggle("active", searchActive)
+  }
+
+  function setPanelOpen(panelId: "graph-nav-panel" | "graph-focus-panel", open?: boolean) {
+    const panel = el<HTMLDivElement>(panelId)
+    if (!panel) return
+    const next = open ?? !panel.classList.contains("open")
+    if (isDesktopLayout()) panel.classList.toggle("panel-hidden", !next)
+    panel.classList.toggle("open", next)
+    updateScrim()
+    syncTopBarButtons()
+  }
+
+  function closePanels() {
+    el<HTMLDivElement>("graph-nav-panel")?.classList.remove("open")
+    el<HTMLDivElement>("graph-focus-panel")?.classList.remove("open")
+    if (isDesktopLayout()) {
+      el<HTMLDivElement>("graph-nav-panel")?.classList.add("panel-hidden")
+      el<HTMLDivElement>("graph-focus-panel")?.classList.add("panel-hidden")
+    }
+    updateScrim()
+    syncTopBarButtons()
+  }
+
+  function handleGraphAction(action: string) {
+    if (action === "home") {
+      currentFocus = { kind: "collection", value: "home" }
+      applyCurrentFocus(true)
       return
     }
-    const matches = Array.from(nodeMap.values()).filter(
-      (n) =>
-        n.text.toLowerCase().includes(query) ||
-        n.id.toLowerCase().includes(query) ||
-        n.tags.some((t) => t.toLowerCase().includes(query)),
-    )
-    currentHighlighted = new Set(matches.map((n) => n.id))
-    refreshGraph(slug, getVisited())
-    if (matches.length > 0) zoomToNodes(matches.map((n) => n.id))
+    if (action === "random") {
+      const notes = Array.from(graphDetails.keys())
+      const random = notes[Math.floor(Math.random() * notes.length)]
+      if (random) focusNote(random, true)
+      return
+    }
+    if (action === "recent") {
+      currentFocus = { kind: "collection", value: "recent" }
+      applyCurrentFocus(true)
+      return
+    }
+    if (action === "popular") {
+      currentFocus = { kind: "collection", value: "popular" }
+      applyCurrentFocus(true)
+      return
+    }
+    if (action === "neighbors" && currentFocus.kind === "note") {
+      zoomToNodes(neighborhoodForNote(currentFocus.slug))
+    }
   }
-
-  // ΓöÇΓöÇ 3D graph renderer ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 
   async function renderBgGraph(container: HTMLElement, fullSlug: FullSlug) {
     container.innerHTML = ""
-    nodeMap = new Map()
-    currentHighlighted = new Set()
     Graph3D = null
+    currentSlug = simplifySlug(fullSlug)
 
-    const slug = simplifySlug(fullSlug)
-    const visited = getVisited()
+    await ensureGraphData()
+    visitedSnapshot = getVisited()
+    renderNavPanel()
 
-    const data: Map<SimpleSlug, ContentDetails> = new Map(
-      Object.entries<ContentDetails>(await fetchData).map(([k, v]) => [
-        simplifySlug(k as FullSlug),
-        v,
-      ]),
-    )
+    const nodes = Array.from(nodeMap.values())
+    nodeObjects = new Map()
 
-    const linkPairs: { source: SimpleSlug; target: SimpleSlug }[] = []
-    const tags: SimpleSlug[] = []
-
-    for (const [source, details] of data.entries()) {
-      const localTags = (details.tags ?? []).map((tag) => simplifySlug(("tags/" + tag) as FullSlug))
-      tags.push(...localTags.filter((t) => !tags.includes(t)))
-      for (const tag of localTags) linkPairs.push({ source, target: tag })
-    }
-
-    const nodes: NodeData[] = [...data.keys()].map((url) => ({
-      id: url,
-      text: data.get(url)?.title ?? url,
-      tags: data.get(url)?.tags ?? [],
-      isFolder: false,
-      isTag: false,
-      val: 2,
-    }))
-
-    const folders = new Set<string>()
-    for (const s of data.keys()) {
-      const parts = s.split("/")
-      for (let i = 0; i < parts.length - 1; i++) folders.add(parts.slice(0, i + 1).join("/"))
-    }
-    for (const folder of folders) {
-      nodes.push({
-        id: folder as any,
-        text: folder.split("/").pop() ?? folder,
-        tags: [],
-        isFolder: true,
-        isTag: false,
-        val: 8,
-      })
-    }
-    for (const tag of tags) {
-      nodes.push({
-        id: tag as any,
-        text: "#" + tag.substring(5),
-        tags: [],
-        isFolder: false,
-        isTag: true,
-        val: 3,
-      })
-    }
-
-    const linkCount = new Map<string, number>()
-    for (const l of linkPairs) {
-      linkCount.set(l.source, (linkCount.get(l.source) ?? 0) + 1)
-      linkCount.set(l.target, (linkCount.get(l.target) ?? 0) + 1)
-    }
-    for (const n of nodes) {
-      if (!n.isFolder) n.val = 2 + Math.sqrt(linkCount.get(n.id) ?? 0)
-      nodeMap.set(n.id, n)
-    }
-
-    const graphLinks = linkPairs
-      .map((l) => ({ source: l.source, target: l.target }))
-      .filter((l) => nodeMap.has(l.source) && nodeMap.has(l.target))
-
-    // @ts-ignore ΓÇö loaded from CDN
+    // @ts-ignore loaded from CDN
     const Graph = ForceGraph3D({ antialias: true, alpha: true })(container)
       .width(container.offsetWidth)
       .height(container.offsetHeight)
       .backgroundColor("rgba(0,0,0,0)")
       .graphData({ nodes, links: graphLinks })
-      .nodeLabel((n: NodeData) => n.text)
+      .nodeLabel((n: NodeData) => labelTextForNode(n))
       .nodeVal((n: NodeData) => nodeVal(n))
-      .nodeColor((n: NodeData) => nodeColor(n, slug, visited))
-      .nodeOpacity(1)
-      .nodeResolution(8)
-      .linkColor(() => "rgba(255,255,255,0.06)")
-      .linkWidth(0.2)
+      .nodeColor((n: NodeData) => nodeColor(n))
+      .nodeThreeObject((n: NodeData) => buildNodeObject(n))
+      .nodeThreeObjectExtend(false)
+      .nodeOpacity(0.94)
+      .nodeResolution(6)
+      .linkColor((link: GraphLink) => linkColor(link))
+      .linkWidth((link: GraphLink) => linkWidth(link))
       .linkDirectionalParticles(0)
-      .onNodeClick((node: NodeData) => openNoteModal(node.id as unknown as FullSlug))
+      .onNodeClick((node: NodeData) => {
+        if (node.kind !== "note") {
+          if (node.kind === "folder") focusCollection("folder", node.folder ?? node.text, true)
+          if (node.kind === "tag") focusCollection("tag", node.id, true)
+          return
+        }
+        openNoteModal(node.id as unknown as FullSlug, true, { focusGraph: true, zoomGraph: true })
+      })
       .onNodeHover((node: NodeData | null) => {
+        const nextHover = node?.id ?? null
+        if (hoveredNodeId !== nextHover) {
+          const previousHover = hoveredNodeId
+          hoveredNodeId = nextHover
+          if (previousHover) {
+            const prevObject = nodeObjects.get(previousHover)
+            const prevNode = nodeMap.get(previousHover)
+            if (prevObject && prevNode) updateNodeObjectAppearance(prevNode, prevObject)
+          }
+          if (nextHover) {
+            const nextObject = nodeObjects.get(nextHover)
+            const nextNode = nodeMap.get(nextHover)
+            if (nextObject && nextNode) updateNodeObjectAppearance(nextNode, nextObject)
+          }
+        }
         container.style.cursor = node ? "pointer" : "grab"
+      })
+      .onBackgroundClick(() => {
+        currentFocus = { kind: "none" }
+        applyCurrentFocus(true)
       })
 
     Graph3D = Graph
+    Graph.linkOpacity(0.85)
+    Graph.cameraPosition({ x: 0, y: 48, z: 760 })
+    Graph.d3Force("charge")?.strength?.(-90)
+    Graph.d3Force("link")?.distance?.((link: GraphLink) => (link.kind === "link" ? 72 : 58))
+    Graph.d3Force("center", null)
 
-    // ΓöÇΓöÇ auto-rotate ΓÇö pauses when modal is open OR user is interacting ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    currentFocus = { kind: "none" }
+    applyCurrentFocus(false)
+    window.setTimeout(() => zoomToOverview(0), 650)
 
-    let autoRotate = true
-    let rotAngle = 0
-    let rotTimer: ReturnType<typeof setTimeout>
-
-    function pauseRot() {
-      autoRotate = false
-      clearTimeout(rotTimer)
-      // Only resume auto-rotate if modal isn't open
-      rotTimer = setTimeout(() => {
-        if (!modalOpen) autoRotate = true
-      }, 3500)
+    const landingSlug = defaultLandingSlug()
+    if (isFirstVisit() && landingSlug) {
+      window.setTimeout(() => {
+        openNoteModal(landingSlug as unknown as FullSlug, true, {
+          focusGraph: false,
+          zoomGraph: false,
+        })
+      }, 280)
     }
 
-    // Pause on any interaction with the graph canvas
-    container.addEventListener("mousedown", pauseRot)
-    container.addEventListener("touchstart", pauseRot)
+    container.addEventListener("mousedown", pauseRotation)
+    container.addEventListener("touchstart", pauseRotation)
 
     Graph.onEngineTick(() => {
-      // Don't rotate while modal is open ΓÇö prevents the camera spinning while
-      // the user is reading a note
-      if (!autoRotate || modalOpen) return
-      rotAngle += 0.0007
-      Graph.cameraPosition({ x: 450 * Math.sin(rotAngle), z: 450 * Math.cos(rotAngle) })
+      animateNodeObjects()
+      if (!autoRotate || modalOpen || currentFocus.kind !== "none") return
+      rotAngle += 0.00045
+      Graph.cameraPosition({
+        x: 720 * Math.sin(rotAngle),
+        y: 42 + 16 * Math.sin(rotAngle * 0.6),
+        z: 720 * Math.cos(rotAngle),
+      })
     })
 
-    const onResize = () => Graph.width(container.offsetWidth).height(container.offsetHeight)
+    const onResize = () => {
+      Graph.width(container.offsetWidth).height(container.offsetHeight)
+      if (modalOpen) sizeModalToContent()
+    }
     window.addEventListener("resize", onResize)
 
     return () => {
@@ -481,136 +1384,107 @@ if (window.self !== window.top) {
       } catch {}
       container.innerHTML = ""
       Graph3D = null
+      nodeObjects = new Map()
     }
   }
 
-  // ΓöÇΓöÇ keybinds ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
-
   document.addEventListener("keydown", (e) => {
-    const tag = (document.activeElement as HTMLElement)?.tagName
+    const tag = (document.activeElement as HTMLElement | null)?.tagName
     const typing = tag === "INPUT" || tag === "TEXTAREA"
 
     if (e.key === "Tab" && !typing) {
       e.preventDefault()
       showAllLabels = !showAllLabels
-      if (Graph3D)
-        Graph3D.nodeLabel((n: NodeData) =>
-          showAllLabels || currentHighlighted.has(n.id) ? n.text : "",
-        )
+      refreshGraph()
       return
     }
+
     if (e.ctrlKey && e.key === "f") {
       e.preventDefault()
       if (!typing) toggleSearch()
       return
     }
-    if (e.key === " " && !typing) {
+
+    if (e.key === "Enter" && !typing && currentFocus.kind === "note") {
       e.preventDefault()
-      if (modalOpen) closeModal()
-      else openNoteModal("index" as FullSlug)
-      return
-    }
-    if (e.key === "Escape") {
-      if (searchActive) toggleSearch()
-      else if (modalOpen) closeModal()
-    }
-  })
-
-  document.getElementById("graph-search-btn")?.addEventListener("click", toggleSearch)
-  document.getElementById("top-bar-search")?.addEventListener("click", toggleSearch)
-  document
-    .getElementById("top-bar-help")
-    ?.addEventListener("click", () => openNoteModal("index" as FullSlug))
-  document.getElementById("top-bar-labels")?.addEventListener("click", () => {
-    showAllLabels = !showAllLabels
-    if (Graph3D)
-      Graph3D.nodeLabel((n: NodeData) =>
-        showAllLabels || currentHighlighted.has(n.id) ? n.text : "",
-      )
-  })
-  document.getElementById("graph-search")?.addEventListener("input", (e) => {
-    handleSearch((e.target as HTMLInputElement).value.toLowerCase().trim())
-  })
-
-  // All Notes dropdown
-  document.getElementById("top-bar-notes")?.addEventListener("click", async (e) => {
-    e.stopPropagation()
-    const dropdown = document.getElementById("notes-dropdown")
-    if (!dropdown) return
-
-    if (dropdown.classList.contains("active")) {
-      dropdown.classList.remove("active")
-      return
-    }
-
-    // Build dropdown content from graph data
-    const data: Map<SimpleSlug, ContentDetails> = new Map(
-      Object.entries<ContentDetails>(await fetchData).map(([k, v]) => [
-        simplifySlug(k as FullSlug),
-        v,
-      ]),
-    )
-
-    const nodes = Array.from(data.entries())
-      .map(([slug, details]) => ({
-        slug,
-        title: details.title ?? slug,
-      }))
-      .sort((a, b) => a.title.localeCompare(b.title))
-
-    const folders = new Set<string>()
-    for (const s of data.keys()) {
-      const parts = s.split("/")
-      for (let i = 0; i < parts.length - 1; i++) {
-        folders.add(parts.slice(0, i + 1).join("/"))
-      }
-    }
-
-    let html = `
-      <div class="dropdown-section">
-        <div class="dropdown-header">Home</div>
-        <div class="dropdown-item" data-slug="index">Index</div>
-      </div>
-    `
-
-    if (folders.size > 0) {
-      html += `<div class="dropdown-section">
-        <div class="dropdown-header">Folders</div>`
-      const sortedFolders = Array.from(folders).sort()
-      for (const folder of sortedFolders) {
-        html += `<div class="dropdown-item folder" data-slug="${folder}">📁 ${folder.split("/").pop()}</div>`
-      }
-      html += `</div>`
-    }
-
-    html += `<div class="dropdown-section">
-      <div class="dropdown-header">Notes (${nodes.length})</div>`
-    for (const node of nodes) {
-      html += `<div class="dropdown-item" data-slug="${node.slug}">${node.title}</div>`
-    }
-    html += `</div>`
-
-    dropdown.innerHTML = html
-    dropdown.classList.add("active")
-
-    // Add click handlers
-    dropdown.querySelectorAll(".dropdown-item").forEach((item) => {
-      item.addEventListener("click", () => {
-        const slug = (item as HTMLElement).dataset.slug as FullSlug
-        openNoteModal(slug)
-        dropdown.classList.remove("active")
+      openNoteModal(currentFocus.slug as unknown as FullSlug, true, {
+        focusGraph: true,
+        zoomGraph: true,
       })
-    })
+      return
+    }
+
+    if (e.key === "Escape") {
+      if (searchActive) toggleSearch(false)
+      else if (modalOpen) closeModal()
+      else closePanels()
+    }
   })
 
-  // Close dropdown when clicking elsewhere
-  document.addEventListener("click", () => {
-    document.getElementById("notes-dropdown")?.classList.remove("active")
-  })
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement
+    const notesToggle = target.closest("#top-bar-notes")
+    if (notesToggle) {
+      setPanelOpen("graph-nav-panel")
+      return
+    }
+    const searchToggle = target.closest("#top-bar-search, #graph-search-btn")
+    if (searchToggle) {
+      toggleSearch()
+      return
+    }
+    const helpToggle = target.closest("#top-bar-help")
+    if (helpToggle) {
+      setPanelOpen("graph-focus-panel")
+      return
+    }
+    const labelsToggle = target.closest("#top-bar-labels")
+    if (labelsToggle) {
+      showAllLabels = !showAllLabels
+      refreshGraph()
+      return
+    }
+    const openNoteButton = target.closest("#graph-open-note")
+    if (openNoteButton) {
+      const slug = el<HTMLButtonElement>("graph-open-note")?.dataset.slug as FullSlug | undefined
+      if (slug) openNoteModal(slug, true, { focusGraph: true, zoomGraph: true })
+      return
+    }
+    const centerButton = target.closest("#graph-center-note")
+    if (centerButton) {
+      applyCurrentFocus(true)
+      return
+    }
+    const action = target.closest("[data-graph-action]") as HTMLElement | null
+    if (action) {
+      handleGraphAction(action.dataset.graphAction!)
+      closePanels()
+      return
+    }
 
-  // ΓöÇΓöÇ nav ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+    const item = target.closest("[data-graph-item]") as HTMLElement | null
+    if (item) {
+      const kind = item.dataset.graphItem
+      const value = item.dataset.graphValue ?? ""
+      if (kind === "note") openNoteModal(value as FullSlug, true, { focusGraph: true, zoomGraph: true })
+      if (kind === "folder") focusCollection("folder", value, true)
+      if (kind === "tag") focusCollection("tag", value, true)
+      closePanels()
+      if (searchActive) toggleSearch(false)
+      return
+    }
+  })
+  el<HTMLDivElement>("graph-panel-scrim")?.addEventListener("click", () => {
+    closePanels()
+    if (searchActive) toggleSearch(false)
+  })
+  el<HTMLInputElement>("graph-search")?.addEventListener("input", (e) => {
+    queueSearchResults((e.target as HTMLInputElement).value)
+  })
 
   document.addEventListener("nav", async () => {
+    currentSlug = simplifySlug(getFullSlug(window))
+
     for (const id of [
       "background-graph",
       "bg-note-modal",
@@ -618,13 +1492,19 @@ if (window.self !== window.top) {
       "graph-search-btn",
       "graph-keybinds",
       "top-bar",
+      "graph-nav-panel",
+      "graph-focus-panel",
+      "graph-panel-scrim",
     ]) {
-      const el = document.getElementById(id)
-      if (el && el.parentElement !== document.body) document.body.appendChild(el)
+      const element = document.getElementById(id)
+      if (element && element.parentElement !== document.body) document.body.appendChild(element)
     }
 
-    const container = document.getElementById("background-graph-canvas-container")
+    const container = el<HTMLDivElement>("background-graph-canvas-container")
     if (!container) return
+
+    if (searchActive) toggleSearch(false)
+
     if (bgGraphCleanup) {
       bgGraphCleanup()
       bgGraphCleanup = null
@@ -634,12 +1514,15 @@ if (window.self !== window.top) {
     await loadScript("https://unpkg.com/3d-force-graph@1.73.3/dist/3d-force-graph.min.js")
 
     bgGraphCleanup = (await renderBgGraph(container, getFullSlug(window))) ?? null
+    if (isDesktopLayout()) {
+      el<HTMLDivElement>("graph-nav-panel")?.classList.add("open")
+      el<HTMLDivElement>("graph-focus-panel")?.classList.add("open")
+      el<HTMLDivElement>("graph-nav-panel")?.classList.remove("panel-hidden")
+      el<HTMLDivElement>("graph-focus-panel")?.classList.remove("panel-hidden")
+      updateScrim()
+      syncTopBarButtons()
+    } else {
+      closePanels()
+    }
   })
-
-  // ΓöÇΓöÇ first visit ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
-
-  if (!localStorage.getItem("hasVisited")) {
-    localStorage.setItem("hasVisited", "true")
-    setTimeout(() => openNoteModal("index" as FullSlug), 800)
-  }
 }
