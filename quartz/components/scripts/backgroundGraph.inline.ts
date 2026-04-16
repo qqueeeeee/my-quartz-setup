@@ -101,7 +101,8 @@ if (window.self !== window.top) {
 
   function getVisitedList(): SimpleSlug[] {
     if (visitedListCache) return [...visitedListCache]
-    visitedListCache = JSON.parse(localStorage.getItem(localStorageKey) ?? "[]")
+    const stored = JSON.parse(localStorage.getItem(localStorageKey) ?? "[]")
+    visitedListCache = Array.isArray(stored) ? (stored as SimpleSlug[]) : []
     return [...visitedListCache]
   }
 
@@ -164,7 +165,9 @@ if (window.self !== window.top) {
   }
 
   function neighborhoodForNote(slug: SimpleSlug): SimpleSlug[] {
-    const neighborIds = Array.from(nodeNeighbors.get(slug) ?? []).filter((id) => graphDetails.has(id))
+    const neighborIds = Array.from(nodeNeighbors.get(slug) ?? [])
+      .filter((id) => graphDetails.has(id as SimpleSlug))
+      .map((id) => id as SimpleSlug)
     return [slug, ...neighborIds]
   }
 
@@ -275,7 +278,7 @@ if (window.self !== window.top) {
       }
 
       for (const rawLink of details.links ?? []) {
-        const target = simplifySlug(rawLink as FullSlug)
+        const target = simplifySlug(rawLink as unknown as FullSlug)
         if (data.has(target)) registerEdge(slug, target, "link")
       }
     }
@@ -341,13 +344,13 @@ if (window.self !== window.top) {
 
   function nodeColor(d: NodeData): string {
     const isHighlighted = currentHighlighted.size === 0 || currentHighlighted.has(d.id)
-    if (!isHighlighted) return "rgba(90, 100, 116, 0.12)"
-    if (currentFocus.kind === "note" && currentFocus.slug === d.id) return "#ffffff"
-    if (d.kind === "folder") return "#cfd5de"
-    if (d.kind === "tag") return "#b7bec9"
-    if (d.id === currentSlug) return "#e9edf2"
-    if (visitedSnapshot.has(d.id)) return "#ccd3dc"
-    return "#8e97a3"
+    if (!isHighlighted) return "rgba(126, 121, 112, 0.16)"
+    if (currentFocus.kind === "note" && currentFocus.slug === d.id) return "#fff7e8"
+    if (d.kind === "folder") return "#d8d0c3"
+    if (d.kind === "tag") return "#bdb7ad"
+    if (d.id === currentSlug) return "#eee6d8"
+    if (visitedSnapshot.has(d.id)) return "#cfc7ba"
+    return "#aaa49a"
   }
 
   function nodeVal(d: NodeData): number {
@@ -361,23 +364,27 @@ if (window.self !== window.top) {
     const hoverBoost = hoveredNodeId === node.id ? 1.16 : 1
     if (node.kind === "folder") return Math.max(4.6, liveVal * 1.75) * hoverBoost
     if (node.kind === "tag") return Math.max(3.8, liveVal * 1.42) * hoverBoost
-    if (currentFocus.kind === "note" && currentFocus.slug === node.id) return Math.max(4.6, liveVal * 1.65) * hoverBoost
+    if (currentFocus.kind === "note" && currentFocus.slug === node.id)
+      return Math.max(4.6, liveVal * 1.65) * hoverBoost
     return Math.max(3.2, liveVal * 1.32) * hoverBoost
   }
 
   function linkColor(link: GraphLink): string {
-    if (currentFocus.kind === "none") return "rgba(255, 255, 255, 0.012)"
+    if (currentFocus.kind === "none") return "rgba(246, 235, 215, 0.022)"
     const sourceId = typeof link.source === "string" ? link.source : link.source.id
     const targetId = typeof link.target === "string" ? link.target : link.target.id
     const active =
       currentHighlighted.size === 0 ||
       (currentHighlighted.has(sourceId) && currentHighlighted.has(targetId))
-    if (!active) return "rgba(255, 255, 255, 0.035)"
-    if (currentFocus.kind === "note" && (sourceId === currentFocus.slug || targetId === currentFocus.slug))
-      return "rgba(230, 236, 232, 0.28)"
-    if (link.kind === "link") return "rgba(210, 216, 222, 0.16)"
-    if (link.kind === "tag") return "rgba(173, 180, 190, 0.1)"
-    return "rgba(184, 192, 202, 0.11)"
+    if (!active) return "rgba(246, 235, 215, 0.04)"
+    if (
+      currentFocus.kind === "note" &&
+      (sourceId === currentFocus.slug || targetId === currentFocus.slug)
+    )
+      return "rgba(255, 244, 224, 0.32)"
+    if (link.kind === "link") return "rgba(222, 213, 198, 0.18)"
+    if (link.kind === "tag") return "rgba(184, 176, 162, 0.1)"
+    return "rgba(190, 181, 166, 0.12)"
   }
 
   function linkWidth(link: GraphLink): number {
@@ -398,11 +405,11 @@ if (window.self !== window.top) {
   }
 
   function nodeHaloColor(node: NodeData): string {
-    if (currentFocus.kind === "note" && currentFocus.slug === node.id) return "#f7fbff"
-    if (node.kind === "folder") return "#c9d1db"
-    if (node.kind === "tag") return "#aeb6c2"
-    if (visitedSnapshot.has(node.id)) return "#d8dee6"
-    return "#9aa3af"
+    if (currentFocus.kind === "note" && currentFocus.slug === node.id) return "#fff7e8"
+    if (node.kind === "folder") return "#d2c9ba"
+    if (node.kind === "tag") return "#b8b0a3"
+    if (visitedSnapshot.has(node.id)) return "#ded5c6"
+    return "#aaa297"
   }
 
   function ensureSharedNodeGeometry() {
@@ -427,7 +434,7 @@ if (window.self !== window.top) {
     const halo = group.userData?.halo
     const ring = group.userData?.ring
     const flare = group.userData?.flare
-    const baseHaloOpacity = muted ? 0.03 : node.kind === "note" ? 0.08 : 0.05
+    const baseHaloOpacity = muted ? 0.018 : node.kind === "note" ? 0.045 : 0.035
 
     if (core) {
       core.scale.setScalar(baseRadius * (isHovered ? pulse * 1.03 : 1))
@@ -438,20 +445,20 @@ if (window.self !== window.top) {
     if (halo) {
       halo.scale.setScalar(baseRadius * 2.25 * (isHovered ? pulse * 1.18 : 1.08))
       halo.material.color.set(nodeHaloColor(node))
-      halo.material.opacity = isHovered ? 0.18 : baseHaloOpacity
+      halo.material.opacity = isHovered ? 0.11 : baseHaloOpacity
     }
 
     if (ring) {
       ring.visible = node.kind !== "note"
       ring.scale.setScalar(baseRadius * 1.9)
       ring.material.color.set(nodeHaloColor(node))
-      ring.material.opacity = muted ? 0.08 : 0.34
+      ring.material.opacity = muted ? 0.04 : 0.16
     }
 
     if (flare) {
       flare.visible = node.kind === "note"
       flare.scale.set(baseRadius * 1.7, baseRadius * 0.4, baseRadius * 0.4)
-      flare.material.opacity = muted ? 0.08 : 0.18
+      flare.material.opacity = muted ? 0.025 : 0.08
     }
   }
 
@@ -575,7 +582,7 @@ if (window.self !== window.top) {
   }
 
   function zoomToOverview(duration = 1200) {
-    zoomToNodes(Array.from(graphDetails.keys()), duration)
+    zoomToNodes(Array.from(nodeMap.keys()), duration)
   }
 
   function refreshGraph() {
@@ -598,7 +605,7 @@ if (window.self !== window.top) {
     }, 4200)
   }
 
-  function setIdentity(title: string, subtitle: string) {
+  function setIdentity(_title: string, subtitle: string) {
     const center = el<HTMLSpanElement>("top-bar-center")
     if (center) center.textContent = subtitle
   }
@@ -663,12 +670,15 @@ if (window.self !== window.top) {
   function relatedNoteIdsFromFocus(): SimpleSlug[] {
     if (currentFocus.kind === "note") {
       return Array.from(nodeNeighbors.get(currentFocus.slug) ?? [])
-        .filter((id) => graphDetails.has(id))
+        .filter((id) => graphDetails.has(id as SimpleSlug))
+        .map((id) => id as SimpleSlug)
         .slice(0, 8)
     }
-    if (currentFocus.kind === "folder") return collectionNoteIds("folder", currentFocus.value).slice(0, 8)
+    if (currentFocus.kind === "folder")
+      return collectionNoteIds("folder", currentFocus.value).slice(0, 8)
     if (currentFocus.kind === "tag") return collectionNoteIds("tag", currentFocus.value).slice(0, 8)
-    if (currentFocus.kind === "collection") return collectionNoteIds("collection", currentFocus.value).slice(0, 8)
+    if (currentFocus.kind === "collection")
+      return collectionNoteIds("collection", currentFocus.value).slice(0, 8)
     return []
   }
 
@@ -681,7 +691,16 @@ if (window.self !== window.top) {
     const openBtn = el<HTMLButtonElement>("graph-open-note")
     const centerBtn = el<HTMLButtonElement>("graph-center-note")
     const signal = el<HTMLDivElement>("graph-focus-signal")
-    if (!eyebrow || !title || !description || !meta || !related || !openBtn || !centerBtn || !signal)
+    if (
+      !eyebrow ||
+      !title ||
+      !description ||
+      !meta ||
+      !related ||
+      !openBtn ||
+      !centerBtn ||
+      !signal
+    )
       return
 
     if (currentFocus.kind === "note") {
@@ -706,7 +725,10 @@ if (window.self !== window.top) {
       openBtn.dataset.slug = currentFocus.slug
       centerBtn.dataset.kind = "note"
       centerBtn.dataset.value = currentFocus.slug
-      setIdentity(details?.title ?? "Focused note", "Open the note and branch into its nearby constellation")
+      setIdentity(
+        details?.title ?? "Focused note",
+        "Open the note and branch into its nearby constellation",
+      )
     } else if (currentFocus.kind === "folder") {
       const ids = collectionNoteIds("folder", currentFocus.value)
       eyebrow.textContent = "Folder cluster"
@@ -715,7 +737,15 @@ if (window.self !== window.top) {
       meta.innerHTML = focusPanelMeta([`${ids.length} notes`, "Folder constellation"])
       signal.innerHTML = [
         signalMarkup("Density", Math.min(100, ids.length * 8)),
-        signalMarkup("Reach", Math.min(100, ids.reduce((sum, id) => sum + (nodeNeighbors.get(id)?.size ?? 0), 0) / Math.max(1, ids.length) * 6)),
+        signalMarkup(
+          "Reach",
+          Math.min(
+            100,
+            (ids.reduce((sum, id) => sum + (nodeNeighbors.get(id)?.size ?? 0), 0) /
+              Math.max(1, ids.length)) *
+              6,
+          ),
+        ),
       ].join("")
       openBtn.disabled = ids.length === 0
       openBtn.dataset.slug = ids[0] ?? ""
@@ -731,7 +761,15 @@ if (window.self !== window.top) {
       meta.innerHTML = focusPanelMeta([`${ids.length} tagged notes`, "Theme constellation"])
       signal.innerHTML = [
         signalMarkup("Coverage", Math.min(100, ids.length * 9)),
-        signalMarkup("Reach", Math.min(100, ids.reduce((sum, id) => sum + (nodeNeighbors.get(id)?.size ?? 0), 0) / Math.max(1, ids.length) * 6)),
+        signalMarkup(
+          "Reach",
+          Math.min(
+            100,
+            (ids.reduce((sum, id) => sum + (nodeNeighbors.get(id)?.size ?? 0), 0) /
+              Math.max(1, ids.length)) *
+              6,
+          ),
+        ),
       ].join("")
       openBtn.disabled = ids.length === 0
       openBtn.dataset.slug = ids[0] ?? ""
@@ -759,7 +797,12 @@ if (window.self !== window.top) {
         signalMarkup("Span", Math.min(100, ids.length * 8)),
         signalMarkup(
           "Intensity",
-          Math.min(100, ids.reduce((sum, id) => sum + (nodeNeighbors.get(id)?.size ?? 0), 0) / Math.max(1, ids.length) * 6),
+          Math.min(
+            100,
+            (ids.reduce((sum, id) => sum + (nodeNeighbors.get(id)?.size ?? 0), 0) /
+              Math.max(1, ids.length)) *
+              6,
+          ),
         ),
       ].join("")
       openBtn.disabled = ids.length === 0
@@ -782,7 +825,10 @@ if (window.self !== window.top) {
       openBtn.dataset.slug = ""
       centerBtn.dataset.kind = "collection"
       centerBtn.dataset.value = "home"
-      setIdentity("Que's Notes", "Explore the full map first, then drop into whichever note pulls you in")
+      setIdentity(
+        "Que's Notes",
+        "Explore the full map first, then drop into whichever note pulls you in",
+      )
     }
 
     const relatedIds = relatedNoteIdsFromFocus()
@@ -832,7 +878,9 @@ if (window.self !== window.top) {
 
   function focusCollection(kind: "folder" | "tag" | "collection", value: string, zoom = true) {
     currentFocus =
-      kind === "collection" ? { kind, value: value as "popular" | "recent" | "home" } : { kind, value }
+      kind === "collection"
+        ? { kind, value: value as "popular" | "recent" | "home" }
+        : { kind, value }
     pauseRotation()
     applyCurrentFocus(zoom)
   }
@@ -977,8 +1025,15 @@ if (window.self !== window.top) {
     }
     body {
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
-        #060707 !important;
+        linear-gradient(rgba(244, 234, 216, 0.014) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 234, 216, 0.01) 1px, transparent 1px),
+        radial-gradient(circle at 18% 0%, rgba(141, 47, 39, 0.16), transparent 34%),
+        linear-gradient(180deg, #171817, #101111) !important;
+      background-size:
+        58px 58px,
+        58px 58px,
+        100% 100%,
+        100% 100% !important;
     }
     .page {
       max-width: 100% !important;
@@ -1012,10 +1067,17 @@ if (window.self !== window.top) {
     .page article {
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(244, 234, 216, 0.14);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0)),
+        linear-gradient(rgba(244, 234, 216, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 234, 216, 0.012) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(244, 234, 216, 0.026), rgba(244, 234, 216, 0.006)),
         rgba(255, 255, 255, 0.01);
+      background-size:
+        44px 44px,
+        44px 44px,
+        100% 100%,
+        100% 100%;
       padding: 0.95rem 1.15rem 1.4rem;
       margin-top: 0 !important;
     }
@@ -1032,18 +1094,18 @@ if (window.self !== window.top) {
     .page article p,
     .page article li,
     .page article blockquote {
-      color: rgba(220, 224, 220, 0.82) !important;
+      color: rgba(244, 234, 216, 0.84) !important;
     }
     .page article hr {
-      border-color: rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(244, 234, 216, 0.12) !important;
     }
     .page article a {
-      color: #e8ece8 !important;
-      text-decoration-color: rgba(198, 206, 216, 0.36) !important;
+      color: #fff3df !important;
+      text-decoration-color: rgba(141, 47, 39, 0.72) !important;
     }
     .page article blockquote {
-      border-left: 1px solid rgba(198, 206, 216, 0.44) !important;
-      background: rgba(255, 255, 255, 0.015) !important;
+      border-left: 1px solid rgba(244, 234, 216, 0.34) !important;
+      background: rgba(141, 47, 39, 0.12) !important;
       padding: 0.8rem 1rem !important;
     }
     .page article pre,
@@ -1051,8 +1113,8 @@ if (window.self !== window.top) {
       border-radius: 0 !important;
     }
     .page article pre {
-      border: 1px solid rgba(255, 255, 255, 0.09) !important;
-      background: rgba(0, 0, 0, 0.34) !important;
+      border: 1px solid rgba(244, 234, 216, 0.12) !important;
+      background: rgba(0, 0, 0, 0.32) !important;
     }
     `
     iDoc.head.appendChild(style)
@@ -1148,7 +1210,8 @@ if (window.self !== window.top) {
       const haystack = `${details.title} ${details.content} ${(details.tags ?? []).join(" ")} ${folderPath(slug)}`
       if (!q || haystack.toLowerCase().includes(q)) {
         const titleHit = q && details.title.toLowerCase().includes(q) ? 3 : 0
-        const tagHit = q && (details.tags ?? []).some((tag) => tag.toLowerCase().includes(q)) ? 2 : 0
+        const tagHit =
+          q && (details.tags ?? []).some((tag) => tag.toLowerCase().includes(q)) ? 2 : 0
         const folderHit = q && folderPath(slug).toLowerCase().includes(q) ? 1 : 0
         const degree = nodeNeighbors.get(slug)?.size ?? 0
         entries.push({
@@ -1224,8 +1287,14 @@ if (window.self !== window.top) {
     const navButton = el<HTMLButtonElement>("top-bar-notes")
     const focusButton = el<HTMLButtonElement>("top-bar-help")
     const searchButton = el<HTMLButtonElement>("top-bar-search")
-    navButton?.classList.toggle("active", !!el<HTMLDivElement>("graph-nav-panel")?.classList.contains("open"))
-    focusButton?.classList.toggle("active", !!el<HTMLDivElement>("graph-focus-panel")?.classList.contains("open"))
+    navButton?.classList.toggle(
+      "active",
+      !!el<HTMLDivElement>("graph-nav-panel")?.classList.contains("open"),
+    )
+    focusButton?.classList.toggle(
+      "active",
+      !!el<HTMLDivElement>("graph-focus-panel")?.classList.contains("open"),
+    )
     searchButton?.classList.toggle("active", searchActive)
   }
 
@@ -1339,9 +1408,9 @@ if (window.self !== window.top) {
     Graph3D = Graph
     Graph.linkOpacity(0.85)
     Graph.cameraPosition({ x: 0, y: 48, z: 760 })
-    Graph.d3Force("charge")?.strength?.(-90)
-    Graph.d3Force("link")?.distance?.((link: GraphLink) => (link.kind === "link" ? 72 : 58))
-    Graph.d3Force("center", null)
+    Graph.d3Force("charge")?.strength?.(-50)
+    Graph.d3Force("link")?.distance?.(30)
+    Graph.d3Force("center")?.strength?.(0.2)
 
     currentFocus = { kind: "none" }
     applyCurrentFocus(false)
@@ -1365,9 +1434,9 @@ if (window.self !== window.top) {
       if (!autoRotate || modalOpen || currentFocus.kind !== "none") return
       rotAngle += 0.00045
       Graph.cameraPosition({
-        x: 720 * Math.sin(rotAngle),
+        x: 860 * Math.sin(rotAngle),
         y: 42 + 16 * Math.sin(rotAngle * 0.6),
-        z: 720 * Math.cos(rotAngle),
+        z: 860 * Math.cos(rotAngle),
       })
     })
 
@@ -1466,7 +1535,8 @@ if (window.self !== window.top) {
     if (item) {
       const kind = item.dataset.graphItem
       const value = item.dataset.graphValue ?? ""
-      if (kind === "note") openNoteModal(value as FullSlug, true, { focusGraph: true, zoomGraph: true })
+      if (kind === "note")
+        openNoteModal(value as FullSlug, true, { focusGraph: true, zoomGraph: true })
       if (kind === "folder") focusCollection("folder", value, true)
       if (kind === "tag") focusCollection("tag", value, true)
       closePanels()
