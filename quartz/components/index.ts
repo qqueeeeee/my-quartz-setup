@@ -23,6 +23,8 @@ import Breadcrumbs from "./Breadcrumbs"
 import Comments from "./Comments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
+import Navbar from "./Navbar"
+import Landing from "./Landing"
 
 import BackgroundGraph from "./BackgroundGraph"
 
@@ -52,5 +54,7 @@ export {
   Comments,
   Flex,
   ConditionalRender,
-	BackgroundGraph,
+  Navbar,
+  Landing,
+  BackgroundGraph,
 }

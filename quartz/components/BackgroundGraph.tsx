@@ -11,20 +11,20 @@ const BackgroundGraph: QuartzComponent = () => {
       </div>
 
       <div id="top-bar">
-        <span id="top-bar-title">Que&apos;s Atlas</span>
-        <span id="top-bar-center">Interactive Knowledge Constellation</span>
+        <span id="top-bar-title">notes graph</span>
+        <span id="top-bar-center">knowledge graph</span>
         <div id="top-bar-actions">
           <button id="top-bar-notes" aria-label="Toggle navigation panel">
-            ☰
+            nav
           </button>
           <button id="top-bar-search" aria-label="Search notes">
-            ⌕
+            search
           </button>
           <button id="top-bar-help" aria-label="Toggle detail panel">
-            ◎
+            focus
           </button>
           <button id="top-bar-labels" aria-label="Toggle labels">
-            ⊹
+            labels
           </button>
         </div>
       </div>
@@ -41,7 +41,7 @@ const BackgroundGraph: QuartzComponent = () => {
 
         <div class="graph-actions">
           <button class="graph-action-button" data-graph-action="home">
-            <span>Graph Overview</span>
+            <span>Overview</span>
             <small>Pull back and light up the full map</small>
           </button>
           <button class="graph-action-button" data-graph-action="random">
@@ -57,7 +57,9 @@ const BackgroundGraph: QuartzComponent = () => {
         <section class="graph-panel-section">
           <div class="graph-section-heading">
             <span class="graph-panel-kicker">Recent</span>
-            <button class="graph-inline-action" data-graph-action="recent">View all</button>
+            <button class="graph-inline-action" data-graph-action="recent">
+              View all
+            </button>
           </div>
           <div id="graph-recent-list" class="graph-list"></div>
         </section>
@@ -65,7 +67,9 @@ const BackgroundGraph: QuartzComponent = () => {
         <section class="graph-panel-section">
           <div class="graph-section-heading">
             <span class="graph-panel-kicker">Constellations</span>
-            <button class="graph-inline-action" data-graph-action="popular">Highlight</button>
+            <button class="graph-inline-action" data-graph-action="popular">
+              Highlight
+            </button>
           </div>
           <div id="graph-popular-list" class="graph-list"></div>
         </section>
@@ -114,7 +118,9 @@ const BackgroundGraph: QuartzComponent = () => {
         <section class="graph-panel-section">
           <div class="graph-section-heading">
             <span class="graph-panel-kicker">Related</span>
-            <button class="graph-inline-action" data-graph-action="neighbors">Neighbors</button>
+            <button class="graph-inline-action" data-graph-action="neighbors">
+              Neighbors
+            </button>
           </div>
           <div id="graph-related-list" class="graph-list"></div>
         </section>
@@ -132,7 +138,7 @@ const BackgroundGraph: QuartzComponent = () => {
       </div>
 
       <button id="graph-search-btn" aria-label="Search graph">
-        ⌕
+        search
       </button>
 
       <div id="graph-panel-scrim"></div>

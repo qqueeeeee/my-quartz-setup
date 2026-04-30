@@ -344,13 +344,13 @@ if (window.self !== window.top) {
 
   function nodeColor(d: NodeData): string {
     const isHighlighted = currentHighlighted.size === 0 || currentHighlighted.has(d.id)
-    if (!isHighlighted) return "rgba(126, 121, 112, 0.16)"
-    if (currentFocus.kind === "note" && currentFocus.slug === d.id) return "#fff7e8"
-    if (d.kind === "folder") return "#d8d0c3"
-    if (d.kind === "tag") return "#bdb7ad"
-    if (d.id === currentSlug) return "#eee6d8"
-    if (visitedSnapshot.has(d.id)) return "#cfc7ba"
-    return "#aaa49a"
+    if (!isHighlighted) return "rgba(57, 56, 54, 0.22)"
+    if (currentFocus.kind === "note" && currentFocus.slug === d.id) return "#8ba4b0"
+    if (d.kind === "folder") return "#8ea4a2"
+    if (d.kind === "tag") return "#87a987"
+    if (d.id === currentSlug) return "#8ba4b0"
+    if (visitedSnapshot.has(d.id)) return "#9e9b93"
+    return "#282727"
   }
 
   function nodeVal(d: NodeData): number {
@@ -370,21 +370,21 @@ if (window.self !== window.top) {
   }
 
   function linkColor(link: GraphLink): string {
-    if (currentFocus.kind === "none") return "rgba(246, 235, 215, 0.022)"
+    if (currentFocus.kind === "none") return "rgba(57, 56, 54, 0.4)"
     const sourceId = typeof link.source === "string" ? link.source : link.source.id
     const targetId = typeof link.target === "string" ? link.target : link.target.id
     const active =
       currentHighlighted.size === 0 ||
       (currentHighlighted.has(sourceId) && currentHighlighted.has(targetId))
-    if (!active) return "rgba(246, 235, 215, 0.04)"
+    if (!active) return "rgba(57, 56, 54, 0.18)"
     if (
       currentFocus.kind === "note" &&
       (sourceId === currentFocus.slug || targetId === currentFocus.slug)
     )
-      return "rgba(255, 244, 224, 0.32)"
-    if (link.kind === "link") return "rgba(222, 213, 198, 0.18)"
-    if (link.kind === "tag") return "rgba(184, 176, 162, 0.1)"
-    return "rgba(190, 181, 166, 0.12)"
+      return "rgba(139, 164, 176, 0.65)"
+    if (link.kind === "link") return "rgba(57, 56, 54, 0.42)"
+    if (link.kind === "tag") return "rgba(57, 56, 54, 0.34)"
+    return "rgba(57, 56, 54, 0.38)"
   }
 
   function linkWidth(link: GraphLink): number {
@@ -405,11 +405,11 @@ if (window.self !== window.top) {
   }
 
   function nodeHaloColor(node: NodeData): string {
-    if (currentFocus.kind === "note" && currentFocus.slug === node.id) return "#fff7e8"
-    if (node.kind === "folder") return "#d2c9ba"
-    if (node.kind === "tag") return "#b8b0a3"
-    if (visitedSnapshot.has(node.id)) return "#ded5c6"
-    return "#aaa297"
+    if (currentFocus.kind === "note" && currentFocus.slug === node.id) return "#8ba4b0"
+    if (node.kind === "folder") return "#8ea4a2"
+    if (node.kind === "tag") return "#87a987"
+    if (visitedSnapshot.has(node.id)) return "#9e9b93"
+    return "#393836"
   }
 
   function ensureSharedNodeGeometry() {

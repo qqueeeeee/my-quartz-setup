@@ -9,6 +9,8 @@ import { QuartzPluginData } from "../../plugins/vfile"
 import { ComponentChildren } from "preact"
 import { concatenateResources } from "../../util/resources"
 import { trieFromAllFiles } from "../../util/ctx"
+import { FullSlug, resolveRelative } from "../../util/path"
+import { Date as QuartzDate, getDate } from "../Date"
 
 interface FolderContentOptions {
   /**
@@ -29,6 +31,63 @@ export default ((opts?: Partial<FolderContentOptions>) => {
 
   const FolderContent: QuartzComponent = (props: QuartzComponentProps) => {
     const { tree, fileData, allFiles, cfg } = props
+    const cssClasses: string[] = fileData.frontmatter?.cssclasses ?? []
+    const classes = cssClasses.join(" ")
+
+    if (fileData.slug === "notes/index") {
+      const notes = allFiles
+        .filter((page) => {
+          const slug = page.slug ?? ""
+          return (
+            slug !== "index" &&
+            slug !== "about" &&
+            slug !== "graph" &&
+            slug !== "notes/index" &&
+            slug !== "projects/index" &&
+            !slug.startsWith("tags/") &&
+            !slug.startsWith("Templates/") &&
+            !slug.startsWith("images/")
+          )
+        })
+        .sort((a, b) => {
+          const aDate = a.dates ? getDate(cfg, a)!.getTime() : 0
+          const bDate = b.dates ? getDate(cfg, b)!.getTime() : 0
+          return bDate - aDate
+        })
+
+      return (
+        <div class="popover-hint notes-index">
+          <article class={classes}>
+            {htmlToJsx(fileData.filePath!, tree) as ComponentChildren}
+          </article>
+          <ol class="notes-list">
+            {notes.map((page) => {
+              const tags = page.frontmatter?.tags ?? []
+              return (
+                <li>
+                  <span class="note-date">
+                    {page.dates && <QuartzDate date={getDate(cfg, page)!} locale={cfg.locale} />}
+                  </span>
+                  <a href={resolveRelative(fileData.slug!, page.slug!)} class="internal">
+                    {page.frontmatter?.title}
+                  </a>
+                  <span class="note-tags">
+                    {tags.map((tag) => (
+                      <a
+                        class="internal tag-link"
+                        href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
+                      >
+                        {tag}
+                      </a>
+                    ))}
+                  </span>
+                </li>
+              )
+            })}
+          </ol>
+        </div>
+      )
+    }
 
     const trie = (props.ctx.trie ??= trieFromAllFiles(allFiles))
     const folder = trie.findNode(fileData.slug!.split("/"))
@@ -88,8 +147,6 @@ export default ((opts?: Partial<FolderContentOptions>) => {
           }
         })
         .filter((page) => page !== undefined) ?? []
-    const cssClasses: string[] = fileData.frontmatter?.cssclasses ?? []
-    const classes = cssClasses.join(" ")
     const listProps = {
       ...props,
       sort: options.sort,
@@ -105,7 +162,7 @@ export default ((opts?: Partial<FolderContentOptions>) => {
     return (
       <div class="popover-hint">
         <article class={classes}>{content}</article>
-        <div class="page-listing">
+        <div class={cssClasses.includes("no-folder-list") ? "page-listing hidden" : "page-listing"}>
           {options.showFolderCount && (
             <p>
               {i18n(cfg.locale).pages.folderContent.itemsUnderFolder({
