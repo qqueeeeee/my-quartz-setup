@@ -1,16 +1,13 @@
 ---
-categories:
-  - "[[Projects]]"
-tags:
-  - projects
-  - ml
-  - c
-  - systems
-year: 2026
-status: in-progress
+title: "Writing a ML Library in C"
+date: 2026-05-07
+category: project
+status: growing
+tags: ["#dsa", "#algorithms", "#fullstack", "#systems", "#projects"]
+related: ["[[Writing]]", "[[Pointers]]", "[[Stack vs Heap]]", "[[Arrays]]"]
 ---
 
-# Writing a ML Library in C
+# [[Writing]] a ML Library in C
 
 I want to build a small machine learning library in C that can eventually classify digits from the MNIST dataset.
 
@@ -55,3 +52,9 @@ The interesting part is not the sentence above. The interesting part is implemen
 - [[Arrays]]
 - [[Graphs]]
 
+## Connections
+
+- [[Writing]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Pointers]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Stack vs Heap]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Arrays]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

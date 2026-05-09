@@ -1,12 +1,13 @@
 ---
-created:
-tags:
-  - forge
-related:
+title: "Boredom Tolerance - How to improve it."
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#systems", "#dsa", "#concepts"]
+related: ["[[roadmap|roadmap]]", "[[Boredom Tolerance|boredom tolerance]]", "[[Elizabeth Wurtzel]]", "[[Viktor Frankl]]"]
 ---
-#forge
 
-This is a 3 step process, skipping any of the steps is really bad it's like trying to run a marathon while you can't even jog a mile. So it is not recommended to skip any of these steps, go one after the other. Having a clear roadmap will help you understand where you are and what you're working on and when you're ready to progress and this will remove most of the ambiguity that causes people to either push too hard or not push hard enough. 
+This is a 3 step process, skipping any of the steps is really bad it's like trying to run a marathon while you can't even jog a mile. So it is not recommended to skip any of these steps, go one after the other. Having a clear [[roadmap|roadmap]] will help you understand where you are and what you're working on and when you're ready to progress and this will remove most of the ambiguity that causes people to either push too hard or not push hard enough. 
 
 ### Level 1 - Micro Boredom  
 
@@ -26,7 +27,7 @@ You will also start noticing more ideas coming up, decisions you've been avoidin
 
 ### Level 2 - Single-task work blocks ###
 
-This is the level where you apply boredom tolerance to actual tasks, you set a timer for 30-60 minutes, and you do that task without anything else, no just checking, no glances, nothing. Just the task. The key here is singular focus, it will want to check something else, it will want to do something else, every one of these is a escape attempt and your job is to notice that and stick to the task still, You will feel urges to switch and that's normal and each of the urge is a training opportunity when you feel the pull you stay strong and train yourself.
+This is the level where you apply [[Boredom Tolerance|boredom tolerance]] to actual tasks, you set a timer for 30-60 minutes, and you do that task without anything else, no just checking, no glances, nothing. Just the task. The key here is singular focus, it will want to check something else, it will want to do something else, every one of these is a escape attempt and your job is to notice that and stick to the task still, You will feel urges to switch and that's normal and each of the urge is a training opportunity when you feel the pull you stay strong and train yourself.
 
 If you need a break from this, what you can do is, do nothing, until the timer runs our when you get an urge, you can take a break, but that break doesn't mean you do something stimulating, that will once again take away from the whole point of this exercise. You can either just stick to the task or do nothing, anything else breaks it and will just reinforce the bad habits.
 
@@ -41,7 +42,7 @@ When 30 minute feels very easy increase it to 45, then 60 then 75 and then final
 
 ### Level 3 - Repetition without Novelty ###
 
-You're going to do the same task, with the same time, day after day, no variation, no mixing it up for the stake of variety, you're going to stick with one over and over again. You're deliberately removing novelty from the equation as it's a crutch your brain uses to get you avoid actual boredom tolerance so when you can get yourself to do something for weeks without needing to change it up, you've reached a new level of tolerance that most people never do. This can be something like writing in the morning, or exercising, anything, doing one thing at the same time everyday regardless of the results. The same-ness is the point, this will feel boring, that is the point. If it feels repetitive then you're doing it right. In-fact boredom at this level is a signal of mastery, you're training your capacity to train without novelty it means you stripped away all dopamine sources and you're still showing up. 
+You're going to do the same task, with the same time, day after day, no variation, no mixing it up for the stake of variety, you're going to stick with one over and over again. You're deliberately removing novelty from the equation as it's a crutch your brain uses to get you avoid actual boredom tolerance so when you can get yourself to do something for weeks without needing to change it up, you've reached a new level of tolerance that most people never do. This can be something like [[Writing|writing]] in the morning, or exercising, anything, doing one thing at the same time everyday regardless of the results. The same-ness is the point, this will feel boring, that is the point. If it feels repetitive then you're doing it right. In-fact boredom at this level is a signal of mastery, you're training your capacity to train without novelty it means you stripped away all dopamine sources and you're still showing up. 
 
 This level is also about consistency, everyone can do it once, or a week, you need to do this, for weeks, months, years in-fact, the point is, you keep going even though there's no result. This is what keeps successful people at the top, the YouTuber who posts everyday for 2 years with no growth, the guy who goes to the gym for months without seeing any physical progress, this is what separates people. Consistency is key. **Everything valuable requires compounding and compounding requires time and time requires sustained effort without novelty.**  
 
@@ -50,3 +51,10 @@ This level is also about consistency, everyone can do it once, or a week, you ne
 Boredom tolerance is basically a multiplier on all that you do, you work, your skills, your projects, all of it works better when you can actually stay in action for things to actually compound. So the  people who build health, wealth, success aren't doing anything crazy, they're just doing the obvious things longer than everyone else and time is the multiplier that most people can't access because they can't tolerate the boredom to let the time work, compounding needs time. The magic of compounding is invisible in the early stages that's why most people quit. The first year of almost anything looks almost unimpressive and the year two builds on your one, year three builds on your three, eventually curve goes exponential. 
 
 **Durability beats intensity almost everytime.** - Someone who can show up at 70% effort for years beats someone who can show up at 100% effort for weeks.
+
+## Connections
+
+- [[roadmap|roadmap]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Boredom Tolerance|boredom tolerance]] - This belongs to the same inner pattern, the part where I am trying to understand how my own mind behaves.
+- [[Elizabeth Wurtzel]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Viktor Frankl]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.

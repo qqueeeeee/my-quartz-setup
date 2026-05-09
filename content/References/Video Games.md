@@ -1,8 +1,12 @@
 ---
-tags:
-  - hobbies
-  - philosophy
+title: "Video Games"
+date: 2026-05-07
+category: reference
+status: seedling
+tags: ["#gamedev", "#research", "#references"]
+related: ["[[Superfighters Deluxe]]", "[[Ironsight]]", "[[Fishao]]", "[[Brawlhalla]]"]
 ---
+
 I grew up with games, these are what I spent most of my time on. Though, I've been being way more productive in the past ~1 year, my love for them never died and I doubt it will ever die.   
 
 
@@ -16,4 +20,11 @@ For 4+ years when I was in school, I played [[Superfighters Deluxe]] for at leas
 
 It was hours of grind, fun and a lot more. I watched guides, grinded ranked constantly, analyzed what I was doing wrong. The same competitive drive that pushes me to be good at everything I touch, games were where I first noticed it in myself.
 
-Gaming taught me something important: getting good at anything requires obsession, not talent. I wasn't good at the start itself, I just cared more and put in more hours than most people were willing to and got there after a lot of work. 
+Gaming taught me something important: getting good at anything requires obsession, not talent. I wasn't good at the start itself, I just cared more and put in more hours than most people were willing to and got there after a lot of work.
+
+## Connections
+
+- [[Superfighters Deluxe]] - This is close enough that future me will probably want to walk between these notes in both directions.
+- [[Ironsight]] - This is close enough that future me will probably want to walk between these notes in both directions.
+- [[Fishao]] - This is close enough that future me will probably want to walk between these notes in both directions.
+- [[Brawlhalla]] - This is close enough that future me will probably want to walk between these notes in both directions.

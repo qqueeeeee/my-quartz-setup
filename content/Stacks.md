@@ -1,8 +1,12 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Stacks"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#career", "#concepts"]
+related: ["[[Reference|reference]]", "[[Recursion]]", "[[Arrays]]", "[[Linked Lists]]"]
 ---
+
 A stack is a linear data structure that follows one rule: **Last In, First Out (LIFO)**. The last thing you put in is the first thing you get out. That's the entire idea.
 
 Think of a stack of plates. You add plates to the top, you take plates from the top. You never pull from the middle or the bottom. The structure enforces this.
@@ -23,7 +27,7 @@ Everything is O(1). That's the payoff for restricting how you interact with it.
 
 ## Why does LIFO matter
 
-The order isn't arbitrary. There are a whole class of problems where the most recently seen thing is exactly what you need to reference next. Some examples:
+The order isn't arbitrary. There are a whole class of problems where the most recently seen thing is exactly what you need to [[Reference|reference]] next. Some examples:
 
 **Function call stack** - when a function calls another function, the current one pauses and gets pushed onto the call stack. When the inner one finishes, you pop back to where you were. This is literally how every program runs, your language runtime uses a stack under the hood. [[Recursion]] is just the call stack doing this automatically.
 
@@ -37,11 +41,11 @@ The order isn't arbitrary. There are a whole class of problems where the most re
 
 ## How it's implemented
 
-A stack isn't a new data structure at the memory level. It's just an [[Arrays]] or [[Linked Lists]] with restricted access. You're not inventing new storage, you're putting rules on top of existing storage.
+A stack isn't a new data structure at the memory level. It's just an Arrays or Linked Lists with restricted access. You're not inventing new storage, you're putting rules on top of existing storage.
 
 With an array you keep track of the top index and only ever touch that position. With a linked list you only ever insert and remove from the head (which becomes the top).
 
-Both work. Array-based stacks are more common in practice because of [[Cache Locality]].
+Both work. Array-based stacks are more common in practice because of Cache Locality.
 
 ---
 
@@ -124,3 +128,10 @@ Result: [4, 4, -1, -1]
 Stacks are simple but they show up everywhere. Whenever you see a problem that involves reversing something, matching pairs, or tracking the most recent item, think stack first.
 
 **Next up → [[Queues]]**
+
+## Connections
+
+- [[Reference|reference]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Recursion]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Arrays]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Linked Lists]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

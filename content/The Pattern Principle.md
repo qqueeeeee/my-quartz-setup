@@ -1,12 +1,12 @@
 ---
-created:
-tags:
-  - ideas
-  - self
-  - writing
-source:
-related:
+title: "The Pattern Principle"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#tools", "#devenv", "#gamedev", "#projects"]
+related: ["[[Video Games]]", "[[Neovim]]", "[[GlazeWM]]", "[[Quartz]]"]
 ---
+
 # The Pattern Principle
 
 ## How you do one thing dictates how you do everything.
@@ -28,3 +28,10 @@ The pattern is basically:
 obsession -> progress -> boredom -> the next thing
 
 I am trying to get better at spotting that loop early so I do not keep repeating it forever. That is why notes like [[Boredom Tolerance]] matter to me. It is less about motivation and more about learning how to actually stay with something long enough to finish it properly.
+
+## Connections
+
+- [[Video Games]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Neovim]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[GlazeWM]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[Quartz]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.

@@ -1,8 +1,10 @@
 ---
-tags:
-  - ideas
-  - design
-  - writing
+title: "Find your own theme."
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#tools", "#devenv", "#projects"]
+related: ["[[Quartz]]", "[[My Theme]]", "[[Digital Garden]]", "[[The Pattern Principle]]"]
 ---
 
 # Find your own theme
@@ -22,3 +24,10 @@ It also connects to:
 - [[My Theme]]
 - [[Digital Garden]]
 - [[The Pattern Principle]]
+
+## Connections
+
+- [[Quartz]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[My Theme]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Digital Garden]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[The Pattern Principle]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

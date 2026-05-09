@@ -1,42 +1,10 @@
 ---
-created: 2026-02-06
-tags:
-  - career
-  - cs
-  - job-search
-  - learning
-  - topic/c++
-  - topic/data-structures
-  - topic/dsa
-  - topic/interview-prep
-  - topic/job-search
-  - topic/resume
-people:
-  - Que
-places:
-  []
-projects:
-  []
-themes:
-  - career
-  - cs
-  - job-search
-  - learning
-topics:
-  - c++
-  - data-structures
-  - dsa
-  - interview-prep
-  - job-search
-  - resume
-orgs:
-  []
-related:
-  - "[[About Me]]"
-  - "[[C++]]"
-  - "[[Data Structures]]"
-  - "[[Featured Work]]"
-  - "[[Skills]]"
+title: "Python quiz and practice note"
+date: 2026-02-06
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#concepts"]
+related: ["[[Python]]", "[[Data Structures]]", "[[Algorithms]]"]
 ---
 
 # Python quiz and practice note
@@ -57,10 +25,8 @@ Quizzes and short code prompts are useful for:
 
 So the value here is not some giant study system. It is just having a low-friction way to pressure-test what I know.
 
-## Related notes
+## Connections
 
-- [[About Me]]
-- [[C++]]
-- [[Data Structures]]
-- [[Featured Work]]
-- [[Skills]]
+- [[Python]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.
+- [[Data Structures]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Algorithms]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

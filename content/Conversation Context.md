@@ -1,9 +1,10 @@
 ---
-tags:
-  - conversations
-  - imported
-  - context
-  - portfolio
+title: "Conversation Context"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#dsa", "#algorithms", "#fullstack", "#systems", "#projects"]
+related: ["[[SelfForge]]", "[[Quartz]]", "[[PathForge AI]]", "[[Lumina Invest]]"]
 ---
 
 # Conversation Context
@@ -22,7 +23,7 @@ This note is a cleaned-up snapshot of what the chat export says I was focused on
 A few themes came up again and again in the export:
 
 - career pivoting and interview prep
-- building things from scratch instead of hiding behind giant stacks
+- building things from scratch instead of hiding behind giant [[Stacks|stacks]]
 - turning projects into real proof of work instead of half-finished ideas
 - making tools feel personal, fast, and actually fun to use
 
@@ -36,3 +37,10 @@ It also links pretty directly into the rest of the vault:
 - [[Featured Work]]
 - [[Skills]]
 - [[Conversation Archive]]
+
+## Connections
+
+- [[SelfForge]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[Quartz]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[PathForge AI]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[Lumina Invest]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.

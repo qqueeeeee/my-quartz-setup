@@ -1,13 +1,10 @@
 ---
-categories:
-  - "[[Projects]]"
-tags:
-  - projects
-  - frontend
-  - finance
-  - dashboard
-year: 2026
-status: shipped
+title: "Lumina Invest"
+date: 2026-05-07
+category: project
+status: evergreen
+tags: ["#fullstack", "#tools", "#devenv", "#finance", "#projects"]
+related: ["[[Quartz]]", "[[Conversation Archive]]"]
 ---
 
 # Lumina Invest
@@ -28,3 +25,8 @@ The goal was to make something that felt closer to a real market dashboard inste
 - [[Featured Work]]
 - [[Quartz]]
 - [[Conversation Archive]]
+
+## Connections
+
+- [[Quartz]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[Conversation Archive]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

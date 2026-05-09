@@ -1,18 +1,15 @@
 ---
 title: "On Writing Tech Specs"
-source: "https://codeburst.io/on-writing-tech-specs-6404c9791159"
-author:
-  - "[[Chuck Groom]]"
-published: 2017-11-01
-created: 2026-04-03
-description: "On Writing Tech Specs Before writing code to solve all but the most trivial of software problems, a software engineer should write a tech spec. Some software engineers may regard writing specs as …"
-tags:
-  - "clippings"
+date: 2026-04-03
+category: reference
+status: seedling
+tags: ["#tools", "#devenv", "#career", "#research", "#references"]
+related: ["[[Writing|writing]]", "[[goal.|a software engineer’s job isn’t to write code but to solve problems]]", "[[Free|free]]", "[[Skills|skills]]"]
 ---
 
 ![](https://miro.medium.com/v2/resize:fit:1200/format:webp/1*AHiGNvpa9IYFWFQscT3RGA.png)
 
-Before writing code to solve all but the most trivial of software problems, a software engineer should write a tech spec.
+Before [[Writing|writing]] code to solve all but the most trivial of software problems, a software engineer should write a tech spec.
 
 Some software engineers may regard writing specs as unnecessary process that gets in the way of the agile approach. The point of a tech spec is not to impede progress, but to take a brief step back and think things through. Remember: [[goal.|a software engineer’s job isn’t to write code but to solve problems]].
 
@@ -110,7 +107,7 @@ These sections are optional if a product spec has already clearly defined the pr
 
 ## Get Chuck Groom’s stories in your inbox
 
-Join Medium for free to get updates from this writer.
+Join Medium for [[Free|free]] to get updates from this writer.
 
 The cornerstone of all successful projects is having clear goals — knowing what problem we’re solving. I cannot over-state the importance of agreeing on the goal; the biggest failures I’ve witnessed were due to various stakeholders running off in different directions because they didn’t take the time to make sure everyone *really agreed* about what they were supposed to do.
 
@@ -190,7 +187,7 @@ Talking to a rubber duck is less crazy than jumping into writing code.
 
 ## Writing a Tech Spec is Writing
 
-Writing is a skill that takes practice and discipline, but it’s worth the effort. Improving your communication skills is essential to becoming a clearer thinker and better leader. Your first tech spec will be slow going; you just need to do it; and then do another; and another. It gets easier.
+Writing is a skill that takes practice and discipline, but it’s worth the effort. Improving your communication [[Skills|skills]] is essential to becoming a clearer thinker and better leader. Your first tech spec will be slow going; you just need to do it; and then do another; and another. It gets easier.
 
 You know who’s good at writing things people pay money to read? Stephen King. The single most useful book I’ve read in my engineering career is his memoir *On Writing.* (#2 is Strunk and White’s *The Elements of Style*, followed by Kernighan and Ritchie’s *The C Programming Language*). King’s book is half painfully honest self-examination, and half bare-knuckles practical advice about the craft. While his topic is creative writing, I feel much of it applies to technical problem-solving. I especially resonated with:
 
@@ -210,3 +207,10 @@ My approach is:
 - I schedule a 90 minute review meeting. The stakeholders are required attendees, and the interested parties are optional. The meeting invite includes a link to my tech spec and gives the itinerary as: 30 minutes quiet time to review the document (a.k.a. read it for the first time), 55 minutes to discuss, and 5 minutes for stakeholder sign-off.
 
 By signing off, the stakeholders are on hook with me. We share responsibility for the project success and timeline, which discourages last-minute changes and feature creep. Work now feels more collegial, sane, and deliberate.
+
+## Connections
+
+- [[Writing|writing]] - This is close enough that future me will probably want to walk between these notes in both directions.
+- [[goal.|a software engineer’s job isn’t to write code but to solve problems]] - This is close enough that future me will probably want to walk between these notes in both directions.
+- [[Free|free]] - This is close enough that future me will probably want to walk between these notes in both directions.
+- [[Skills|skills]] - This is close enough that future me will probably want to walk between these notes in both directions.

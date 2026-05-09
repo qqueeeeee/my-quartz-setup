@@ -1,13 +1,10 @@
 ---
-categories:
-  - "[[Projects]]"
-tags:
-  - projects
-  - ai
-  - hackathon
-  - career
-year: 2026
-status: shipped
+title: "PathForge AI"
+date: 2026-05-07
+category: project
+status: evergreen
+tags: ["#dsa", "#algorithms", "#fullstack", "#career", "#projects"]
+related: ["[[FastAPI|FastAPI]]", "[[React|React]]", "[[Groq|Groq]]", "[[roadmap|roadmap]]"]
 ---
 
 # PathForge AI
@@ -24,13 +21,20 @@ The idea was to make it feel less like a boring career portal and more like an a
 
 ## Stack / direction
 
-- FastAPI backend
-- React frontend
-- Groq models for inference
-- roadmap / resume / interview style features
+- [[FastAPI|FastAPI]] backend
+- [[React|React]] frontend
+- [[Groq|Groq]] models for inference
+- [[roadmap|roadmap]] / resume / interview style features
 
 ## Connected notes
 
 - [[About Me]]
 - [[Conversation Archive]]
 - [[Writing]]
+
+## Connections
+
+- [[FastAPI|FastAPI]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[React|React]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[Groq|Groq]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[roadmap|roadmap]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

@@ -1,8 +1,12 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Linked Lists"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#research", "#concepts"]
+related: ["[[Arrays]]", "[[Pointers|pointers]]", "[[Reference|reference]]", "[[Cache Locality]]"]
 ---
+
 A linked list is a collection of nodes where each node holds some data and a pointer to the next node. Unlike [[Arrays]], the elements are not stored contiguously in memory. Each node can be anywhere in memory, and the pointers are what connect them together.
 
 ---
@@ -53,7 +57,7 @@ The insert/delete being O(1) is only true once you're already at the position. T
 
 When you're doing a lot of insertions and deletions and don't need random access. Good examples are implementing stacks, queues, or anything where you're constantly adding/removing from the ends.
 
-In practice, [[Arrays]] (vectors) are often faster in the real world even for insertions because of [[Cache Locality]]. Memory that's contiguous is faster to access because of how CPU caches work. Linked list nodes are scattered in memory so every hop is potentially a cache miss. Worth knowing even if it doesn't change DSA problem solving much.
+In practice, Arrays (vectors) are often faster in the real world even for insertions because of Cache Locality. Memory that's contiguous is faster to access because of how CPU caches work. Linked list nodes are scattered in memory so every hop is potentially a cache miss. Worth knowing even if it doesn't change DSA problem solving much.
 
 ---
 ## In C++
@@ -139,3 +143,10 @@ l.pop_back();
 ---
 
 Linked lists are also the foundation for [[Stacks]] and [[Queues]], which are just linked lists with restricted access patterns.
+
+## Connections
+
+- [[Arrays]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Pointers|pointers]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Reference|reference]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Cache Locality]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.

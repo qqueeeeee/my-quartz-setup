@@ -1,8 +1,10 @@
 ---
-tags:
-  - vaults
-  - systems
-  - writings
+title: "Vault Style Guide"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#tools", "#devenv", "#gamedev", "#research", "#projects"]
+related: ["[[Writing|writing]]", "[[Clippings]]"]
 ---
 
 # Vault Style Guide
@@ -15,7 +17,7 @@ It is not some strict religion or anything, it is just the set of rules that mak
 
 The vault should stay file-first, link-heavy, and as low-friction as possible.
 
-I do not want to spend more time organizing notes than actually writing them.
+I do not want to spend more time organizing notes than actually [[Writing|writing]] them.
 
 ## Rules I want to follow
 
@@ -51,3 +53,8 @@ The folders that should exist are mostly just support folders:
 I want structure to emerge from links, categories, and repeated themes, not from me endlessly deciding where a file belongs.
 
 That is the whole point.
+
+## Connections
+
+- [[Writing|writing]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Clippings]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

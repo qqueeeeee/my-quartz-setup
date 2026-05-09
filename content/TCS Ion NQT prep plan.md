@@ -1,97 +1,10 @@
 ---
-created: 2026-03-13
-tags:
-  - ai
-  - career
-  - cs
-  - design
-  - finance
-  - frontend
-  - games
-  - job-search
-  - learning
-  - product
-  - project/lumina-invest
-  - project/minecraft-redstone-ai
-  - project/quartz
-  - project/selfforge
-  - projects
-  - topic/ai
-  - topic/auth
-  - topic/c++
-  - topic/csv-import
-  - topic/dashboard
-  - topic/data-structures
-  - topic/dsa
-  - topic/graph
-  - topic/interview-prep
-  - topic/job-search
-  - topic/lumina-invest
-  - topic/minecraft
-  - topic/portfolio
-  - topic/quartz
-  - topic/rag
-  - topic/redstone
-  - topic/resume
-  - topic/selfforge
-people:
-  - Que
-places:
-  - Hyderabad
-  - India
-projects:
-  - Lumina Invest
-  - Minecraft Redstone AI
-  - Quartz
-  - SelfForge
-themes:
-  - ai
-  - career
-  - cs
-  - design
-  - finance
-  - frontend
-  - games
-  - job-search
-  - learning
-  - product
-  - projects
-topics:
-  - ai
-  - auth
-  - c++
-  - csv-import
-  - dashboard
-  - data-structures
-  - dsa
-  - graph
-  - interview-prep
-  - job-search
-  - lumina-invest
-  - minecraft
-  - portfolio
-  - quartz
-  - rag
-  - redstone
-  - resume
-  - selfforge
-orgs:
-  - Prime
-  - TCS
-related:
-  - "[[About Me]]"
-  - "[[C++]]"
-  - "[[Data Structures]]"
-  - "[[Digital Garden]]"
-  - "[[Featured Work]]"
-  - "[[Keyboard Centric Workflow]]"
-  - "[[Lumina Invest]]"
-  - "[[Python]]"
-  - "[[Quartz]]"
-  - "[[RAG]]"
-  - "[[SelfForge]]"
-  - "[[Skills]]"
-  - "[[Writing]]"
+title: "TCS Ion NQT prep plan"
+date: 2026-03-13
+category: review
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#tools", "#reviews"]
+related: ["[[Python]]", "[[SelfForge]]", "[[Lumina Invest]]"]
 ---
 
 # TCS Ion NQT prep plan
@@ -123,18 +36,8 @@ So instead of treating NQT as the whole game, it made more sense to use it as on
 - my DSA level
 - my interview answers around [[SelfForge]], [[Lumina Invest]], and the rest of my work
 
-## Related notes
+## Connections
 
-- [[About Me]]
-- [[C++]]
-- [[Data Structures]]
-- [[Digital Garden]]
-- [[Featured Work]]
-- [[Keyboard Centric Workflow]]
-- [[Lumina Invest]]
-- [[Python]]
-- [[Quartz]]
-- [[RAG]]
-- [[SelfForge]]
-- [[Skills]]
-- [[Writing]]
+- [[Python]] - This is one of the concrete things the pressure was pointing at, so it should stay easy to revisit.
+- [[SelfForge]] - This is where future me can check what this moment eventually turned into.
+- [[Lumina Invest]] - This is where future me can check what this moment eventually turned into.

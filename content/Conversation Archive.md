@@ -1,8 +1,10 @@
 ---
-tags:
-  - conversations
-  - imported
-  - navigation
+title: "Conversation Archive"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#dsa", "#algorithms", "#fullstack", "#systems", "#projects"]
+related: ["[[Conversation Context]]", "[[About Me]]", "[[Building PathForge AI for the hackathon]]", "[[Resume ideas for my Quartz site]]"]
 ---
 
 # Conversation Archive
@@ -50,15 +52,15 @@ If I was actively thinking about a project, a career move, or some weird tooling
 - [[Reverse engineering Superfighters Deluxe for vulnerabilities]]
 - [[Verifying the Bloomberg-style dashboard idea]]
 
-## Games / side rabbit holes
+## [[Games]] / side rabbit holes
 
 - [[Can Linux ever run anti-cheat games properly]]
 
 ## Blank imports
 
-- [[Blank imported chat from 2026-03-07]]
-- [[Blank imported chat from 2026-03-22]]
-- [[Blank imported chat from 2026-03-31]]
-- [[Blank imported chat from 2026-03-27]]
-- [[Blank imported chat from 2026-03-04]]
-- [[Blank imported chat from 2026-02-23]]
+## Connections
+
+- [[Conversation Context]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[About Me]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Building PathForge AI for the hackathon]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[Resume ideas for my Quartz site]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.

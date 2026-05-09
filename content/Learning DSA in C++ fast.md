@@ -1,110 +1,10 @@
 ---
-created: 2026-02-19
-tags:
-  - ai
-  - career
-  - cs
-  - design
-  - frontend
-  - games
-  - job-search
-  - learning
-  - linux
-  - product
-  - project/quartz
-  - project/selfforge
-  - projects
-  - reverse-engineering
-  - security
-  - systems
-  - tooling
-  - topic/auth
-  - topic/c++
-  - topic/clipboard
-  - topic/compatibility
-  - topic/data-structures
-  - topic/dsa
-  - topic/games
-  - topic/graph
-  - topic/interview-prep
-  - topic/job-search
-  - topic/linux
-  - topic/neovim
-  - topic/portfolio
-  - topic/quartz
-  - topic/rag
-  - topic/resume
-  - topic/reverse-engineering
-  - topic/security
-  - topic/selfforge
-  - topic/sfd
-  - topic/wsl2
-  - workflow
-people:
-  - Que
-places:
-  - Hyderabad
-  - India
-projects:
-  - Quartz
-  - SelfForge
-themes:
-  - ai
-  - career
-  - cs
-  - design
-  - frontend
-  - games
-  - job-search
-  - learning
-  - linux
-  - product
-  - projects
-  - reverse-engineering
-  - security
-  - systems
-  - tooling
-  - workflow
-topics:
-  - auth
-  - c++
-  - clipboard
-  - compatibility
-  - data-structures
-  - dsa
-  - games
-  - graph
-  - interview-prep
-  - job-search
-  - linux
-  - neovim
-  - portfolio
-  - quartz
-  - rag
-  - resume
-  - reverse-engineering
-  - security
-  - selfforge
-  - sfd
-  - wsl2
-orgs:
-  - Prime
-related:
-  - "[[About Me]]"
-  - "[[Address Space Layout Randomization (ASLR)|ASLR]]"
-  - "[[C++]]"
-  - "[[Data Structures]]"
-  - "[[Digital Garden]]"
-  - "[[Featured Work]]"
-  - "[[Keyboard Centric Workflow]]"
-  - "[[Neovim]]"
-  - "[[Python]]"
-  - "[[Quartz]]"
-  - "[[RAG]]"
-  - "[[SelfForge]]"
-  - "[[Skills]]"
-  - "[[Superfighters Deluxe]]"
-  - "[[Tiling Window Managers]]"
+title: "Learning DSA in C++ fast"
+date: 2026-02-19
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#tools", "#concepts"]
+related: ["[[C++]]", "[[Arrays|arrays]]", "[[Linked Lists|linked lists]]", "[[Stacks|stacks]]"]
 ---
 
 # Learning DSA in C++ fast
@@ -132,32 +32,21 @@ The goal was not to become a master in two or three days. The goal was to get to
 
 The main areas I wanted to cover were the usual core set:
 
-- arrays / hashing
-- linked lists
-- stacks / queues
-- two pointers
-- sliding window
+- [[Arrays|arrays]] / hashing
+- [[Linked Lists|linked lists]]
+- [[Stacks|stacks]] / queues
+- [[Two Pointers|two pointers]]
+- [[Sliding Window|sliding window]]
 - binary search
-- trees / graphs
-- heaps
-- dynamic programming
+- trees / [[Graphs|graphs]]
+- [[Heaps|heaps]]
+- [[Dynamic Programming|dynamic programming]]
 
 So this note is really less about speed for the sake of speed, and more about building a DSA base that fits how I actually learn.
 
-## Related notes
+## Connections
 
-- [[About Me]]
-- [[Address Space Layout Randomization (ASLR)|ASLR]]
-- [[C++]]
-- [[Data Structures]]
-- [[Digital Garden]]
-- [[Featured Work]]
-- [[Keyboard Centric Workflow]]
-- [[Neovim]]
-- [[Python]]
-- [[Quartz]]
-- [[RAG]]
-- [[SelfForge]]
-- [[Skills]]
-- [[Superfighters Deluxe]]
-- [[Tiling Window Managers]]
+- [[C++]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.
+- [[Arrays|arrays]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Linked Lists|linked lists]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Stacks|stacks]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

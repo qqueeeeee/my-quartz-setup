@@ -1,86 +1,10 @@
 ---
-created: 2026-03-06
-tags:
-  - ai
-  - career
-  - design
-  - frontend
-  - hackathon
-  - job-search
-  - project/fishao-server
-  - project/pathforge-ai
-  - project/quartz
-  - projects
-  - reverse-engineering
-  - systems
-  - tooling
-  - topic/backend
-  - topic/career-planning
-  - topic/clipboard
-  - topic/fishao
-  - topic/graph
-  - topic/hackathon
-  - topic/interview-prep
-  - topic/job-search
-  - topic/neovim
-  - topic/pathforge-ai
-  - topic/portfolio
-  - topic/protocols
-  - topic/quartz
-  - topic/resume
-  - topic/wsl2
-  - workflow
-people:
-  - Que
-places:
-  []
-projects:
-  - Fishao Server
-  - PathForge AI
-  - Quartz
-themes:
-  - ai
-  - career
-  - design
-  - frontend
-  - hackathon
-  - job-search
-  - projects
-  - reverse-engineering
-  - systems
-  - tooling
-  - workflow
-topics:
-  - backend
-  - career-planning
-  - clipboard
-  - fishao
-  - graph
-  - hackathon
-  - interview-prep
-  - job-search
-  - neovim
-  - pathforge-ai
-  - portfolio
-  - protocols
-  - quartz
-  - resume
-  - wsl2
-orgs:
-  []
-related:
-  - "[[About Me]]"
-  - "[[C++]]"
-  - "[[Digital Garden]]"
-  - "[[Featured Work]]"
-  - "[[Fishao Server]]"
-  - "[[Keyboard Centric Workflow]]"
-  - "[[Neovim]]"
-  - "[[PathForge AI]]"
-  - "[[Quartz]]"
-  - "[[Skills]]"
-  - "[[Superfighters Deluxe]]"
-  - "[[Writing]]"
+title: "Resume ideas for my Quartz site"
+date: 2026-03-06
+category: project
+status: seedling
+tags: ["#dsa", "#algorithms", "#fullstack", "#tools", "#projects"]
+related: ["[[Quartz]]", "[[graph]]"]
 ---
 
 # Resume ideas for my Quartz site
@@ -91,7 +15,7 @@ This is about how a resume should live inside [[Quartz]] without feeling bolted 
 
 If I add a resume to [[Quartz]], it should not feel like some boring external attachment sitting next to the real site.
 
-The best version is making the resume part of the graph itself.
+The best version is making the resume part of the [[graph]] itself.
 
 That could mean:
 
@@ -111,17 +35,7 @@ The easiest source material is usually:
 - things I learned while building
 - ideas I ran into and want to come back to later
 
-## Related notes
+## Connections
 
-- [[About Me]]
-- [[C++]]
-- [[Digital Garden]]
-- [[Featured Work]]
-- [[Fishao Server]]
-- [[Keyboard Centric Workflow]]
-- [[Neovim]]
-- [[PathForge AI]]
-- [[Quartz]]
-- [[Skills]]
-- [[Superfighters Deluxe]]
-- [[Writing]]
+- [[Quartz]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[graph]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

@@ -1,7 +1,10 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Arrays"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#concepts"]
+related: ["[[Linked Lists]]", "[[Python]]", "[[Binary Search]]", "[[Hash Maps]]"]
 ---
 
 An array is a contiguous block of memory where elements are stored one after another. This isn't just an implementation detail, it's the reason arrays behave the way they do.
@@ -36,7 +39,7 @@ A dynamic array wraps a static array internally but handles resizing for you. Wh
 
 The 2x growth strategy is deliberate. If you grew by 1 each time, every single append would trigger a copy. Doubling means copies happen at sizes 1, 2, 4, 8, 16... so total work across n appends is roughly 2n. Amortizes to O(1) per append.
 
-Python's list, Java's ArrayList, C++'s vector are all dynamic arrays under the hood.
+[[Python]]'s list, Java's ArrayList, C++'s vector are all dynamic arrays under the hood.
 
 ---
 
@@ -114,3 +117,10 @@ insert() and erase() take iterators not indices. v.begin() + i gets you the iter
 ---
 
 Almost every other data structure either builds on top of Arrays or exists because of their limitations.
+
+## Connections
+
+- [[Linked Lists]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Python]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.
+- [[Binary Search]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Hash Maps]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

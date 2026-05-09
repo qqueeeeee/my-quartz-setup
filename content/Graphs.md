@@ -1,11 +1,15 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Graphs"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#concepts"]
+related: ["[[Trees|tree]]", "[[graph]]", "[[Queues|queue]]", "[[Recursion]]"]
 ---
+
 A graph is a collection of nodes (vertices) connected by edges. It's the most general data structure, everything else is a special case of a graph. A [[Trees|tree]] is just a graph with no cycles and one root.
 
-Graphs model anything with relationships — social networks, maps, the internet, dependencies between tasks, flight routes. If your problem involves connections between things, it's probably a graph problem.
+Graphs model anything with relationships — social networks, maps, the internet, dependencies between tasks, flight routes. If your problem involves connections between things, it's probably a [[graph]] problem.
 
 ---
 
@@ -73,7 +77,7 @@ Two fundamental ways to explore a graph. These are the building blocks for almos
 
 ### BFS (Breadth First Search)
 
-Explore level by level. Start at a node, visit all its neighbours, then all their neighbours, and so on. Uses a [[Queues|queue]].
+Explore level by level. Start at a node, visit all its neighbours, then all their neighbours, and so on. Uses a queue.
 
 Gives you the shortest path in an unweighted graph because you always explore closer nodes first.
 
@@ -102,7 +106,7 @@ void bfs(vector<vector<int>>& adj, int start) {
 
 ### DFS (Depth First Search)
 
-Go as deep as possible before backtracking. Uses [[Recursion]] (or an explicit [[Stacks|stack]]).
+Go as deep as possible before backtracking. Uses Recursion (or an explicit stack).
 
 Good for detecting cycles, topological sort, connected components, and pathfinding.
 
@@ -146,7 +150,7 @@ The `visited` array is critical. Without it you loop forever on graphs with cycl
 
 **Shortest path (unweighted)** — BFS gives you this directly.
 
-**Shortest path (weighted) — Dijkstra's algorithm** — use a min [[Heaps|heap]], always process the closest unvisited node. O((V + E) log V).
+**Shortest path (weighted) — Dijkstra's algorithm** — use a min heap, always process the closest unvisited node. O((V + E) log V).
 
 ```cpp
 vector<int> dijkstra(vector<vector<pair<int,int>>>& adj, int src) {
@@ -210,3 +214,10 @@ vector<int> topologicalSort(vector<vector<int>>& adj, int V) {
 ---
 
 Graphs are where everything comes together. BFS uses a queue, DFS uses recursion/stack, Dijkstra uses a heap. Every prior topic feeds into this one.
+
+## Connections
+
+- [[Trees|tree]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[graph]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Queues|queue]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Recursion]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

@@ -1,8 +1,12 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Recursion"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#career", "#concepts"]
+related: ["[[Stacks|call stack]]", "[[Writing|writing]]", "[[C++]]", "[[Trees]]"]
 ---
+
 Recursion is when a function calls itself to solve a smaller version of the same problem. It's not a data structure, it's a problem-solving technique. But it's foundational enough that you need to understand it deeply before tackling trees, graphs, and dynamic programming.
 
 The core idea: if you can solve a small version of a problem, and you can reduce the big version into smaller versions, you can solve anything.
@@ -31,7 +35,7 @@ factorial(5)
 
 ## The Call Stack
 
-Every recursive call gets pushed onto the [[Stacks|call stack]]. When the base case is hit, the calls start returning and popping off one by one. This is literally the same call stack your program uses for all function calls.
+Every recursive call gets pushed onto the call stack. When the base case is hit, the calls start returning and popping off one by one. This is literally the same call stack your program uses for all function calls.
 
 This is why infinite recursion causes a stack overflow — you just keep pushing frames onto the stack until it runs out of memory.
 
@@ -122,4 +126,11 @@ int binarySearch(vector<int>& arr, int left, int right, int target) {
 
 ---
 
-Recursion is the prerequisite for [[Trees]], [[Graphs]], [[Backtracking]], and [[Dynamic Programming]]. 
+Recursion is the prerequisite for [[Trees]], [[Graphs]], [[Backtracking]], and [[Dynamic Programming]].
+
+## Connections
+
+- [[Stacks|call stack]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.
+- [[Writing|writing]] - This belongs to the same inner pattern, the part where I am trying to understand how my own mind behaves.
+- [[C++]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.
+- [[Trees]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

@@ -1,11 +1,12 @@
 ---
-created:
-tags:
-  - ideas
-  - writing
-  - self
-related:
+title: "Discipline of Perception"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#tools", "#devenv", "#research", "#concepts"]
+related: ["[[Vagabond]]", "[[Preoccupied with a single leaf]]", "[[The Pattern Principle]]", "[[SelfForge]]"]
 ---
+
 # Discipline of Perception
 
 In a crowded café, two people sit across from each other. To most observers, it’s just a casual meeting. But someone trained in perception notices the subtle lean of one person’s torso, the tension in the jaw, the way the hand grips the coffee cup just a little too tightly. From these small cues, a deeper story emerges: there’s conflict under the surface.
@@ -25,3 +26,10 @@ This connects to a lot of other stuff I care about too:
 - how you notice patterns in your own behavior in [[The Pattern Principle]]
 - how you pay attention while learning something technical instead of skimming it
 - how you build tools like [[SelfForge]] that are supposed to help with reflection instead of just storing text
+
+## Connections
+
+- [[Vagabond]] - This belongs to the same inner pattern, the part where I am trying to understand how my own mind behaves.
+- [[Preoccupied with a single leaf]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[The Pattern Principle]] - This belongs to the same inner pattern, the part where I am trying to understand how my own mind behaves.
+- [[SelfForge]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.

@@ -1,25 +1,17 @@
 ---
-categories:
-  - "[[Projects]]"
-tags:
-  - projects
-  - portfolio
-  - frontend
-  - design
-type:
-  - site
-org: []
-start:
-year: 2026
-url:
-status: active
+title: "Quartz"
+date: 2026-05-07
+category: project
+status: growing
+tags: ["#dsa", "#algorithms", "#fullstack", "#tools", "#projects"]
+related: ["[[graph]]", "[[Digital Garden]]", "[[How I use Obsidian]]", "[[Keyboard Centric Workflow]]"]
 ---
 
-# Quartz
+# [[Quartz|Quartz]]
 
 This note is about the site you are looking at right now.
 
-I started with Quartz as a digital garden tool, then kept pushing it until it became something closer to a graph-native portfolio.
+I started with Quartz as a digital garden tool, then kept pushing it until it became something closer to a [[graph]]-native portfolio.
 
 ## Why this project matters
 
@@ -56,3 +48,10 @@ This project shows a mix of:
 - [[How I use Obsidian]]
 - [[Keyboard Centric Workflow]]
 - [[SelfForge]]
+
+## Connections
+
+- [[graph]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Digital Garden]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[How I use Obsidian]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Keyboard Centric Workflow]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

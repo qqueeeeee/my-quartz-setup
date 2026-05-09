@@ -1,8 +1,12 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Backtracking"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#concepts"]
+related: ["[[Recursion]]", "[[Data Structures]]", "[[Algorithms]]"]
 ---
+
 Backtracking is a technique for solving problems by building a solution incrementally, and abandoning a path as soon as you determine it can't lead to a valid solution. You go forward when things look promising, backtrack when they don't.
 
 It's essentially [[Recursion]] with an undo step. At each point you make a choice, recurse to explore it, then unmake the choice and try the next option.
@@ -155,3 +159,9 @@ These are unavoidable when you need all solutions. The question is how fast you 
 Backtracking is the brute-force-but-smart approach. When a problem asks "find all valid X" or "does any arrangement satisfy these constraints", backtracking is usually the answer.
 
 The undo step is the thing people forget when first learning it. Always ask: if I make this choice and recurse, what do I need to undo before trying the next choice?
+
+## Connections
+
+- [[Recursion]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Data Structures]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Algorithms]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

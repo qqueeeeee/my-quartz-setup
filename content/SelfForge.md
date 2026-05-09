@@ -1,18 +1,10 @@
 ---
-categories:
-  - "[[Projects]]"
-tags:
-  - projects
-  - ai
-  - product
-  - local-first
-type:
-  - app
-org: []
-start: 2026-01-28
-year: 2026
-url:
-status: in-progress
+title: "SelfForge"
+date: 2026-05-07
+category: project
+status: growing
+tags: ["#systems", "#tools", "#devenv", "#career", "#projects"]
+related: ["[[RAG]]", "[[Tauri]]", "[[Python]]", "[[Writing|writing]]"]
 ---
 
 # SelfForge
@@ -44,7 +36,7 @@ The current direction is:
 
 - desktop shell with [[Tauri]]
 - application logic with [[Python]]
-- note-aware memory system on top of my existing writing
+- note-aware memory system on top of my existing [[Writing|writing]]
 
 ## What makes it a meaningful project
 
@@ -57,8 +49,9 @@ SelfForge is not just an AI wrapper. The interesting part is the system design:
 
 ## Connected notes
 
-- [[RAG]]
-- [[Python]]
-- [[Digital Garden]]
-- [[How I use Obsidian]]
-- [[Keyboard Centric Workflow]]
+## Connections
+
+- [[RAG]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[Tauri]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[Python]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[Writing|writing]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

@@ -1,111 +1,13 @@
 ---
-created: 2026-03-08
-tags:
-  - ai
-  - career
-  - cs
-  - design
-  - frontend
-  - games
-  - hackathon
-  - job-search
-  - learning
-  - linux
-  - project/pathforge-ai
-  - project/quartz
-  - projects
-  - reverse-engineering
-  - security
-  - systems
-  - tooling
-  - topic/c++
-  - topic/career-planning
-  - topic/clipboard
-  - topic/compatibility
-  - topic/data-structures
-  - topic/dsa
-  - topic/games
-  - topic/graph
-  - topic/hackathon
-  - topic/interview-prep
-  - topic/job-search
-  - topic/linux
-  - topic/neovim
-  - topic/pathforge-ai
-  - topic/portfolio
-  - topic/quartz
-  - topic/resume
-  - topic/reverse-engineering
-  - topic/security
-  - topic/sfd
-  - topic/wsl2
-  - workflow
-people:
-  - Que
-places:
-  []
-projects:
-  - PathForge AI
-  - Quartz
-themes:
-  - ai
-  - career
-  - cs
-  - design
-  - frontend
-  - games
-  - hackathon
-  - job-search
-  - learning
-  - linux
-  - projects
-  - reverse-engineering
-  - security
-  - systems
-  - tooling
-  - workflow
-topics:
-  - c++
-  - career-planning
-  - clipboard
-  - compatibility
-  - data-structures
-  - dsa
-  - games
-  - graph
-  - hackathon
-  - interview-prep
-  - job-search
-  - linux
-  - neovim
-  - pathforge-ai
-  - portfolio
-  - quartz
-  - resume
-  - reverse-engineering
-  - security
-  - sfd
-  - wsl2
-orgs:
-  []
-related:
-  - "[[About Me]]"
-  - "[[Address Space Layout Randomization (ASLR)|ASLR]]"
-  - "[[C++]]"
-  - "[[Data Structures]]"
-  - "[[Digital Garden]]"
-  - "[[Featured Work]]"
-  - "[[Keyboard Centric Workflow]]"
-  - "[[Neovim]]"
-  - "[[PathForge AI]]"
-  - "[[Quartz]]"
-  - "[[Skills]]"
-  - "[[Superfighters Deluxe]]"
-  - "[[Tiling Window Managers]]"
-  - "[[Writing]]"
+title: "Turning my Quartz site into a 3D graph"
+date: 2026-03-08
+category: project
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#tools", "#projects"]
+related: ["[[graph]]", "[[Quartz]]"]
 ---
 
-# Turning my Quartz site into a 3D graph
+# Turning my Quartz site into a 3D [[graph]]
 
 This note is about the technical and design decisions behind turning my [[Quartz]] site into a 3D graph interface.
 
@@ -134,19 +36,7 @@ The technical details that actually mattered were:
 
 This note is less about one exact final implementation and more about the direction: if I want the site to feel like a graph-native portfolio / garden, the graph cannot just be decoration. It has to become the main navigation system.
 
-## Related notes
+## Connections
 
-- [[About Me]]
-- [[Address Space Layout Randomization (ASLR)|ASLR]]
-- [[C++]]
-- [[Data Structures]]
-- [[Digital Garden]]
-- [[Featured Work]]
-- [[Keyboard Centric Workflow]]
-- [[Neovim]]
-- [[PathForge AI]]
-- [[Quartz]]
-- [[Skills]]
-- [[Superfighters Deluxe]]
-- [[Tiling Window Managers]]
-- [[Writing]]
+- [[graph]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Quartz]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.

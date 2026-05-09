@@ -1,9 +1,13 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Greedy"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#gamedev", "#concepts"]
+related: ["[[Backtracking|backtracking]]", "[[Dynamic Programming]]"]
 ---
-A greedy algorithm makes the locally optimal choice at each step, hoping that these local choices lead to a globally optimal solution. No backtracking, no reconsideration — just take the best option available right now and move on.
+
+A greedy algorithm makes the locally optimal choice at each step, hoping that these local choices lead to a globally optimal solution. No [[Backtracking|backtracking]], no reconsideration — just take the best option available right now and move on.
 
 The hard part isn't the implementation, it's knowing when greedy actually works. A greedy approach gives the correct answer for some problems and a completely wrong answer for others. The difference isn't always obvious.
 
@@ -64,7 +68,7 @@ With denominations [1, 5, 10, 25], make change for amount n using minimum coins.
 
 Greedy: always pick the largest coin that fits.
 
-This works for standard coin systems but NOT for arbitrary denominations. With coins [1, 3, 4] and target 6: greedy picks 4+1+1 = 3 coins, but optimal is 3+3 = 2 coins. This is why coin change in interviews is usually solved with [[Dynamic Programming]], not greedy.
+This works for standard coin systems but NOT for arbitrary denominations. With coins [1, 3, 4] and target 6: greedy picks 4+1+1 = 3 coins, but optimal is 3+3 = 2 coins. This is why coin change in interviews is usually solved with Dynamic Programming, not greedy.
 
 ### Jump Game
 
@@ -119,3 +123,8 @@ Greedy algorithms are usually O(n log n) due to sorting as a preprocessing step,
 ---
 
 Greedy is elegant when it works because the code is simple and fast. The skill is in the recognition — seeing that the locally optimal choice is always globally safe.
+
+## Connections
+
+- [[Backtracking|backtracking]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Dynamic Programming]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

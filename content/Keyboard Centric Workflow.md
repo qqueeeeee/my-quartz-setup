@@ -1,8 +1,10 @@
 ---
-tags:
-  - workflow
-  - tools
-  - writing
+title: "Keyboard Centric Workflow"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#systems", "#tools", "#devenv", "#projects"]
+related: ["[[Tiling Window Managers]]", "[[GlazeWM]]", "[[Windows|Windows]]", "[[Neovim]]"]
 ---
 
 # Keyboard Centric Workflow
@@ -16,7 +18,7 @@ I hate having to constantly move my hand back to the mouse just to do basic stuf
 This usually shows up through a bunch of tools and habits:
 
 - [[Tiling Window Managers]] because I like my screen layout being something I can control instantly
-- [[GlazeWM]] because I still want that kind of workflow on Windows
+- [[GlazeWM]] because I still want that kind of workflow on [[Windows|Windows]]
 - [[Neovim]] because it feels way more natural to me than clicking around an IDE
 - [[Quartz]] because even this site is built around shortcuts and keyboard-first navigation
 
@@ -34,3 +36,9 @@ That is also why this shows up outside my local setup too:
 - in how I think about interfaces in [[Quartz]]
 - in the kind of tools I want to build for myself, like [[SelfForge]]
 
+## Connections
+
+- [[Tiling Window Managers]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[GlazeWM]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[Windows|Windows]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Neovim]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.

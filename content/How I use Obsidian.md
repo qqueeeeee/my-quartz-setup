@@ -1,12 +1,13 @@
 ---
-tags:
-  - workflows
-  - tools
-  - writings
-related: "[[index]]"
+title: "How I use Obsidian"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#tools", "#concepts"]
+related: ["[[Obsidian|Obsidian]]", "[[Clippings]]", "[[Writing|writing]]", "[[Neovim|vim]]"]
 ---
 
-# How I use Obsidian
+# How I use [[Obsidian|Obsidian]]
 
 The way I use Obsidian is mostly based on [Steph Ango's workflow](https://stephango.com/vault), especially the part where the vault stays simple and the structure comes more from links than folders.
 
@@ -32,7 +33,7 @@ That feels way better to me than having folders try to explain everything.
 
 ## Why this works for me
 
-I want writing notes to feel light.
+I want [[Writing|writing]] notes to feel light.
 
 If capturing something feels annoying, I just will not do it consistently. So the system has to be simple enough that I can throw thoughts in fast, but structured enough that I can still find them later.
 
@@ -51,3 +52,10 @@ Templates help me:
 That matters even more now because this vault is not just private notes anymore, it is also the base for [[Quartz]] and the graph around it.
 
 If I want the longer version of the rules, that is in [[Vault Style Guide]].
+
+## Connections
+
+- [[Obsidian|Obsidian]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Clippings]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Writing|writing]] - This belongs to the same inner pattern, the part where I am trying to understand how my own mind behaves.
+- [[Neovim|vim]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.

@@ -1,34 +1,36 @@
 ---
-categories:
-  - "[[Projects]]"
-tags:
-  - projects
-type:
-org:
-start:
-year:
-url:
-status:
+title: "{{title}}"
+date: "{{date:YYYY-MM-DD}}"
+category: project
+status: seedling
+tags: ["#fullstack", "#tools", "#projects"]
+related: ["[[Projects]]", "[[Featured Work]]", "[[Technical Decisions]]"]
 ---
 
 # {{title}}
 
-What is this?
+## The itch
 
-Why am I building it / why does it matter?
+What made [[{{title}}]] feel worth building in the first place? Not the polished pitch version, the real reason. What annoyed me, fascinated me, or kept showing up until it started looking like a project?
 
-## What it does
+## What this is becoming
 
-- 
+What does this thing actually do right now, and what is it trying to become if I keep pulling on the thread? Where does it feel alive, and where does it still feel like cardboard scenery?
 
-## What I am working on
+## The messy build notes
 
-- 
+What tools, architecture decisions, bugs, shortcuts, and weird little discoveries should I remember? If future me comes back after forgetting the whole context, what would save him from walking into the same wall again?
 
-## What makes it interesting
+## The next honest move
 
-- 
+What is the next step that would actually move [[{{title}}]] forward? Not the grand plan, not the fantasy rewrite, just the next useful shove.
 
-## Connected notes
+## Loose ends
 
-- 
+What is still open, confusing, or waiting for a better note? What question should I leave here as a breadcrumb instead of pretending the thought is finished?
+
+## Connections
+
+- [[Related note]] - The closest note this should talk to, even if the connection is still rough.
+- [[Unmade note]] - The note this is quietly asking me to create later.
+- [[Bigger pattern]] - The wider idea this probably belongs inside.

@@ -1,14 +1,17 @@
 ---
-tags:
-  - portfolio
-  - about
+title: "About Me"
+date: 2026-05-07
+category: person
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#tools", "#people"]
+related: ["[[graph]]", "[[Digital Garden]]", "[[Keyboard Centric Workflow]]", "[[How I use Obsidian]]"]
 ---
 
 # About Me
 
 I am Sasank, also known as Que.
 
-I like building software that feels interactive, intentional, and a little different from the default. I am especially drawn to systems where structure matters: developer tooling, local-first workflows, graph-like interfaces, AI-assisted tools, and anything that turns messy information into something navigable.
+I like building software that feels interactive, intentional, and a little different from the default. I am especially drawn to systems where structure matters: developer tooling, local-first workflows, [[graph]]-like interfaces, AI-assisted tools, and anything that turns messy information into something navigable.
 
 ## How I work
 
@@ -35,6 +38,13 @@ It is a hybrid:
 
 - projects show what I have built
 - connected notes show what I learned while building them
-- writing notes show how I think when I am not coding
+- [[Writing|writing]] notes show how I think when I am not coding
 
 If you want the shortest path through the site, go to [[Featured Work]].
+
+## Connections
+
+- [[graph]] - This gives the person context, so they are not just a name floating without the work, idea, or memory attached.
+- [[Digital Garden]] - This gives the person context, so they are not just a name floating without the work, idea, or memory attached.
+- [[Keyboard Centric Workflow]] - This gives the person context, so they are not just a name floating without the work, idea, or memory attached.
+- [[How I use Obsidian]] - This gives the person context, so they are not just a name floating without the work, idea, or memory attached.

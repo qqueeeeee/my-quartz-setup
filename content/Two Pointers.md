@@ -1,9 +1,13 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Two Pointers"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#concepts"]
+related: ["[[Pointers|pointers]]", "[[Linked Lists]]"]
 ---
-Two pointers is a technique where you maintain two indices into an array and move them strategically to solve a problem in O(n) that would naively require O(n²).
+
+Two [[Pointers|pointers]] is a technique where you maintain two indices into an array and move them strategically to solve a problem in O(n) that would naively require O(n²).
 
 It's not a data structure, it's a pattern. Once you recognize it, a whole class of problems becomes obvious.
 
@@ -81,7 +85,7 @@ Other problems: move zeroes to end, remove element, partition array.
 
 One pointer moves one step at a time, the other moves two. If there's a cycle, the fast pointer will eventually lap the slow one and they'll meet.
 
-Used for detecting cycles in [[Linked Lists]]:
+Used for detecting cycles in Linked Lists:
 
 ```cpp
 bool hasCycle(Node* head) {
@@ -123,3 +127,8 @@ This is the main appeal. O(n) time and O(1) space is hard to beat.
 ---
 
 Two pointers is one of the most frequently tested patterns in interviews. It's simple once you see it but requires recognizing the right moment to apply it.
+
+## Connections
+
+- [[Pointers|pointers]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Linked Lists]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

@@ -1,9 +1,10 @@
 ---
-created: 2026-03-02
-tags:
-  - ideas
-  - writings
-  - projects
+title: "Create things you wish existed"
+date: 2026-03-02
+category: project
+status: seedling
+tags: ["#tools", "#devenv", "#projects"]
+related: ["[[SelfForge]]", "[[Quartz]]", "[[Find your own theme..]]"]
 ---
 
 # Create things you wish existed
@@ -23,3 +24,9 @@ That is part of why projects like [[SelfForge]] or [[Quartz]] matter to me more 
 I think this is also tied pretty closely to [[Find your own theme..]].
 
 If I am building something I wish existed, it is way easier for it to have a real point of view instead of feeling like copy-pasted product design.
+
+## Connections
+
+- [[SelfForge]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[Quartz]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[Find your own theme..]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

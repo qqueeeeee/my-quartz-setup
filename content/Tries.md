@@ -1,7 +1,10 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Tries"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#concepts"]
+related: ["[[Hash Maps|hash map]]", "[[Backtracking]]", "[[C++]]"]
 ---
 
 A trie (pronounced "try", short for retrieval) is a tree-like data structure used to store strings where each node represents a single character. The path from the root to any node spells out a prefix.
@@ -56,11 +59,11 @@ Any problem involving prefixes, autocomplete, or word searches.
 
 **Spell checker** — check if a word exists or find the closest match.
 
-**Word search in a grid** — [[Backtracking]] through a grid while checking a trie is much faster than checking each word independently.
+**Word search in a grid** — Backtracking through a grid while checking a trie is much faster than checking each word independently.
 
 **Longest common prefix** — find where paths diverge in the trie.
 
-If you're just doing exact lookups with no prefix operations, a [[Hash Maps|hash map]] is simpler. Tries shine when prefixes matter.
+If you're just doing exact lookups with no prefix operations, a hash map is simpler. Tries shine when prefixes matter.
 
 ---
 
@@ -132,3 +135,9 @@ The `c - 'a'` trick converts a character to an index 0-25. 'a' becomes 0, 'b' be
 ---
 
 Tries are niche but when a problem involves prefixes, they're the perfect tool. Autocomplete and word search problems are the most common places you'll reach for one.
+
+## Connections
+
+- [[Hash Maps|hash map]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Backtracking]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[C++]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.

@@ -1,9 +1,12 @@
 ---
-created:
-tags:
-  - cs/concepts
-  - data-structures
+title: "Data Structures"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#career", "#interviews", "#concepts"]
+related: ["[[DSA]]", "[[Interviews]]", "[[C++]]"]
 ---
+
 # What are Data Structures
 
 A data structure is basically a way to store and organize data in a computer so that operations on that data become easier or more efficient.
@@ -30,9 +33,8 @@ That is why data structures are not just interview stuff. They show up everywher
 
 ## Good notes to branch into
 
-- [[Arrays]]
-- [[Linked Lists]]
-- [[Stacks]]
-- [[Heaps]]
-- [[Graphs]]
+## Connections
 
+- [[DSA]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Interviews]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[C++]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.

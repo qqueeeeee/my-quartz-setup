@@ -1,7 +1,10 @@
 ---
-tags:
-  - navigation
-  - toc
+title: "Table of Contents"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#dsa", "#algorithms", "#fullstack", "#systems", "#projects"]
+related: ["[[index]]", "[[About Me]]", "[[Skills]]", "[[Writing]]"]
 ---
 
 # Table of Contents
@@ -49,3 +52,9 @@ tags:
 - [[Clippings]]
 - [[Games]]
 
+## Connections
+
+- [[index]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[About Me]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Skills]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[Writing]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

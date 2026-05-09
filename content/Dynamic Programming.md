@@ -1,8 +1,12 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Dynamic Programming"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#concepts"]
+related: ["[[Recursion|recursion]]", "[[Data Structures]]", "[[Algorithms]]"]
 ---
+
 Dynamic programming (DP) is an optimization technique for problems where the same subproblems keep appearing. Instead of solving them repeatedly, you solve each one once and store the result. That's the entire idea.
 
 It sounds simple but DP is consistently the hardest topic in DSA because recognizing when and how to apply it takes practice. The mechanics are simple, the insight is hard.
@@ -175,3 +179,9 @@ Space is O(number of states) but often optimizable. If `dp[i]` only depends on `
 ---
 
 DP is the topic that separates junior from intermediate. The mechanics are learnable, but pattern recognition comes from solving problems. Start with climbing stairs and house robber, they're the clearest entry points.
+
+## Connections
+
+- [[Recursion|recursion]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Data Structures]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Algorithms]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.

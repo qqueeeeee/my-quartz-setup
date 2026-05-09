@@ -1,9 +1,12 @@
 ---
-created: 2026-03-08T10:35:00
-tags:
-  - cs/security
-  - systems
+title: "Address Space Layout Randomization (ASLR)"
+date: 2026-03-08
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#concepts"]
+related: ["[[Stacks|the stack]]", "[[Heaps|the heap]]"]
 ---
+
 # Address Space Layout Randomization (ASLR)
 
 Address Space Layout Randomization is a security technique where the memory locations of important parts of a process get randomized.
@@ -27,3 +30,7 @@ That predictability makes attacks like buffer overflows way easier to pull off, 
 
 ASLR does not magically solve the whole problem, but it raises the difficulty a lot, especially when combined with other protections.
 
+## Connections
+
+- [[Stacks|the stack]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.
+- [[Heaps|the heap]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.

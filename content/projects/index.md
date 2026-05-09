@@ -1,13 +1,15 @@
 ---
-title: projects
-cssclasses:
-  - portfolio-projects
-  - no-folder-list
+title: "index"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#dsa", "#algorithms", "#fullstack", "#systems", "#projects"]
+related: ["[[SelfForge]]", "[[RAG]]", "[[FastAPI|FastAPI]]", "[[React|React]]"]
 ---
 
 # projects
 
-## SelfForge `2024`
+## [[SelfForge]] `2024`
 
 AI-powered self-improvement platform. I built custom JWT auth, a RAG pipeline over user notes, and the first product loop for roughly 50 active users.
 
@@ -62,3 +64,10 @@ Desktop app for a friend's repair business. Local-first, offline-capable, and bu
 **Stack:** `Rust` · `Tauri` · `React` · `SQLite`
 
 **Links:** source: —
+
+## Connections
+
+- [[SelfForge]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[RAG]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[FastAPI|FastAPI]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[React|React]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.

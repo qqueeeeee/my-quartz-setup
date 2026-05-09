@@ -1,8 +1,12 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Heaps"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#concepts"]
+related: ["[[Pointers|pointers]]", "[[Graphs|Shortest path]]", "[[C++]]"]
 ---
+
 A heap is a complete binary tree that satisfies the heap property. It's the data structure behind priority queues and one of the most useful structures for problems involving "find the min/max efficiently."
 
 There are two types:
@@ -17,7 +21,7 @@ That's the only rule. There's no ordering between siblings or cousins, just the 
 
 ## Why it's stored as an array
 
-A heap is a complete binary tree, meaning every level is fully filled except possibly the last, which fills left to right. This specific shape means you can store the entire tree in an array without any pointers.
+A heap is a complete binary tree, meaning every level is fully filled except possibly the last, which fills left to right. This specific shape means you can store the entire tree in an array without any [[Pointers|pointers]].
 
 For a node at index `i`:
 - Left child is at `2i + 1`
@@ -75,7 +79,7 @@ Any time you need to repeatedly get the minimum or maximum element from a collec
 
 **Merge k sorted lists:** Use a min heap to always pick the smallest current element across all lists.
 
-**Dijkstra's algorithm:** [[Graphs|Shortest path]] algorithm uses a min heap to always process the closest unvisited node next.
+**Dijkstra's algorithm:** Shortest path algorithm uses a min heap to always process the closest unvisited node next.
 
 ---
 
@@ -153,3 +157,9 @@ O(n log n) time, O(1) space. Not as fast as quicksort in practice but has guaran
 ---
 
 Heaps are the go-to whenever a problem involves "top k", "kth largest/smallest", or any scenario where you need fast access to the min or max of a dynamic set.
+
+## Connections
+
+- [[Pointers|pointers]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[Graphs|Shortest path]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.
+- [[C++]] - This is where the idea stops being just a definition and starts touching real code, memory, and tradeoffs.

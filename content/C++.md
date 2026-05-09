@@ -1,9 +1,12 @@
 ---
-created:
-tags:
-  - cs/cpp
-  - systems
+title: "C++"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#dsa", "#algorithms", "#systems", "#gamedev", "#projects"]
+related: ["[[Superfighters Deluxe]]", "[[Writing a ML Library in C]]", "[[How does C++ work]]", "[[Compiler]]"]
 ---
+
 # C++ Intro
 
 I have always thought C++ was a cool language.
@@ -33,3 +36,9 @@ That is also why this connects pretty naturally to [[Writing a ML Library in C]]
 - [[Pointers]]
 - [[Stack vs Heap]]
 
+## Connections
+
+- [[Superfighters Deluxe]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[Writing a ML Library in C]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[How does C++ work]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[Compiler]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

@@ -1,7 +1,10 @@
 ---
-created:
-tags:
-  - cs/concepts
+title: "Sliding Window"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#dsa", "#algorithms", "#concepts"]
+related: ["[[Two Pointers]]", "[[Pointers|pointers]]"]
 ---
 
 Sliding window is a technique for problems that involve a contiguous subarray or substring. Instead of recomputing from scratch each time you move, you maintain a window and update it incrementally as it slides.
@@ -127,3 +130,8 @@ They're the same mechanic. The distinction is mostly conceptual. "Two pointers" 
 ---
 
 Sliding window is one of the most common interview patterns. The key insight is always the same: instead of recomputing from scratch, update incrementally as the window moves.
+
+## Connections
+
+- [[Two Pointers]] - This is the nearby idea I would compare it with, confuse it with, or reach for right after it.
+- [[Pointers|pointers]] - This is the next layer of the idea, the place I would go when this note starts feeling too small.

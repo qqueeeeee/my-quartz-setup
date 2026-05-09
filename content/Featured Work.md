@@ -1,13 +1,15 @@
 ---
-tags:
-  - portfolio
-  - projects
-  - featured
+title: "Featured Work"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#dsa", "#algorithms", "#fullstack", "#systems", "#projects"]
+related: ["[[graph]]", "[[SelfForge]]", "[[RAG]]", "[[Python]]"]
 ---
 
 # Featured Work
 
-These are the best project entry points in the graph right now.
+These are the best project entry points in the [[graph]] right now.
 
 ## [[SelfForge]]
 
@@ -43,7 +45,7 @@ Why it matters:
 
 - [[PathForge AI]] for the hackathon / AI product side
 - [[Lumina Invest]] for dashboard / real-user product work
-- [[Fishao Server]] for the reverse-engineering / protocol side
+- [[Fishao Server]] for the reverse-engineering / [[protocol|protocol]] side
 
 ## What to do next
 
@@ -51,3 +53,9 @@ Why it matters:
 - Then open the connected notes around it.
 - If you want the broader picture, jump to [[Skills]] or [[Writing]].
 
+## Connections
+
+- [[graph]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.
+- [[SelfForge]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[RAG]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.
+- [[Python]] - This is part of the toolchain or technical texture, so it belongs close to the build notes.

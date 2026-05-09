@@ -1,11 +1,13 @@
 ---
-tags:
-  - ai
-  - rag
-  - systems
+title: "RAG"
+date: 2026-05-07
+category: project
+status: seedling
+tags: ["#tools", "#devenv", "#research", "#projects"]
+related: ["[[SelfForge]]", "[[Writing|writing]]"]
 ---
 
-# RAG
+# [[RAG|RAG]]
 
 RAG stands for Retrieval-Augmented Generation.
 
@@ -17,7 +19,7 @@ That matters because the model is not forced to guess as much, and the response 
 
 This is one of the main things that makes a project like [[SelfForge]] interesting to me.
 
-If I am building a personal AI tool, I do not just want a generic chatbot. I want something that can pull from my notes, my writing, and my actual history in a way that feels useful.
+If I am building a personal AI tool, I do not just want a generic chatbot. I want something that can pull from my notes, my [[Writing|writing]], and my actual history in a way that feels useful.
 
 ## Rough mental model
 
@@ -27,3 +29,8 @@ If I am building a personal AI tool, I do not just want a generic chatbot. I wan
 4. let the model answer with better grounding
 
 That is the simple version, but the real challenge is figuring out what should be stored, what should be retrieved, and how to stop the whole thing from becoming noisy.
+
+## Connections
+
+- [[SelfForge]] - This is the actual project gravity in the note, the thing the whole thought keeps bending back toward.
+- [[Writing|writing]] - This sits near the same build thread, where the idea becomes less abstract and more like something I can actually ship.

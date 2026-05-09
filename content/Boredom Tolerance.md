@@ -1,13 +1,15 @@
 ---
-created:
-tags:
-  - forge
-related:
+title: "Boredom Tolerance"
+date: 2026-05-07
+category: concept
+status: seedling
+tags: ["#systems", "#research", "#concepts"]
+related: ["[[Writing|writing]]", "[[dopamine]]", "[[Flat Phase]]", "[[quick feedback]]"]
 ---
-#forge 
+
 ### Overview ###
 
-First off, if any of this happened to you, congrats, you're normal, I mean it happened to me, that's why I'm spending my time understanding and fixing it - in fact, writing this so that I remind myself and actually work on it to improve myself.
+First off, if any of this happened to you, congrats, you're normal, I mean it happened to me, that's why I'm spending my time understanding and fixing it - in fact, [[Writing|writing]] this so that I remind myself and actually work on it to improve myself.
 
 Boredom tolerance refers to the process of tolerating something even when the task is mundane and boring, people might assume they don't do stuff because of lack of discipline and motivation or something else but the root cause of all of that usually stems from lack of Boredom Tolerance. 
 
@@ -33,3 +35,10 @@ As bad and harmful it is, this pattern is indeed fixable, as like everything, if
 To fix it we're going to make a three-level system that will improve our boredom tolerance.
 
 ### [[Boredom Tolerance - How to improve it.]] ###
+
+## Connections
+
+- [[Writing|writing]] - This belongs to the same inner pattern, the part where I am trying to understand how my own mind behaves.
+- [[dopamine]] - This belongs to the same inner pattern, the part where I am trying to understand how my own mind behaves.
+- [[Flat Phase]] - This belongs to the same inner pattern, the part where I am trying to understand how my own mind behaves.
+- [[quick feedback]] - This belongs to the same inner pattern, the part where I am trying to understand how my own mind behaves.
