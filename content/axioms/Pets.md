@@ -1,0 +1,1 @@
+I love animals. I want to get a dog, that's the first thing. I will take care of him so much and train him and everything. I love dogs. I can't wait to get a job and get my own dog. It will be one of the best days of my life. Seriously. 
