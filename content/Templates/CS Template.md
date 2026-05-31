@@ -1,7 +1,9 @@
 ---
 created:
 tags:
-  - cs/concepts
+  - area/templates
+  - area/education
+  - topic/programming
 ---
 
 # {{title}}

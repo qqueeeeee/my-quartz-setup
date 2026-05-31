@@ -2,6 +2,7 @@
 categories:
   - "[[Podcast episodes]]"
 tags:
+  - area/templates
   - podcast
   - episodes
 show: 

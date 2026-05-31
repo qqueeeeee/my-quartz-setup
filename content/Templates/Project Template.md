@@ -1,8 +1,9 @@
 ---
-categories:
-  - "[[Projects]]"
+folder: Projects
 tags:
-  - projects
+  - area/templates
+  - area/projects
+  - project
 type:
 org:
 start:

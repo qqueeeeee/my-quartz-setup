@@ -1,21 +1,43 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
+
+type FooterLink = {
+  label: string
+  href: string
+}
+
+// Footer.tsx
+// Small site footer shared by normal pages. Update FOOTER_LINKS when profiles
+// or contact details change.
+
+// ── Edit these when contact links change ─────────────────────────────
+const COPYRIGHT = "© 2025 sq"
+
+const FOOTER_LINKS: FooterLink[] = [
+  { label: "gh", href: "https://github.com/shotzling" },
+  { label: "li", href: "https://www.linkedin.com/in/sasank-kodamarthy/" },
+  { label: "mail", href: "mailto:sasank.kodamarthy@gmail.com" },
+]
+// ────────────────────────────────────────────────────────────────────
+
 export default (() => {
   const Footer: QuartzComponent = ({ displayClass }: QuartzComponentProps) => {
     return (
       <footer class={`${displayClass ?? ""} site-footer`}>
-        <p>© 2025 sq</p>
+        <p>{COPYRIGHT}</p>
         <nav aria-label="Footer links">
-          <a href="https://github.com/shotzling">gh</a>
-          <span>·</span>
-          <a href="https://www.linkedin.com/in/sasank-kodamarthy/">li</a>
-          <span>·</span>
-          <a href="mailto:sasank.kodamarthy@gmail.com">mail</a>
+          {FOOTER_LINKS.map((link, index) => (
+            <>
+              {index > 0 && <span>·</span>}
+              <a href={link.href}>{link.label}</a>
+            </>
+          ))}
         </nav>
       </footer>
     )
   }
 
   Footer.css = `
+/* ── Layout ── */
 .site-footer {
   display: flex;
   align-items: center;
@@ -40,6 +62,7 @@ export default (() => {
   font-family: var(--font-mono);
 }
 
+/* ── Links ── */
 .site-footer a,
 .site-footer span {
   color: var(--muted);

@@ -7,6 +7,7 @@ start:
 end: 
 loc: 
 tags:
+  - area/templates
   - events
   - conferences
 ---

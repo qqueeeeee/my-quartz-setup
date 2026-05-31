@@ -14,5 +14,6 @@ created: {{date}}
 last:
 via: ""
 tags:
+  - area/templates
   - to-read
 ---

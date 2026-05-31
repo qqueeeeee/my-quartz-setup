@@ -8,11 +8,21 @@ cssclasses:
 
 B.Tech Computer Science · AVN Institute · Hyderabad · May 2026
 
-I am a final-year CS student in Hyderabad, and I build software by pulling on threads until the system makes sense. I like projects where the boring parts matter: auth, imports, file formats, background services, small UI decisions, and the bits that only break after someone actually uses the thing.
+final-year CS student in Hyderabad. i build software by pulling on threads until
+the system starts making sense.
 
-Day to day, I work across FastAPI backends, React frontends, SQLite/Postgres storage, and small tools for my own workflow. I am still figuring out where I am strongest, but I keep coming back to developer tooling, full-stack product work, and systems that expose how they work instead of hiding it.
+i like projects where the boring parts matter: auth, imports, file formats,
+background services, tiny UI decisions, and the stuff that only breaks after
+someone actually uses it.
 
-My environment is part of how I think. I use Hyprland, Neovim, WSL2, Kitty, Starship, and a lot of config files that probably deserve fewer late-night edits. I think most portfolios look the same, so I did not try to make this one look designed. I wanted it to feel maintained.
+day to day it's mostly FastAPI, React, SQLite/Postgres, and small tools for
+my own workflow. still figuring out where i'm strongest, but i keep coming back
+to [[Keyboard Centric Workflow]], full-stack product work, and systems that don't
+hide how they work.
+
+my setup is part of how i think. [[Hyprland]], [[Neovim]], WSL2, Kitty, Starship,
+and too many config files. this site wasn't meant to look like a normal
+portfolio. i wanted it to feel maintained.
 
 ---
 

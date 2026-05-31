@@ -2,6 +2,7 @@
 categories:
   - "[[Meditations]]"
 tags:
+  - area/templates
   - note
   - journal
   - meditation

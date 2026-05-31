@@ -1,11 +1,71 @@
 import { QuartzComponent, QuartzComponentConstructor } from "./types"
 
+type Project = {
+  name: string
+  description: string
+  tags: string
+  href: string
+}
+
+type CurrentItem = {
+  label: string
+  value: string
+}
+
+// ── Edit these when your situation changes ──────────────────────────
+const TAGLINES: string[] = ["systems thinker.", "full-stack dev.", "builds things that work."]
+
+const PROJECTS: Project[] = [
+  {
+    name: "SelfForge",
+    description:
+      "AI self-improvement platform with custom auth and a RAG pipeline over user notes.",
+    tags: "FastAPI, PostgreSQL, LangChain, FAISS, React, AWS",
+    href: "/projects",
+  },
+  {
+    name: "Lumina Invest",
+    description: "Portfolio tracker with custom CSV imports for Moomoo and Revolut exports.",
+    tags: "React, Express, Yahoo Finance API, papaparse",
+    href: "/projects",
+  },
+  {
+    name: "Knowledge Graph Portfolio",
+    description: "This site: Quartz notes, Cloudflare Workers, and a graph layer for navigation.",
+    tags: "Quartz v4, Three.js, Cloudflare Workers",
+    href: "/graph",
+  },
+]
+
+const CURRENTLY: CurrentItem[] = [
+  { label: "building", value: "resq, a Win32 tray resolution manager" },
+  { label: "reading", value: "—" },
+  { label: "listening", value: "—" },
+]
+// ────────────────────────────────────────────────────────────────────
+
+// Typewriter timing:
+// - TYPE_SPEED_MS controls how fast each phrase appears.
+// - PAUSE_MS controls how long the complete phrase stays visible.
+// - DELETE_SPEED_MS controls how fast the phrase is erased.
+// - NEXT_PAUSE_MS controls the beat before the next phrase starts.
+// Lower the numbers to speed it up; raise them to make it calmer.
+const TYPE_SPEED_MS = 76 // ms per character while typing
+const PAUSE_MS = 1150 // ms to pause at end of phrase
+const DELETE_SPEED_MS = 34 // ms per character while deleting
+const NEXT_PAUSE_MS = 220 // ms before starting next phrase
+
 const typewriterScript = `
 (() => {
   const target = document.getElementById("typewriter")
   if (!target) return
 
-  const phrases = ["systems thinker.", "full-stack dev.", "builds things that work."]
+  const phrases = ${JSON.stringify(TAGLINES)}
+  const TYPE_SPEED_MS = ${TYPE_SPEED_MS}
+  const PAUSE_MS = ${PAUSE_MS}
+  const DELETE_SPEED_MS = ${DELETE_SPEED_MS}
+  const NEXT_PAUSE_MS = ${NEXT_PAUSE_MS}
+
   let phraseIndex = 0
   let charIndex = 0
   let deleting = false
@@ -16,38 +76,35 @@ const typewriterScript = `
 
     if (!deleting && charIndex < phrase.length) {
       charIndex += 1
-      window.setTimeout(tick, 76)
+      window.setTimeout(tick, TYPE_SPEED_MS)
       return
     }
 
     if (!deleting) {
       deleting = true
-      window.setTimeout(tick, 1150)
+      window.setTimeout(tick, PAUSE_MS)
       return
     }
 
     if (charIndex > 0) {
       charIndex -= 1
-      window.setTimeout(tick, 34)
+      window.setTimeout(tick, DELETE_SPEED_MS)
       return
     }
 
     deleting = false
     phraseIndex = (phraseIndex + 1) % phrases.length
-    window.setTimeout(tick, 220)
+    window.setTimeout(tick, NEXT_PAUSE_MS)
   }
 
   tick()
 })()
 `
 
-const Landing: QuartzComponent = ({ fileData }) => {
-  if (fileData.slug !== "index") {
-    return null
-  }
-
+const Landing: QuartzComponent = () => {
   return (
     <div class="landing">
+      {/* ── Hero ── */}
       <section class="landing-hero" aria-labelledby="landing-name">
         <p class="landing-kicker">~/portfolio</p>
         <h1 id="landing-name" class="landing-name">
@@ -63,6 +120,7 @@ const Landing: QuartzComponent = ({ fileData }) => {
         </div>
       </section>
 
+      {/* ── About ── */}
       <section class="landing-section landing-about" aria-labelledby="about-heading">
         <h2 id="about-heading">about</h2>
         <p>
@@ -73,48 +131,34 @@ const Landing: QuartzComponent = ({ fileData }) => {
         </p>
       </section>
 
+      {/* ── Selected projects ── */}
       <section class="landing-section" aria-labelledby="selected-projects-heading">
         <div class="landing-section-head">
           <h2 id="selected-projects-heading">selected projects</h2>
           <a href="/projects">all work ↗</a>
         </div>
         <div class="project-grid">
-          <article class="project-card">
-            <h3>SelfForge</h3>
-            <p>AI self-improvement platform with custom auth and a RAG pipeline over user notes.</p>
-            <p class="project-tags">FastAPI, PostgreSQL, LangChain, FAISS, React, AWS</p>
-            <a href="/projects">view ↗</a>
-          </article>
-          <article class="project-card">
-            <h3>Lumina Invest</h3>
-            <p>Portfolio tracker with custom CSV imports for Moomoo and Revolut exports.</p>
-            <p class="project-tags">React, Express, Yahoo Finance API, papaparse</p>
-            <a href="/projects">view ↗</a>
-          </article>
-          <article class="project-card">
-            <h3>Knowledge Graph Portfolio</h3>
-            <p>This site: Quartz notes, Cloudflare Workers, and a graph layer for navigation.</p>
-            <p class="project-tags">Quartz v4, Three.js, Cloudflare Workers</p>
-            <a href="/graph">view ↗</a>
-          </article>
+          {PROJECTS.map((project) => (
+            <article class="project-card">
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+              <p class="project-tags">{project.tags}</p>
+              <a href={project.href}>view ↗</a>
+            </article>
+          ))}
         </div>
       </section>
 
+      {/* ── Currently ── */}
       <section class="landing-section currently" aria-labelledby="currently-heading">
         <h2 id="currently-heading">currently</h2>
         <dl>
-          <div>
-            <dt>building</dt>
-            <dd>resq, a Win32 tray resolution manager</dd>
-          </div>
-          <div>
-            <dt>reading</dt>
-            <dd>—</dd>
-          </div>
-          <div>
-            <dt>listening</dt>
-            <dd>—</dd>
-          </div>
+          {CURRENTLY.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
         </dl>
       </section>
 
@@ -124,6 +168,7 @@ const Landing: QuartzComponent = ({ fileData }) => {
 }
 
 Landing.css = `
+/* ── Layout ── */
 .landing {
   width: min(100%, 980px);
   margin: 0 auto;
@@ -131,8 +176,16 @@ Landing.css = `
   animation: pageFade 300ms ease both;
 }
 
-.landing-hero {
-  padding: 5rem 0 4.5rem;
+.landing-section {
+  padding: 2.4rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.landing-section h2 {
+  margin: 0 0 1rem;
+  font-size: 0.82rem;
+  font-weight: 400;
+  text-transform: lowercase;
 }
 
 .landing-kicker,
@@ -141,6 +194,11 @@ Landing.css = `
 .project-tags {
   font-family: var(--font-mono);
   color: var(--muted);
+}
+
+/* ── Hero ── */
+.landing-hero {
+  padding: 5rem 0 4.5rem;
 }
 
 .landing-kicker {
@@ -162,11 +220,6 @@ Landing.css = `
   color: var(--muted);
 }
 
-.cursor {
-  color: var(--accent);
-  animation: cursorBlink 0.6s step-end infinite;
-}
-
 .landing-cta {
   display: flex;
   gap: 1.3rem;
@@ -182,23 +235,19 @@ Landing.css = `
   text-underline-offset: 0.22em;
 }
 
-.landing-section {
-  padding: 2.4rem 0;
-  border-top: 1px solid var(--border);
+/* ── Typewriter ── */
+.cursor {
+  color: var(--accent);
+  animation: cursorBlink 0.6s step-end infinite;
 }
 
-.landing-section h2 {
-  margin: 0 0 1rem;
-  font-size: 0.82rem;
-  font-weight: 400;
-  text-transform: lowercase;
-}
-
+/* ── About ── */
 .landing-about p {
   max-width: 68ch;
   margin: 0;
 }
 
+/* ── Projects grid ── */
 .landing-section-head {
   display: flex;
   align-items: baseline;
@@ -215,6 +264,7 @@ Landing.css = `
 
 .project-card {
   display: flex;
+  /* Keeps cards equal height in the three-column grid. */
   min-height: 14rem;
   flex-direction: column;
   padding: 1rem;
@@ -241,6 +291,7 @@ Landing.css = `
   margin-top: auto;
 }
 
+/* ── Currently ── */
 .currently dl {
   display: grid;
   gap: 0.65rem;
@@ -258,6 +309,7 @@ Landing.css = `
   margin: 0;
 }
 
+/* ── Mobile ── */
 @media (max-width: 800px) {
   .landing {
     padding-top: 3.5rem;

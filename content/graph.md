@@ -1,5 +1,0 @@
----
-title: graph
-tags:
-  - notes
----

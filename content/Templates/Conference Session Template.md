@@ -7,6 +7,7 @@ topics: []
 rating: 
 last: {{date}}
 tags:
+  - area/templates
   - conferences
   - sessions
   - events

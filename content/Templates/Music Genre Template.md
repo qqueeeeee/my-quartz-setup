@@ -1,5 +1,6 @@
 ---
 tags:
+  - area/templates
   - music/genres
 ---
 

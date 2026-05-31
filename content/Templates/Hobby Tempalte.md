@@ -1,4 +1,5 @@
 ---
 tags:
+  - area/templates
   - hobbies
 ---

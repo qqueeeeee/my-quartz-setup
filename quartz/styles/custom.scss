@@ -1,10 +1,16 @@
+// custom.scss
+// Global styles and design system for sasank.dev
+//
+// Palette: kanagawa-dragon (base16)
+// Fonts:   JetBrains Mono (mono), Geist (sans)
+//
+// To change the accent colour, update --accent in :root.
+// To change the background, update --bg and --bg-subtle.
+// Everything else derives from these variables.
+
 @use "./base.scss";
 
-* {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
+// ── Variables ──────────────────────────────────────────────────────
 :root {
   --bg: #181616;
   --bg-subtle: #1d1c19;
@@ -36,6 +42,23 @@
   --codeFont: var(--font-mono);
 }
 
+// ── Reset ──────────────────────────────────────────────────────────
+// Hard reset — kanagawa-dragon aesthetic uses sharp corners everywhere.
+// The !important is intentional: Quartz's default styles use border-radius
+// on several components and we want zero exceptions.
+* {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+img,
+video,
+audio,
+iframe {
+  border-radius: 0 !important;
+}
+
+// ── Base ───────────────────────────────────────────────────────────
 html {
   background: var(--bg);
 }
@@ -60,24 +83,20 @@ tr,
   color: var(--text);
 }
 
-a {
-  color: var(--accent);
-  font-weight: 400;
-  text-decoration: none;
-  transition: color 150ms ease;
-
-  &:hover {
-    color: var(--accent);
-    text-decoration: underline;
-  }
-
-  &.internal {
-    background: transparent;
-    padding: 0;
-    line-height: inherit;
-  }
+hr {
+  height: 0;
+  margin: 2.2rem 0;
+  border: none;
+  border-top: 1px solid var(--border);
+  background: transparent;
 }
 
+blockquote {
+  border-left: 1px solid var(--border);
+  color: var(--muted);
+}
+
+// ── Typography ─────────────────────────────────────────────────────
 strong {
   font-weight: 400;
   color: var(--text);
@@ -108,19 +127,26 @@ h3 {
   font-size: 1rem;
 }
 
-hr {
-  height: 0;
-  margin: 2.2rem 0;
-  border: none;
-  border-top: 1px solid var(--border);
-  background: transparent;
+// ── Links ──────────────────────────────────────────────────────────
+a {
+  color: var(--accent);
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  &.internal {
+    background: transparent;
+    padding: 0;
+    line-height: inherit;
+  }
 }
 
-blockquote {
-  border-left: 1px solid var(--border);
-  color: var(--muted);
-}
-
+// ── Code ───────────────────────────────────────────────────────────
 pre,
 code {
   font-family: var(--font-mono);
@@ -143,6 +169,7 @@ pre > code {
   background: transparent;
 }
 
+// ── Tables ─────────────────────────────────────────────────────────
 table {
   width: 100%;
   border-collapse: collapse;
@@ -160,38 +187,42 @@ table {
   }
 }
 
-img,
-video,
-audio,
-iframe {
-  border-radius: 0 !important;
+// ── Tags ───────────────────────────────────────────────────────────
+// Overrides Quartz TagList spacing so tags sit closer to note metadata.
+.tags {
+  gap: 0.65rem;
+  margin: 0.6rem 0 1.4rem;
 }
 
-@keyframes pageFade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+// Overrides Quartz tag pills; the site uses inline mono hash tags instead.
+a.internal.tag-link,
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  padding: 0;
+
+  &::before {
+    content: "#";
   }
 }
 
-@keyframes cursorBlink {
-  50% {
-    opacity: 0;
-  }
-}
-
+// ── Quartz overrides ───────────────────────────────────────────────
+// Overrides Quartz root sizing so the custom sidebars can own page width.
 #quartz-root.page {
   max-width: none;
   width: 100%;
 }
 
+// Overrides Quartz body layout with a fixed three-column reading grid.
 #quartz-body {
   width: min(1120px, calc(100vw - 2rem));
   margin: 0 auto;
 }
 
+// Overrides Quartz's default stacked layout for desktop content pages.
 .page > #quartz-body {
   display: grid;
   grid-template-columns: minmax(0, 160px) minmax(0, 760px) minmax(0, 160px);
@@ -202,11 +233,13 @@ iframe {
   column-gap: 2rem;
 }
 
+// Maps Quartz's center slot into the custom grid area.
 .page > #quartz-body .center {
   grid-area: grid-center;
   min-width: 0;
 }
 
+// Keeps Quartz sidebars visible while scrolling long notes.
 .page > #quartz-body .sidebar {
   position: sticky;
   top: 5rem;
@@ -222,15 +255,18 @@ iframe {
   grid-area: grid-sidebar-right;
 }
 
+// Places Quartz's header slot in the center column.
 .page-header {
   grid-area: grid-header;
   margin: 0;
 }
 
+// Prevents Quartz popover wrappers from widening narrow grid columns.
 .popover-hint {
   min-width: 0;
 }
 
+// Fades normal Quartz articles in once; Landing.tsx uses the same animation.
 article {
   animation: pageFade 300ms ease both;
   padding-top: 3.5rem;
@@ -240,12 +276,14 @@ article > h1:first-child {
   margin-top: 0;
 }
 
+// Homepage and graph page are full-canvas views, so they skip the article grid.
 body[data-slug="index"] #quartz-body,
 body[data-slug="graph"] #quartz-body {
   width: min(1120px, calc(100vw - 2rem));
   display: block;
 }
 
+// Hides Quartz article chrome where the custom landing or graph UI owns the page.
 body[data-slug="index"] article,
 body[data-slug="index"] .center > hr,
 body[data-slug="graph"] article,
@@ -260,25 +298,7 @@ body[data-slug="graph"] .site-footer {
   display: none;
 }
 
-.tags {
-  gap: 0.65rem;
-  margin: 0.6rem 0 1.4rem;
-}
-
-a.internal.tag-link,
-.tag {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--muted);
-  background: transparent;
-  border: none;
-  padding: 0;
-
-  &::before {
-    content: "#";
-  }
-}
-
+// Overrides Quartz Backlinks typography to match the compact mono sidebar.
 .backlinks {
   font-size: 0.86rem;
 
@@ -294,6 +314,7 @@ a.internal.tag-link,
   }
 }
 
+// Overrides Quartz TOC typography to keep the sidebar quiet.
 .toc {
   font-size: 0.78rem;
 
@@ -304,15 +325,18 @@ a.internal.tag-link,
   }
 }
 
+// Overrides Quartz header width so the custom navbar and search can share a row.
 .site-header {
   width: 100%;
 }
 
+// Overrides Quartz Search spacing to sit next to the nav links.
 .site-header > .search {
   margin-left: 0.2rem;
   min-width: auto;
 }
 
+// Overrides Quartz Search button chrome to look like a small text command.
 .site-header .search-button {
   width: auto;
   height: auto;
@@ -340,6 +364,7 @@ a.internal.tag-link,
   content: " ]";
 }
 
+// Overrides Quartz Search modal surfaces so they use the site palette.
 .search > .search-container {
   background: rgba(24, 22, 22, 0.78);
   backdrop-filter: none;
@@ -368,6 +393,7 @@ a.internal.tag-link,
   color: var(--text);
 }
 
+// Overrides Quartz Graph component surfaces for the kanagawa background.
 .graph-outer,
 .graph,
 .global-graph-outer {
@@ -386,10 +412,12 @@ a.internal.tag-link,
   color: var(--muted);
 }
 
+// Quartz keeps hidden listings in the DOM; this makes the hidden state absolute.
 .page-listing.hidden {
   display: none;
 }
 
+// ── Custom pages ───────────────────────────────────────────────────
 .portfolio-projects {
   padding-top: 3.5rem;
 }
@@ -469,6 +497,8 @@ a.internal.tag-link,
   justify-content: flex-end;
 }
 
+// ── Graph page ─────────────────────────────────────────────────────
+// Custom graph UI starts hidden so non-graph pages never flash graph controls.
 #starfield,
 #top-bar,
 .graph-panel,
@@ -481,10 +511,12 @@ a.internal.tag-link,
   display: none;
 }
 
+// The graph page is a full-screen canvas, so document scrolling is disabled.
 body[data-slug="graph"] {
   overflow: hidden;
 }
 
+// Reveals only the graph UI pieces on the graph page.
 body[data-slug="graph"] #starfield,
 body[data-slug="graph"] #top-bar,
 body[data-slug="graph"] .graph-panel,
@@ -752,6 +784,7 @@ body[data-slug="graph"] #modal-iframe {
   background: var(--bg);
 }
 
+// ── Mobile ─────────────────────────────────────────────────────────
 @media (max-width: 900px) {
   .page > #quartz-body {
     width: min(100%, calc(100vw - 2rem));
@@ -783,5 +816,28 @@ body[data-slug="graph"] #modal-iframe {
 
   body[data-slug="graph"] #graph-focus-panel {
     display: none;
+  }
+}
+
+// ── Animations ─────────────────────────────────────────────────────
+// pageFade runs once on load (see Landing.tsx); cursorBlink is on the typewriter cursor.
+@keyframes pageFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cursorBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
   }
 }

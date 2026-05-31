@@ -1,10 +1,10 @@
 ---
 created:
 tags:
+  - area/templates
   - ideas
   - writing
 source:
-related:
 ---
 
 # {{title}}
