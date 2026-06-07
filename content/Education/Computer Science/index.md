@@ -11,7 +11,7 @@ tags:
 Programming notes grouped by how I actually use them.
 
 - [[Data Structures]]
-- [[C++]]
-- [[Python]]
+- [[C++ Intro]]
+- [[Python Intro]]
 - [[Compiler]]
 - [[RAG]]

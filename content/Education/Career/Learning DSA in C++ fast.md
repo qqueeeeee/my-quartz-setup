@@ -108,7 +108,7 @@ The way that actually works for me is:
 - write the note properly in my own words
 - come back to it later through the vault when I need it again
 
-That is why I wanted to learn DSA in [[C++]] this way instead of just grinding problems mindlessly.
+That is why I wanted to learn DSA in [[C++ Intro]] this way instead of just grinding problems mindlessly.
 
 The goal was not to become a master in two or three days. The goal was to get to a solid enough intermediate level that I could:
 

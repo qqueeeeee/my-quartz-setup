@@ -7,7 +7,6 @@ cssclasses:
   - portfolio-projects
   - no-folder-list
 ---
-
 # projects
 
 ## SelfForge `2024`

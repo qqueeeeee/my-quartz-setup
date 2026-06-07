@@ -46,7 +46,7 @@ i care about this project for three reasons:
 right now the shape is:
 
 - desktop shell with [[Tauri]]
-- application logic with [[Python]]
+- application logic with [[Python Intro]]
 - note-aware memory system on top of my existing writing
 
 ## why this isn't just an AI wrapper
@@ -61,7 +61,7 @@ the interesting part is the system design:
 ## connected notes
 
 - [[RAG]]
-- [[Python]]
+- [[Python Intro]]
 - [[Digital Garden]]
 - [[How I use Obsidian]]
 - [[Keyboard Centric Workflow]]

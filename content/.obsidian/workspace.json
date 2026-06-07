@@ -1,0 +1,235 @@
+{
+  "main": {
+    "id": "93c2984fe1d105c9",
+    "type": "split",
+    "children": [
+      {
+        "id": "88358cf9f57bf683",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d0432c59b2fd9b8f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Education/Computer Science/ML/fundamentals/Gradient.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Gradient"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "64ebb403f00a713e",
+    "type": "split",
+    "children": [
+      {
+        "id": "44723310a1563a1f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "eb00db3ed2f6a9e8",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "3cf72ea7b30ef4fe",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "9b17c2087cc00721",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "21d0bf4d5dea4daf",
+    "type": "split",
+    "children": [
+      {
+        "id": "f3834048577802e0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b62e10a78967ee69",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "a44de8489f012b3c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "cd04a671e6414cc8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "bd319dae3ebaaf1c",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "1008d1f30e54e212",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "277265ff52a83591",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "obsidian-git:Open Git source control": false,
+      "templater-obsidian:Templater": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
+    }
+  },
+  "active": "d0432c59b2fd9b8f",
+  "lastOpenFiles": [
+    "Education/Computer Science/ML/fundamentals/Computation Graph.md",
+    "Education/Computer Science/ML/fundamentals/Backpropagation.md",
+    "Education/Computer Science/ML/fundamentals/Gradient.md",
+    "Education/Computer Science/ML/fundamentals/Backpropagation.md~",
+    "Education/Computer Science/ML/fundamentals/Computation Graph.md~",
+    "Education/Computer Science/ML/fundamentals/Gradients.md",
+    "Education/Computer Science/ML/fundamentals/Gradients.md~",
+    "Projects/Marionette/Plan.md",
+    "Education/Computer Science/ML/fundamentals/Backpropagation & Gradients.md~",
+    "Education/Computer Science/ML/fundamentals/Backpropagation & Gradients.md",
+    "Education/Computer Science/ML/fundamentals",
+    "Education/Computer Science/ML/Backpropagation & Gradients.md",
+    "Education/Computer Science/ML",
+    "Education/Computer Science/AI/Backpropagation.md",
+    "Education/Computer Science/Languages/Python/Python Intro.md",
+    "Education/Computer Science/Languages/C++/Reference.md",
+    "Education/Computer Science/Languages/C++/Pointers.md",
+    "Education/Computer Science/Languages/C++/Linker.md",
+    "Education/Computer Science/Languages/C++/How does C++ work.md",
+    "Education/Computer Science/Languages/C++/Errors.md",
+    "Education/Computer Science/Languages/C++/Compiler.md",
+    "Education/Computer Science/Languages/C++/C++ Intro.md",
+    "Education/Computer Science/Languages/Python",
+    "Education/Computer Science/Languages/C++",
+    "Education/Computer Science/General/index.md",
+    "Education/Computer Science/General/Tiling Window Managers.md",
+    "Education/Computer Science/General/Stack vs Heap.md",
+    "Education/Computer Science/General/Constant Folding.md",
+    "Education/Computer Science/General/Cache Locality.md",
+    "Education/Computer Science/General/Address Space Layout Randomization (ASLR).md",
+    "Education/Computer Science/DSA/index.md",
+    "Education/Computer Science/DSA/Two Pointers.md",
+    "Education/Computer Science/DSA/Tries.md",
+    "Education/Computer Science/DSA/Trees.md",
+    "Education/Computer Science/Languages",
+    "Education/Computer Science/General"
+  ]
+}

@@ -11,7 +11,7 @@ shortest map of the domains that keep showing up across my work and notes.
 
 ## core technical areas
 
-- [[C++]]
+- [[C++ Intro]]
 - [[Data Structures]]
 - [[Address Space Layout Randomization (ASLR)]]
 - [[Quartz]]

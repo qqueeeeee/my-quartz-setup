@@ -12,8 +12,8 @@ Structured learning notes live here.
 ## Programming
 
 - [[Data Structures]]
-- [[C++]]
-- [[Python]]
+- [[C++ Intro]]
+- [[Python Intro]]
 - [[RAG]]
 
 ## System Design

@@ -30,7 +30,7 @@ tags:
 - [[Education/index|Education]]
 - [[Education/Programming/index|Programming]]
 - [[Education/Programming/DSA/index|DSA]]
-- [[C++]]
+- [[C++ Intro]]
 - [[Data Structures]]
 - [[Address Space Layout Randomization (ASLR)]]
 

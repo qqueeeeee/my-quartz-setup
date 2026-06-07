@@ -132,7 +132,7 @@ orgs:
 
 # Overnight prep for the Prime interview
 
-This connects interview prep back to [[Data Structures]], [[C++]], and project examples like [[SelfForge]].
+This connects interview prep back to [[Data Structures]], [[C++ Intro]], and project examples like [[SelfForge]].
 
 This note is about how to think when you have basically one night left before an important interview.
 

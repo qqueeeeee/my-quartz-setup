@@ -19,7 +19,7 @@ why it matters:
 
 - combines product thinking, AI integration, and local data design
 - forces tradeoffs around memory, privacy, and usability
-- connects naturally to [[RAG]], [[Python]], and personal systems
+- connects naturally to [[RAG]], [[Python Intro]], and personal systems
 
 ## [[Quartz]]
 

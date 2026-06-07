@@ -24,5 +24,5 @@ That is part of why it makes sense for [[SelfForge]] too. I want to spend time o
 
 It also pairs nicely with lower-level learning because it gives me a contrast:
 
-- [[Python]] when I want speed of building
-- [[C++]] or [[Writing a ML Library in C]] when I want deeper control or understanding
+- [[Python Intro]] when I want speed of building
+- [[C++ Intro]] or [[Writing a ML Library in C]] when I want deeper control or understanding

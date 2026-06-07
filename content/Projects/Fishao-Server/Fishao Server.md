@@ -28,6 +28,6 @@ backend architecture, and how games actually talk to services.
 ## connected notes
 
 - [[Superfighters Deluxe]]
-- [[C++]]
+- [[C++ Intro]]
 - [[Conversation Archive]]
 - [[Choosing the backend language for Fishao Server]]

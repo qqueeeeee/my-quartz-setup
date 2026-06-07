@@ -11,7 +11,7 @@ once set, it can't be repointed.
 it does a lot of what pointers can do, but cleaner. basically pointer-ish
 behavior without writing pointer syntax everywhere.
 
-Related to [[C++]] and [[Pointers]].
+Related to [[C++ Intro]] and [[Pointers]].
 
 ```cpp
 int a = 10;
