@@ -18,7 +18,7 @@ const isGraphPage = (slug: FullSlug | undefined) => slug === "graph"
 // Components shared across all pages.
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
-  header: [Component.Navbar(), Component.Search()],
+  header: [Component.Navbar(), Component.Search(), Component.Darkmode()],
   afterBody: [
     // The graph page owns the full-screen graph; lazy avoids loading Three.js everywhere.
     Component.ConditionalRender({
