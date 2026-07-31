@@ -1,32 +1,37 @@
 // custom.scss
 // Global styles and design system for sasank.dev
 //
-// Palette: kanagawa-dragon (base16)
-// Fonts:   JetBrains Mono (mono), Geist (sans)
+// Palette: Flexoki (paper light / black dark)
+// Fonts:   Geist (sans), Newsreader (serif accents), Geist Mono (mono)
 //
-// To change the accent colour, update --accent in :root.
-// To change the background, update --bg and --bg-subtle.
+// To change the accent colour, update --accent in :root (and the dark block).
+// To change the background, update --bg / --bg-subtle / --bg-raised.
 // Everything else derives from these variables.
 
 @use "./base.scss";
 
 // ── Variables ──────────────────────────────────────────────────────
+// Light is the default: Flexoki "paper". Dark mode overrides the same
+// handful of tokens below, so nothing else in this file needs to know
+// which theme is active.
 :root {
-  --bg: #181616;
-  --bg-subtle: #1d1c19;
-  --bg-raised: #282727;
-  --border: #393836;
-  --muted: #9e9b93;
-  --text: #c5c9c5;
-  --accent: #8ba4b0;
-  --red: #c4746e;
-  --green: #87a987;
-  --yellow: #c4b28a;
-  --teal: #8ea4a2;
-  --purple: #a292a3;
+  --bg: #fffcf0;
+  --bg-subtle: #f2f0e5;
+  --bg-raised: #e6e4d9;
+  --bg-overlay: rgba(255, 252, 240, 0.86);
+  --border: #dad8ce;
+  --muted: #6f6e69;
+  --text: #100f0f;
+  --accent: #24837b;
+  --red: #af3029;
+  --green: #66800b;
+  --yellow: #ad8301;
+  --teal: #24837b;
+  --purple: #5e409d;
 
-  --font-mono: "JetBrains Mono", monospace;
+  --font-mono: "Geist Mono", "JetBrains Mono", monospace;
   --font-sans: "Geist", system-ui, sans-serif;
+  --font-serif: "Newsreader", Georgia, serif;
 
   --light: var(--bg);
   --lightgray: var(--border);
@@ -36,14 +41,31 @@
   --secondary: var(--accent);
   --tertiary: var(--green);
   --highlight: transparent;
-  --textHighlight: rgba(196, 178, 138, 0.18);
+  --textHighlight: rgba(188, 82, 21, 0.15);
   --bodyFont: var(--font-sans);
   --headerFont: var(--font-sans);
   --codeFont: var(--font-mono);
 }
 
+:root[saved-theme="dark"] {
+  --bg: #100f0f;
+  --bg-subtle: #1c1b1a;
+  --bg-raised: #262625;
+  --bg-overlay: rgba(16, 15, 15, 0.86);
+  --border: #343331;
+  --muted: #878580;
+  --text: #cecdc3;
+  --accent: #3aa99f;
+  --red: #d14d41;
+  --green: #879a39;
+  --yellow: #d0a215;
+  --teal: #3aa99f;
+  --purple: #8b7ec8;
+  --textHighlight: rgba(218, 112, 44, 0.18);
+}
+
 // ── Reset ──────────────────────────────────────────────────────────
-// Hard reset — kanagawa-dragon aesthetic uses sharp corners everywhere.
+// Hard reset — the paper aesthetic uses sharp corners everywhere.
 // The !important is intentional: Quartz's default styles use border-radius
 // on several components and we want zero exceptions.
 * {
@@ -67,7 +89,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
 }
 
@@ -366,7 +388,7 @@ body[data-slug="graph"] .site-footer {
 
 // Overrides Quartz Search modal surfaces so they use the site palette.
 .search > .search-container {
-  background: rgba(24, 22, 22, 0.78);
+  background: var(--bg-overlay);
   backdrop-filter: none;
 }
 
@@ -725,7 +747,7 @@ body[data-slug="graph"] #bg-note-modal.active {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(24, 22, 22, 0.82);
+  background: var(--bg-overlay);
 }
 
 body[data-slug="graph"] #modal-panel {
@@ -840,4 +862,59 @@ body[data-slug="graph"] #modal-iframe {
   50% {
     opacity: 0;
   }
+}
+
+// ── Theme toggle ───────────────────────────────────────────────────
+// Quartz ships an icon button; the paper aesthetic wants a word. Hide the
+// SVGs and let CSS print the theme you would switch *to*.
+.darkmode {
+  width: auto;
+  height: auto;
+  line-height: 1;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  align-self: center;
+}
+
+.darkmode svg {
+  display: none !important;
+}
+
+.darkmode::after {
+  content: "dark";
+}
+
+:root[saved-theme="dark"] .darkmode::after {
+  content: "light";
+}
+
+.darkmode:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+// ── Serif accents ──────────────────────────────────────────────────
+// Section labels and pull quotes borrow Newsreader italic; headings stay sans.
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-sans);
+}
+
+blockquote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05em;
+}
+
+.page-listing-header,
+.section-label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--muted);
 }
