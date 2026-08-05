@@ -57,6 +57,8 @@ orgs:
 categories:
   - Projects
   - Superfighters-Deluxe
+updated: 2026-08-05
+aliases: []
 ---
 
 # Reverse engineering Superfighters Deluxe for vulnerabilities

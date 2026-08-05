@@ -57,6 +57,8 @@ orgs:
 categories:
   - Projects
   - Workflow-Tools
+updated: 2026-08-05
+aliases: []
 ---
 
 # Building my own keyboard-centric shell with Quickshell

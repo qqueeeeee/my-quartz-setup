@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -9,10 +9,21 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
+
 A graph is a collection of nodes (vertices) connected by edges. It's the most general data structure, everything else is a special case of a graph. A [[Trees|tree]] is just a graph with no cycles and one root.
 
+
 Graphs model anything with relationships — social networks, maps, the internet, dependencies between tasks, flight routes. If your problem involves connections between things, it's probably a graph problem.
+
+## atomic notes
+
+- [[Graph Representations]]
+- [[BFS]]
+- [[DFS]]
+- [[Topological Sort]]
 
 ---
 
@@ -29,115 +40,18 @@ Graphs model anything with relationships — social networks, maps, the internet
 
 ---
 
-## representing a graph
-
-Two main ways to store a graph in code.
-
-**Adjacency List** — for each vertex, store a list of its neighbours. This is what you'll use almost always.
-
-```
-Graph:  1 - 2
-        |   |
-        3 - 4
-
-Adjacency list:
-1: [2, 3]
-2: [1, 4]
-3: [1, 4]
-4: [2, 3]
-```
-
-Space: O(V + E) where V is vertices and E is edges. Good for sparse graphs.
-
-**Adjacency Matrix** — a 2D array where `matrix[i][j] = 1` means there's an edge from i to j.
-
-Space: O(V²). Good for dense graphs or when you need to quickly check if a specific edge exists.
-
-For most DSA problems you'll use an adjacency list.
-
-```cpp
-// adjacency list representation
-int V = 5;
-vector<vector<int>> adj(V);
-
-// add edge between 0 and 1 (undirected)
-adj[0].push_back(1);
-adj[1].push_back(0);
-
-// directed edge from 0 to 2
-adj[0].push_back(2);
-
-// weighted adjacency list
-vector<vector<pair<int,int>>> wadj(V); // {neighbour, weight}
-wadj[0].push_back({1, 5}); // edge from 0 to 1 with weight 5
-```
-
----
-
 ## traversals
 
 Two fundamental ways to explore a graph. These are the building blocks for almost every graph algorithm.
-
-### BFS (breadth first search)
-
-Explore level by level. Start at a node, visit all its neighbours, then all their neighbours, and so on. Uses a [[Queues|queue]].
-
-Gives you the shortest path in an unweighted graph because you always explore closer nodes first.
-
-```cpp
-void bfs(vector<vector<int>>& adj, int start) {
-    int V = adj.size();
-    vector<bool> visited(V, false);
-    queue<int> q;
-
-    visited[start] = true;
-    q.push(start);
-
-    while (!q.empty()) {
-        int node = q.front(); q.pop();
-        cout << node << " ";
-
-        for (int neighbour : adj[node]) {
-            if (!visited[neighbour]) {
-                visited[neighbour] = true;
-                q.push(neighbour);
-            }
-        }
-    }
-}
-```
-
-### DFS (depth first search)
-
-Go as deep as possible before backtracking. Uses [[Recursion]] (or an explicit [[Stacks|stack]]).
-
-Good for detecting cycles, topological sort, connected components, and pathfinding.
-
-```cpp
-void dfs(vector<vector<int>>& adj, int node, vector<bool>& visited) {
-    visited[node] = true;
-    cout << node << " ";
-
-    for (int neighbour : adj[node]) {
-        if (!visited[neighbour]) {
-            dfs(adj, neighbour, visited);
-        }
-    }
-}
-```
-
-The `visited` array is critical. Without it you loop forever on graphs with cycles.
-
----
 
 ## BFS vs DFS
 
 |                | BFS                        | DFS                                  |
 | -------------- | -------------------------- | ------------------------------------ |
-| Data structure | Queue                      | Stack / Recursion                    |
+| Data structure | Queue                      | Stack / [[Recursion]]                    |
 | Shortest path  | Yes (unweighted)           | No                                   |
 | Memory         | O(V) worst case            | O(depth)                             |
-| Good for       | Shortest path, level order | Cycles, components, topological sort |
+| Good for       | Shortest path, level order | Cycles, components, [[Topological Sort|topological sort]] |
 
 ---
 
@@ -181,30 +95,6 @@ vector<int> dijkstra(vector<vector<pair<int,int>>>& adj, int src) {
 
 ---
 
-## topological sort
-
-```cpp
-void topoHelper(vector<vector<int>>& adj, int node, vector<bool>& visited, stack<int>& st) {
-    visited[node] = true;
-    for (int neighbour : adj[node])
-        if (!visited[neighbour])
-            topoHelper(adj, neighbour, visited, st);
-    st.push(node); // push after all descendants are processed
-}
-
-vector<int> topologicalSort(vector<vector<int>>& adj, int V) {
-    vector<bool> visited(V, false);
-    stack<int> st;
-    for (int i = 0; i < V; i++)
-        if (!visited[i]) topoHelper(adj, i, visited, st);
-    vector<int> result;
-    while (!st.empty()) { result.push_back(st.top()); st.pop(); }
-    return result;
-}
-```
-
----
-
 ## time complexity
 
 | Algorithm | Time | Space |
@@ -212,7 +102,7 @@ vector<int> topologicalSort(vector<vector<int>>& adj, int V) {
 | BFS | O(V + E) | O(V) |
 | DFS | O(V + E) | O(V) |
 | Dijkstra | O((V + E) log V) | O(V) |
-| Topological Sort | O(V + E) | O(V) |
+| [[Topological Sort]] | O(V + E) | O(V) |
 
 ---
 

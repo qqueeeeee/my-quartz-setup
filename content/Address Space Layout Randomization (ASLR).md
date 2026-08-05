@@ -11,7 +11,10 @@ categories:
   - Education
   - Computer Science
   - General
+updated: 2026-08-05
+aliases: []
 ---
+
 # address space layout randomization (ASLR)
 
 Address Space Layout Randomization is a security technique where important

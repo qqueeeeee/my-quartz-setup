@@ -34,6 +34,8 @@ topics:
 orgs:
 categories:
   - Personal
+updated: 2026-08-05
+aliases: []
 ---
 
 # Making programming feel as fun as gaming

@@ -6,7 +6,11 @@ tags:
   - personal
 categories:
   - Personal
+created: 2026-08-05
+updated: 2026-08-05
+aliases: []
 ---
+
 I grew up with games, these are what I spent most of my time on. Though, I've been being way more productive in the past ~1 year, my love for them never died and I doubt it will ever die.   
 
 

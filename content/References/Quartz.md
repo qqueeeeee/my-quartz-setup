@@ -19,13 +19,16 @@ categories:
   - References
   - Projects
   - Quartz
+created: 2026-08-05
+updated: 2026-08-05
+aliases: []
 ---
 
 # Quartz
 
 this site.
 
-i started with [[Quartz]] as a digital garden tool, then kept pushing it until it
+i started with [[Quartz]] as a [[Digital Garden|digital garden]] tool, then kept pushing it until it
 became closer to a graph-native portfolio.
 
 ## why this matters

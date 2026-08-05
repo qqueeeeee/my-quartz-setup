@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - area/notes
   - ideas
@@ -8,7 +8,10 @@ tags:
   - personal
 categories:
   - Personal
+updated: 2026-08-05
+aliases: []
 ---
+
 # discipline of perception
 
 in a crowded cafe, two people sit across from each other.

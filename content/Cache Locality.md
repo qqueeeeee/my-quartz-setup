@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-08-05
 tags:
   - area/education
   - topic/programming-systems
@@ -9,6 +9,8 @@ categories:
   - Education
   - Computer Science
   - General
+updated: 2026-08-05
+aliases: []
 ---
 
 # Cache Locality

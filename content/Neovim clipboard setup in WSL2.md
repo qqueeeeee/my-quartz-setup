@@ -25,6 +25,8 @@ orgs:
 categories:
   - Projects
   - Workflow-Tools
+updated: 2026-08-05
+aliases: []
 ---
 
 # Neovim clipboard setup in WSL2

@@ -64,6 +64,8 @@ orgs:
 categories:
   - Projects
   - Fishao-Server
+updated: 2026-08-05
+aliases: []
 ---
 
 # Choosing the backend language for Fishao Server

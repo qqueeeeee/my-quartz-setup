@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -10,7 +10,10 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
+
 # what are data structures
 
 a data structure is basically a way to store and organize data so operations on
@@ -30,11 +33,11 @@ If you pick the right one, the solution often becomes way more obvious.
 
 that's why data structures are not just interview stuff. they show up everywhere:
 
-- arrays when you want direct indexing
-- linked lists when you care more about insertion patterns
-- stacks when the most recent thing matters
-- heaps when you need fast min/max access
-- graphs when relationships matter more than sequence
+- [[Arrays|arrays]] when you want direct indexing
+- [[Linked Lists|linked lists]] when you care more about insertion patterns
+- [[Stacks|stacks]] when the most recent thing matters
+- [[Heaps|heaps]] when you need fast min/max access
+- [[Graphs|graphs]] when relationships matter more than sequence
 
 ## notes to branch into
 

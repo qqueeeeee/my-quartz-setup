@@ -8,6 +8,8 @@ tags:
   - personal
 categories:
   - Personal
+updated: 2026-08-05
+aliases: []
 ---
 
 # create things you wish existed

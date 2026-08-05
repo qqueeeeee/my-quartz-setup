@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -9,8 +9,11 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
-A greedy algorithm makes the locally optimal choice at each step, hoping that these local choices lead to a globally optimal solution. No backtracking, no reconsideration — just take the best option available right now and move on.
+
+A greedy algorithm makes the locally optimal choice at each step, hoping that these local choices lead to a globally optimal solution. No [[Backtracking|backtracking]], no reconsideration — just take the best option available right now and move on.
 
 The hard part isn't the implementation, it's knowing when greedy actually works. A greedy approach gives the correct answer for some problems and a completely wrong answer for others. The difference isn't always obvious.
 

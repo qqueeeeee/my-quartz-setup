@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -9,11 +9,14 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
 
 an array is a contiguous block of memory where elements are stored one after
 another. not just an implementation detail, this is why arrays behave the way
 they do.
+
 
 when you ask for an array of 5 integers, the system finds a block of memory big
 enough to hold all 5 in a row and gives you the address of the first one.
@@ -24,6 +27,10 @@ every other element is found by simple math. if the first element is at address
 this is why access is O(1). the computer doesn't search, it calculates.
 
 contiguous memory is both the superpower and the limitation.
+
+## atomic notes
+
+- [[Static vs Dynamic Arrays]]
 
 ---
 
@@ -46,25 +53,6 @@ same idea, just shifting left.
 
 this is why [[Linked Lists]] exist. they trade random access for easier
 insertions/deletions.
-
----
-
-## static vs dynamic arrays
-
-a static array has a fixed size set at creation. you can't grow it.
-
-a dynamic array wraps a static array internally but handles resizing for you.
-when it runs out of space, it allocates a new array, usually 2x the size, copies
-everything, and continues.
-
-the copy is O(n), but it happens rarely enough that append stays O(1) amortized.
-
-the 2x growth strategy is deliberate. if you grew by 1 each time, every append
-would trigger a copy. doubling means copies happen at sizes 1, 2, 4, 8, 16...
-so total work across n appends is roughly 2n. amortizes to O(1) per append.
-
-Python's list, Java's ArrayList, and C++'s vector are all dynamic arrays under
-the hood.
 
 ---
 

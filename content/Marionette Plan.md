@@ -8,7 +8,10 @@ tags:
 categories:
   - Projects
   - Marionette
+created: 2026-08-05
+updated: 2026-08-05
 ---
+
 # Marionette — Initial Plan
 
 ## Context
@@ -56,7 +59,7 @@ The reward function (`gained_currency`, `challenge_triggered`, `command_on_coold
 A cold-start DQN explores by sending random commands. On a Discord self-bot this is a fast path to a ban and very slow to converge. Fix: record the user playing for ~1 hour, save (state, action) pairs, pretrain the Q-network to mimic those choices, *then* switch to reward-driven RL. Same model, much safer bootstrap.
 
 **3. Per-bot adapter layer.**
-The action space, cooldown clock, and reward-event strings are all bot-specific. Keep the core (encoder, DQN, replay, trainer, classifiers) bot-agnostic; put each target bot's config in a thin adapter module. Lets Marionette retarget without touching the brain.
+The action space, cooldown clock, and reward-event strings are all bot-specific. Keep the core (encoder, DQN, replay, trainer, classifiers) bot-agnostic; put each target bot's config in a thin adapter module. Lets [[Marionette]] retarget without touching the brain.
 
 ## Proposed layout
 
@@ -103,7 +106,7 @@ We're going to start with DQN + reward. Order:
 1. `agent/dqn.py` — small MLP Q-network
 2. `agent/replay.py` — experience replay buffer
 3. `rewards.py` — reward function with placeholder events
-4. `agent/trainer.py` — Bellman update + gradient steps
+4. `agent/trainer.py` — Bellman update + [[Gradient|gradient]] steps
 5. `agent/policy.py` — epsilon-greedy
 6. `state.py` + `actions.py` — abstractions so the agent compiles end-to-end
 7. `encoder.py` — MiniLM wrapper

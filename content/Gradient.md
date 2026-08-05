@@ -12,7 +12,10 @@ categories:
   - Computer Science
   - ML
   - fundamentals
+created: 2026-08-05
+updated: 2026-08-05
 ---
+
 # Gradient.md
 
 ## The actual question gradients answer
@@ -260,7 +263,7 @@ translate it into this sentence:
 
 > "If I change this weight a tiny bit, how much will the loss change?"
 
-That single idea is the foundation of gradient descent, backpropagation, and neural network training.
+That single idea is the foundation of gradient descent, [[Backpropagation|backpropagation]], and neural network training.
 
 Almost everything in modern deep learning is built on top of this concept.
 

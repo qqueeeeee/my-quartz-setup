@@ -94,6 +94,8 @@ orgs:
 categories:
   - Education
   - Career
+updated: 2026-08-05
+aliases: []
 ---
 
 # Learning DSA in C++ fast
@@ -121,14 +123,14 @@ The goal was not to become a master in two or three days. The goal was to get to
 
 The main areas I wanted to cover were the usual core set:
 
-- arrays / hashing
+- [[Arrays|arrays]] / hashing
 - [[Linked Lists|linked lists]]
-- stacks / queues
+- [[Stacks|stacks]] / [[Queues|queues]]
 - [[Two Pointers|two pointers]]
 - [[Sliding Window|sliding window]]
 - [[Binary Search|binary search]]
-- trees / graphs
-- heaps
+- [[Trees|trees]] / [[Graphs|graphs]]
+- [[Heaps|heaps]]
 - [[Dynamic Programming|dynamic programming]]
 
 So this note is really less about speed for the sake of speed, and more about building a DSA base that fits how I actually learn.

@@ -48,6 +48,8 @@ orgs:
 categories:
   - Projects
   - PathForge-AI
+updated: 2026-08-05
+aliases: []
 ---
 
 # Building PathForge AI for the hackathon

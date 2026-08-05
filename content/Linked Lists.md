@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -9,8 +9,15 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
-A linked list is a collection of nodes where each node holds some data and a pointer to the next node. Unlike [[Arrays]], the elements are not stored contiguously in memory. Each node can be anywhere in memory, and the pointers are what connect them together.
+
+A linked list is a collection of nodes where each node holds some data and a pointer to the next node. Unlike [[Arrays]], the elements are not stored contiguously in memory. Each node can be anywhere in memory, and the [[Pointers|pointers]] are what connect them together.
+
+## atomic notes
+
+- [[Types of Linked Lists]]
 
 ---
 
@@ -19,24 +26,6 @@ A linked list is a collection of nodes where each node holds some data and a poi
 In an array, elements are packed together so index math works. In a linked list, node A might be at address 100, node B at address 450, node C at address 230. They're scattered. The only way to get from A to C is to follow the chain: A tells you where B is, B tells you where C is.
 
 This is why you can't do O(1) access by index. To get to index 4 you have to start at the head and hop 4 times. That's O(n).
-
----
-
-## types of linked lists
-
-**Singly Linked List** - each node points to the next one only. You can only traverse forward.
-
-```
-[data|next] -> [data|next] -> [data|next] -> nullptr
-```
-
-**Doubly Linked List** - each node has a pointer to both next and previous. You can traverse in both directions. Costs more memory (extra pointer per node) but makes operations like deletion easier since you don't need to track the previous node manually.
-
-```
-nullptr <- [prev|data|next] <-> [prev|data|next] <-> [prev|data|next] -> nullptr
-```
-
-**Circular Linked List** - the last node points back to the head instead of nullptr. Used in things like round-robin scheduling. Less common in DSA problems but good to know it exists.
 
 ---
 
@@ -58,7 +47,7 @@ The insert/delete being O(1) is only true once you're already at the position. T
 
 ## when to reach for a linked list
 
-When you're doing a lot of insertions and deletions and don't need random access. Good examples are implementing stacks, queues, or anything where you're constantly adding/removing from the ends.
+When you're doing a lot of insertions and deletions and don't need random access. Good examples are implementing [[Stacks|stacks]], [[Queues|queues]], or anything where you're constantly adding/removing from the ends.
 
 In practice, [[Arrays]] (vectors) are often faster in the real world even for insertions because of [[Cache Locality]]. Memory that's contiguous is faster to access because of how CPU caches work. Linked list nodes are scattered in memory so every hop is potentially a cache miss. Worth knowing even if it doesn't change DSA problem solving much.
 

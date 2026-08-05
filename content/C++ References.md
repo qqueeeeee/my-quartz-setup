@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-08-05
 tags:
   - area/notes
   - cs/concepts
@@ -12,12 +12,15 @@ categories:
   - Computer Science
   - Languages
   - C++
+updated: 2026-08-05
+aliases: []
 ---
+
 a reference is an alias. another name for the same variable.
 
 once set, it can't be repointed.
 
-it does a lot of what pointers can do, but cleaner. basically pointer-ish
+it does a lot of what [[Pointers|pointers]] can do, but cleaner. basically pointer-ish
 behavior without writing pointer syntax everywhere.
 
 Related to [[C++ Intro]] and [[Pointers]].

@@ -46,6 +46,8 @@ orgs:
 categories:
   - Projects
   - SelfForge
+updated: 2026-08-05
+aliases: []
 ---
 
 # SelfForge auth and backend cleanup

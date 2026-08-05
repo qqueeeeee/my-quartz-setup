@@ -12,6 +12,9 @@ status: in-progress
 categories:
   - Projects
   - Writing-ML-Library-in-C
+created: 2026-04-03
+updated: 2026-08-05
+aliases: []
 ---
 
 # Writing a ML Library in C
@@ -30,7 +33,7 @@ this is valuable because it makes me deal with:
 
 - memory layout
 - tensor math
-- gradients and backpropagation
+- gradients and [[Backpropagation|backpropagation]]
 - the difference between understanding an API and understanding the mechanism
 
 ## what it needs
@@ -38,9 +41,9 @@ this is valuable because it makes me deal with:
 to get something like this working, i need at least:
 
 1. tensor operations
-2. gradient calculation
+2. [[Gradient|gradient]] calculation
 3. a layer abstraction that ties the model together
-4. a training loop
+4. a [[Training Loop|training loop]]
 5. enough infrastructure to load and evaluate data cleanly
 
 ## mental model

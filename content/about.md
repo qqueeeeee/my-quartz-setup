@@ -2,6 +2,11 @@
 title: about
 cssclasses:
   - about-page
+created: 2026-04-30
+updated: 2026-08-05
+categories: []
+tags: []
+aliases: []
 ---
 
 # sasank kodamarthy
@@ -39,7 +44,7 @@ portfolio. i wanted it to feel maintained.
 | key      | value                                             |
 | -------- | ------------------------------------------------- |
 | os       | [[Arch Linux]] / Windows 11 (WSL2)                    |
-| editor   | Neovim 0.12 (vague colorscheme → kanagawa-dragon) |
+| editor   | [[Neovim]] 0.12 (vague colorscheme → kanagawa-dragon) |
 | shell    | Zsh + Starship                                    |
 | wm       | Hyprland                                          |
 | terminal | Kitty                                             |
