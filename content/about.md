@@ -2,11 +2,16 @@
 title: about
 cssclasses:
   - about-page
+created: 2026-04-30
+updated: 2026-08-05
+categories: []
+tags: []
+aliases: []
 ---
 
 # sasank kodamarthy
 
-B.Tech Computer Science · AVN Institute · Hyderabad · May 2026
+B.Tech [[Computer Science]] · AVN Institute · Hyderabad · May 2026
 
 final-year CS student in Hyderabad. i build software by pulling on threads until
 the system starts making sense.
@@ -38,8 +43,8 @@ portfolio. i wanted it to feel maintained.
 
 | key      | value                                             |
 | -------- | ------------------------------------------------- |
-| os       | Arch Linux / Windows 11 (WSL2)                    |
-| editor   | Neovim 0.12 (vague colorscheme → kanagawa-dragon) |
+| os       | [[Arch Linux]] / Windows 11 (WSL2)                    |
+| editor   | [[Neovim]] 0.12 (vague colorscheme → kanagawa-dragon) |
 | shell    | Zsh + Starship                                    |
 | wm       | Hyprland                                          |
 | terminal | Kitty                                             |
