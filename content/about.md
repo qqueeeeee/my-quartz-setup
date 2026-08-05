@@ -6,7 +6,7 @@ cssclasses:
 
 # sasank kodamarthy
 
-B.Tech Computer Science · AVN Institute · Hyderabad · May 2026
+B.Tech [[Computer Science]] · AVN Institute · Hyderabad · May 2026
 
 final-year CS student in Hyderabad. i build software by pulling on threads until
 the system starts making sense.
@@ -38,7 +38,7 @@ portfolio. i wanted it to feel maintained.
 
 | key      | value                                             |
 | -------- | ------------------------------------------------- |
-| os       | Arch Linux / Windows 11 (WSL2)                    |
+| os       | [[Arch Linux]] / Windows 11 (WSL2)                    |
 | editor   | Neovim 0.12 (vague colorscheme → kanagawa-dragon) |
 | shell    | Zsh + Starship                                    |
 | wm       | Hyprland                                          |
