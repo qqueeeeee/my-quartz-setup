@@ -1,12 +1,15 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - area/notes
   - forge
   - personal
 categories:
   - Personal
+updated: 2026-08-05
+aliases: []
 ---
+
 #forge
 
 This is a 3 step process, skipping any of the steps is really bad it's like trying to run a marathon while you can't even jog a mile. So it is not recommended to skip any of these steps, go one after the other. Having a clear roadmap will help you understand where you are and what you're working on and when you're ready to progress and this will remove most of the ambiguity that causes people to either push too hard or not push hard enough. 
@@ -44,7 +47,7 @@ When 30 minute feels very easy increase it to 45, then 60 then 75 and then final
 
 ### Level 3 - Repetition without Novelty ###
 
-You're going to do the same task, with the same time, day after day, no variation, no mixing it up for the stake of variety, you're going to stick with one over and over again. You're deliberately removing novelty from the equation as it's a crutch your brain uses to get you avoid actual boredom tolerance so when you can get yourself to do something for weeks without needing to change it up, you've reached a new level of tolerance that most people never do. This can be something like writing in the morning, or exercising, anything, doing one thing at the same time everyday regardless of the results. The same-ness is the point, this will feel boring, that is the point. If it feels repetitive then you're doing it right. In-fact boredom at this level is a signal of mastery, you're training your capacity to train without novelty it means you stripped away all dopamine sources and you're still showing up. 
+You're going to do the same task, with the same time, day after day, no variation, no mixing it up for the stake of variety, you're going to stick with one over and over again. You're deliberately removing novelty from the equation as it's a crutch your brain uses to get you avoid actual [[Boredom Tolerance|boredom tolerance]] so when you can get yourself to do something for weeks without needing to change it up, you've reached a new level of tolerance that most people never do. This can be something like writing in the morning, or exercising, anything, doing one thing at the same time everyday regardless of the results. The same-ness is the point, this will feel boring, that is the point. If it feels repetitive then you're doing it right. In-fact boredom at this level is a signal of mastery, you're training your capacity to train without novelty it means you stripped away all dopamine sources and you're still showing up. 
 
 This level is also about consistency, everyone can do it once, or a week, you need to do this, for weeks, months, years in-fact, the point is, you keep going even though there's no result. This is what keeps successful people at the top, the YouTuber who posts everyday for 2 years with no growth, the guy who goes to the gym for months without seeing any physical progress, this is what separates people. Consistency is key. **Everything valuable requires compounding and compounding requires time and time requires sustained effort without novelty.**  
 

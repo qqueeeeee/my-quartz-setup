@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -9,8 +9,12 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
-A heap is a complete binary tree that satisfies the heap property. It's the data structure behind priority queues and one of the most useful structures for problems involving "find the min/max efficiently."
+
+A heap is a complete binary tree that satisfies the heap property. It's the data structure behind priority [[Queues|queues]] and one of the most useful structures for problems involving "find the min/max efficiently."
+
 
 There are two types:
 
@@ -20,11 +24,15 @@ There are two types:
 
 That's the only rule. There's no ordering between siblings or cousins, just the parent-child relationship.
 
+## atomic notes
+
+- [[Heap Sort]]
+
 ---
 
 ## why it's stored as an array
 
-A heap is a complete binary tree, meaning every level is fully filled except possibly the last, which fills left to right. This specific shape means you can store the entire tree in an array without any pointers.
+A heap is a complete binary tree, meaning every level is fully filled except possibly the last, which fills left to right. This specific shape means you can store the entire tree in an array without any [[Pointers|pointers]].
 
 For a node at index `i`:
 - Left child is at `2i + 1`
@@ -76,7 +84,7 @@ Any time you need to repeatedly get the minimum or maximum element from a collec
 
 **Priority queue:** Process tasks by priority not arrival order. A heap is literally the standard implementation of a priority queue.
 
-**Heap sort:** Build a heap, extract max n times. O(n log n) sort.
+**[[Heap Sort|Heap sort]]:** Build a heap, extract max n times. O(n log n) sort.
 
 **K largest/smallest elements:** Maintain a heap of size k. When a new element comes in, compare with the root and replace if necessary.
 
@@ -124,39 +132,3 @@ for (int n : nums) {
 The min heap trick for "k largest" works because you maintain a window of the k largest seen so far. If a new element is bigger than the current smallest in your window (the root of the min heap), it replaces it.
 
 ---
-
-## heap sort
-
-Build a max heap, then repeatedly extract the max and place it at the end of the array.
-
-```cpp
-void heapify(vector<int>& arr, int n, int i) {
-    int largest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
-
-    if (left < n && arr[left] > arr[largest]) largest = left;
-    if (right < n && arr[right] > arr[largest]) largest = right;
-
-    if (largest != i) {
-        swap(arr[i], arr[largest]);
-        heapify(arr, n, largest);
-    }
-}
-
-void heapSort(vector<int>& arr) {
-    int n = arr.size();
-    for (int i = n / 2 - 1; i >= 0; i--)  // build max heap
-        heapify(arr, n, i);
-    for (int i = n - 1; i > 0; i--) {      // extract elements
-        swap(arr[0], arr[i]);
-        heapify(arr, i, 0);
-    }
-}
-```
-
-O(n log n) time, O(1) space. Not as fast as quicksort in practice but has guaranteed O(n log n) worst case.
-
----
-
-Heaps are the go-to whenever a problem involves "top k", "kth largest/smallest", or any scenario where you need fast access to the min or max of a dynamic set.

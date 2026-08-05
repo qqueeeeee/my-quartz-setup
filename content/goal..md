@@ -12,5 +12,8 @@ topics: []
 via:
 categories:
   - Personal
+updated: 2026-08-05
+aliases: []
 ---
+
 a software engineer’s job isn’t to write code but to solve problems.

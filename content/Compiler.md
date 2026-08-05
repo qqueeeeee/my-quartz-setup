@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/programming-systems
   - area/education
@@ -11,7 +11,10 @@ categories:
   - Computer Science
   - Languages
   - C++
+updated: 2026-08-05
+aliases: []
 ---
+
 "files have no meaning" in C++.
 
 unlike Java, C++ doesn't care about file names or package hierarchy. the

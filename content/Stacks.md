@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -9,7 +9,10 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
+
 A stack is a linear data structure that follows one rule: **Last In, First Out (LIFO)**. The last thing you put in is the first thing you get out. That's the entire idea.
 
 Think of a stack of plates. You add plates to the top, you take plates from the top. You never pull from the middle or the bottom. The structure enforces this.
@@ -32,7 +35,7 @@ Everything is O(1). That's the payoff for restricting how you interact with it.
 
 The order isn't arbitrary. There are a whole class of problems where the most recently seen thing is exactly what you need to reference next. Some examples:
 
-**Function call stack** - when a function calls another function, the current one pauses and gets pushed onto the call stack. When the inner one finishes, you pop back to where you were. This is literally how every program runs, your language runtime uses a stack under the hood. [[Recursion]] is just the call stack doing this automatically.
+**Function [[Call Stack|call stack]]** - when a function calls another function, the current one pauses and gets pushed onto the call stack. When the inner one finishes, you pop back to where you were. This is literally how every program runs, your language runtime uses a stack under the hood. [[Recursion]] is just the call stack doing this automatically.
 
 **Undo functionality** - every action gets pushed. Ctrl+Z pops the last one.
 

@@ -83,6 +83,8 @@ orgs:
 categories:
   - Education
   - Career
+updated: 2026-08-05
+aliases: []
 ---
 
 # Switching from data science to software development

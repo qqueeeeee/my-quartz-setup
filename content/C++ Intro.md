@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-08-05
 tags:
   - topic/programming-languages
   - area/education
@@ -13,7 +13,10 @@ categories:
   - Computer Science
   - Languages
   - C++
+updated: 2026-08-05
+aliases: []
 ---
+
 # c++ intro
 
 i've always thought C++ was cool.
@@ -35,8 +38,8 @@ C++ forces you to care about things like:
 
 - memory
 - compilation
-- references and pointers
-- stack vs heap
+- references and [[Pointers|pointers]]
+- [[Stack vs Heap|stack vs heap]]
 - performance as an actual design constraint
 
 that's also why this connects naturally to [[Writing a ML Library in C]]. if i'm

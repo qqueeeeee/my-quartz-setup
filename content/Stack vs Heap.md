@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/programming-systems
   - area/education
@@ -10,7 +10,10 @@ categories:
   - Education
   - Computer Science
   - General
+updated: 2026-08-05
+aliases: []
 ---
+
 in C++, stack and heap matter a lot because they behave very differently.
 
 stack memory is automatic. when you declare `int x = 5;` inside a function, it

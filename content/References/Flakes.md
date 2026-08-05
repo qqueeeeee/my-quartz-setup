@@ -9,7 +9,11 @@ tags:
   - workflow
   - linux
   - nixos
+created: 2026-08-05
+updated: 2026-08-05
+aliases: []
 ---
+
 A **flake** is just a `flake.nix` file in a directory. It does two things:
 1. **Locks dependencies.** It says "I depend on nixpkgs version X, on
    home-manager version Y." Those versions are pinned in `flake.lock`. When you build, you get the *exact* same packages every time, on any machine. Reproducibility.

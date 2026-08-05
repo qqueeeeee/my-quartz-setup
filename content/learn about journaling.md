@@ -8,7 +8,10 @@ priority:
 due:
 categories:
   - Personal
+updated: 2026-08-05
+aliases: []
 ---
+
 i need to understand how to journal and start journaling everyday
 
 This belongs with [[Daily|Daily Notes]], [[Boredom Tolerance]], and [[SelfForge]].

@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-08-05
 tags:
   - area/education
   - topic/dsa
@@ -9,10 +9,12 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
 
 # Trees
 
-Trees are hierarchical graphs.
+Trees are hierarchical [[Graphs|graphs]].
 
 They connect [[Graphs]], [[Recursion]], and [[Dynamic Programming]].

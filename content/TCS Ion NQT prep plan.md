@@ -83,6 +83,8 @@ orgs:
 categories:
   - Education
   - Career
+updated: 2026-08-05
+aliases: []
 ---
 
 # TCS Ion NQT prep plan
@@ -102,7 +104,7 @@ It is really three problems at once:
 The practical prep split was:
 
 - aptitude practice through repeated pattern exposure
-- coding practice in [[Python Intro]] with awareness of TCS-specific compiler quirks
+- coding practice in [[Python Intro]] with awareness of TCS-specific [[Compiler|compiler]] quirks
 - interview prep built around projects, DSA basics, and common CS fundamentals
 
 The bigger takeaway is that exam prep like this works much better when it plugs into a longer career plan.

@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -9,10 +9,18 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
-Two pointers is a technique where you maintain two indices into an array and move them strategically to solve a problem in O(n) that would naively require O(n²).
+
+Two [[Pointers|pointers]] is a technique where you maintain two indices into an array and move them strategically to solve a problem in O(n) that would naively require O(n²).
+
 
 It's not a data structure, it's a pattern. Once you recognize it, a whole class of problems becomes obvious.
+
+## atomic notes
+
+- [[Floyd's Cycle Detection]]
 
 ---
 
@@ -81,29 +89,6 @@ int removeDuplicates(vector<int>& arr) {
 `slow` tracks where to write the next unique element. `fast` scans through everything. When fast finds something new, slow advances and writes it.
 
 Other problems: move zeroes to end, remove element, partition array.
-
----
-
-## pattern 3: fast and slow (Floyd's cycle detection)
-
-One pointer moves one step at a time, the other moves two. If there's a cycle, the fast pointer will eventually lap the slow one and they'll meet.
-
-Used for detecting cycles in [[Linked Lists]]:
-
-```cpp
-bool hasCycle(Node* head) {
-    Node* slow = head;
-    Node* fast = head;
-    while (fast && fast->next) {
-        slow = slow->next;
-        fast = fast->next->next;
-        if (slow == fast) return true;
-    }
-    return false;
-}
-```
-
-Also used for finding the middle of a linked list — when fast reaches the end, slow is at the middle.
 
 ---
 

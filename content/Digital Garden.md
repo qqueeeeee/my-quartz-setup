@@ -6,6 +6,9 @@ tags:
   - digital-garden
 categories:
   - Writing
+created: 2026-04-03
+updated: 2026-08-05
+aliases: []
 ---
 
 i was randomly scrolling YouTube and found this video: [Interview with Obsidian enthusiast 2026](https://youtu.be/NSTT2iBSwZs?si=PmiKESEHER2a3axc).

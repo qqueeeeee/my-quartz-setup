@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - area/notes
   - ideas
@@ -9,7 +9,10 @@ tags:
 source:
 categories:
   - Personal
+updated: 2026-08-05
+aliases: []
 ---
+
 # the pattern principle
 
 ## how you do one thing is how you do everything

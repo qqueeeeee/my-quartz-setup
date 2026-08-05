@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -9,10 +9,19 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
-Recursion is when a function calls itself to solve a smaller version of the same problem. It's not a data structure, it's a problem-solving technique. But it's foundational enough that you need to understand it deeply before tackling trees, graphs, and dynamic programming.
+
+Recursion is when a function calls itself to solve a smaller version of the same problem. It's not a data structure, it's a problem-solving technique. But it's foundational enough that you need to understand it deeply before tackling [[Trees|trees]], [[Graphs|graphs]], and [[Dynamic Programming|dynamic programming]].
+
 
 The core idea: if you can solve a small version of a problem, and you can reduce the big version into smaller versions, you can solve anything.
+
+## atomic notes
+
+- [[Call Stack]]
+- [[Recursion vs Iteration]]
 
 ---
 
@@ -36,16 +45,6 @@ factorial(5)
 
 ---
 
-## the call stack
-
-Every recursive call gets pushed onto the [[Stacks|call stack]]. When the base case is hit, the calls start returning and popping off one by one. This is literally the same call stack your program uses for all function calls.
-
-This is why infinite recursion causes a stack overflow — you just keep pushing frames onto the stack until it runs out of memory.
-
-The maximum depth you can recurse is limited by the stack size, usually around 1000-10000 calls depending on the language and environment.
-
----
-
 ## How to think about it
 
 The mental model that actually works: **trust the recursion.**
@@ -61,19 +60,11 @@ Don't try to trace every call in your head. Just define what the function should
 
 ---
 
-## recursion vs iteration
-
-Anything you can do recursively you can also do iteratively with an explicit stack, and vice versa. Recursion is often cleaner and more natural for problems that have recursive structure, like trees and graphs.
-
-Iteration is better when the recursion depth could be huge (stack overflow risk) or when performance is critical (function call overhead).
-
----
-
 ## time and space
 
 Time complexity of a recursive function depends on how many calls you make and what work you do per call. A function that makes 2 recursive calls and does O(1) work per call on input of size n makes O(2^n) total calls, exponential. This is why naive recursive fibonacci is slow.
 
-Space complexity is at minimum O(depth) for the call stack even if you're not storing anything else.
+Space complexity is at minimum O(depth) for the [[Call Stack|call stack]] even if you're not storing anything else.
 
 ---
 

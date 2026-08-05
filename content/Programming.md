@@ -5,50 +5,45 @@ tags:
   - programming
 categories:
   - Index
+created: 2026-08-05
+updated: 2026-08-05
+aliases: []
 ---
 
 # Programming
 
-Index of notes categorised under `Computer Science`, `Languages`, `C++`, `Python`, `DSA`, `General`.
+map of content for languages, tooling and how machines actually run code.
 
 ## notes
 
 - [[Address Space Layout Randomization (ASLR)]]
-- [[Arrays]]
-- [[Backpropagation]]
-- [[Backtracking]]
-- [[Binary Search]]
+- [[Building my own keyboard-centric shell with Quickshell]]
 - [[C++ Intro]]
 - [[C++ References]]
-- [[Cache Locality]]
+- [[Can Linux ever run anti-cheat games properly]]
+- [[Choosing the backend language for Fishao Server]]
 - [[Compiler]]
-- [[Computation Graph]]
-- [[Computer Science]]
-- [[Constant Folding]]
-- [[DSA]]
-- [[Data Structures]]
-- [[Dynamic Programming]]
 - [[Errors]]
-- [[General]]
-- [[Gradient]]
-- [[Graphs]]
-- [[Greedy]]
-- [[Hash Maps]]
-- [[Heaps]]
+- [[Fishao Server]]
 - [[How does C++ work]]
-- [[Linked Lists]]
+- [[Learning DSA in C++ fast]]
 - [[Linker]]
+- [[Neovim clipboard setup in WSL2]]
+- [[Overnight prep for the Prime interview]]
 - [[Pointers]]
-- [[Prefix Sums]]
 - [[Python Intro]]
-- [[Queues]]
 - [[RAG]]
-- [[Recursion]]
-- [[Sliding Window]]
-- [[Stack vs Heap]]
-- [[Stacks]]
-- [[Tiling Window Managers]]
-- [[Trees]]
-- [[Tries]]
-- [[Two Pointers]]
+- [[Resume ideas for my Quartz site]]
+- [[Reverse engineering Superfighters Deluxe for vulnerabilities]]
+- [[Styling YASB workspace buttons properly]]
+- [[Switching from data science to software development]]
+- [[Turning my Quartz site into a 3D graph]]
+- [[Vault Style Guide]]
+- [[Verifying the Bloomberg-style dashboard idea]]
+- [[Writing a ML Library in C]]
 
+## related
+
+- [[DSA]]
+- [[AI]]
+- [[Computer Science]]

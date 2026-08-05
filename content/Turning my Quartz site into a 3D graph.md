@@ -90,6 +90,8 @@ orgs:
 categories:
   - Projects
   - Quartz
+updated: 2026-08-05
+aliases: []
 ---
 
 # Turning my Quartz site into a 3D graph
@@ -109,7 +111,7 @@ The architecture decisions that mattered most were:
 - avoid hacky CSS hiding tricks that break the site in weird ways
 - keep most of the graph logic in the inline script layer instead of stuffing everything into the component file
 
-I hit a few dead ends first. Early approaches using CSS hiding and iframe bail-outs caused broken explorer behavior and blank content, so I dropped that direction. The cleaner version was separating the graph from the normal Quartz page layout and using dedicated iframe-rendered note pages for modal content.
+I hit a few dead ends first. Early approaches using CSS hiding and iframe bail-outs caused broken explorer behavior and blank content, so I dropped that direction. The cleaner version was separating the graph from the normal [[Quartz]] page layout and using dedicated iframe-rendered note pages for modal content.
 
 The technical details that actually mattered were:
 

@@ -1,12 +1,15 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - area/notes
   - forge
   - personal
 categories:
   - Personal
+updated: 2026-08-05
+aliases: []
 ---
+
 #forge 
 ### Overview ###
 

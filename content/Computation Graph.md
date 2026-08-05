@@ -12,7 +12,10 @@ categories:
   - Computer Science
   - ML
   - fundamentals
+created: 2026-08-05
+updated: 2026-08-05
 ---
+
 # Computation Graph.md
 
 ## What a computation graph is
@@ -179,7 +182,7 @@ These questions are exactly what gradients answer.
 
 However, gradients can only be computed if we know how the final value was produced.
 
-That is why the computation graph is so important. It provides the information needed for backpropagation to calculate gradients.
+That is why the computation graph is so important. It provides the information needed for [[Backpropagation|backpropagation]] to calculate gradients.
 
 Without the graph, backpropagation would have nothing to traverse and no way to determine how earlier values affected the final loss.
 
@@ -221,9 +224,9 @@ The final loss is simply the last node in a very large chain of computations.
 
 ## Micrograd and computation graphs
 
-Micrograd is often introduced while learning neural networks, but its core purpose is actually much simpler.
+[[Micrograd]] is often introduced while learning neural networks, but its core purpose is actually much simpler.
 
-Micrograd is an **autograd engine**.
+[[Micrograd]] is an **autograd engine**.
 
 Its job is to:
 
@@ -252,7 +255,7 @@ Instead of only storing the answer, it stores:
 
 This allows us to later compute gradients, perform backpropagation, and train neural networks.
 
-Without computation graphs, automatic differentiation and modern deep learning would not be possible.
+Without computation [[Graphs|graphs]], automatic differentiation and modern deep learning would not be possible.
 
 ## Related
 

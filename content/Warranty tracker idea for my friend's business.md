@@ -33,6 +33,8 @@ orgs:
 categories:
   - Projects
   - Ideas
+updated: 2026-08-05
+aliases: []
 ---
 
 # Warranty tracker idea for my friend's business

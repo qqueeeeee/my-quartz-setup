@@ -16,6 +16,8 @@ year:
 categories:
   - Projects
   - Marionette
+created: 2026-08-05
+updated: 2026-08-05
 ---
 
 # Intro

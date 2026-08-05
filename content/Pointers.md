@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/programming-systems
   - area/education
@@ -12,7 +12,10 @@ categories:
   - Computer Science
   - Languages
   - C++
+updated: 2026-08-05
+aliases: []
 ---
+
 a pointer stores the memory address of something.
 
 basically just a variable holding an address. the address might point to a real

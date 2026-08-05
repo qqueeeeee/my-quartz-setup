@@ -5,6 +5,9 @@ tags:
   - conventions
 categories:
   - Meta
+created: 2026-08-05
+updated: 2026-08-05
+aliases: []
 ---
 
 # STYLE_GUIDE
@@ -92,3 +95,21 @@ candidates go to [[REPORT_DUPLICATES]] for review.
 
 quick switcher (`Ctrl+O`), search, backlinks and the graph — not the file tree. the file
 tree is deliberately boring so the links have to carry the structure.
+
+## 10. one note, one concept
+
+A note answers one question. When a note grows several sections that would each be
+useful on their own, the sections move out into their own notes and the parent keeps
+everything else plus an `atomic notes` list at the top — it becomes a map of content,
+never a deleted note.
+
+## 11. maps of content
+
+Domain entry points (`AI`, `DSA`, `Programming`, `Career`, `Workflow`) are curated
+navigation pages: a short line of context, then links. Navigate by MOC and backlinks,
+not by folders.
+
+## 12. frontmatter
+
+Every note carries `created`, `updated`, `categories`, `tags`, `aliases`. Existing
+values are never overwritten — only missing fields get added.

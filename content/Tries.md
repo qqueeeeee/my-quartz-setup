@@ -1,5 +1,5 @@
 ---
-created:
+created: 2026-04-03
 tags:
   - topic/dsa
   - area/education
@@ -9,6 +9,8 @@ categories:
   - Education
   - Computer Science
   - DSA
+updated: 2026-08-05
+aliases: []
 ---
 
 A trie (pronounced "try", short for retrieval) is a tree-like data structure used to store strings where each node represents a single character. The path from the root to any node spells out a prefix.

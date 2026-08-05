@@ -47,6 +47,8 @@ orgs:
 categories:
   - Projects
   - Ideas
+updated: 2026-08-05
+aliases: []
 ---
 
 # Idea for a Minecraft Redstone AI site

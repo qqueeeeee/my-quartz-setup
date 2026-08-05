@@ -92,6 +92,8 @@ orgs:
 categories:
   - Projects
   - Lumina-Invest
+updated: 2026-08-05
+aliases: []
 ---
 
 # Verifying the Bloomberg-style dashboard idea

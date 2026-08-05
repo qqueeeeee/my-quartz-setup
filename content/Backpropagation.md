@@ -13,8 +13,16 @@ categories:
   - Computer Science
   - ML
   - fundamentals
+created: 2026-08-05
+updated: 2026-08-05
 ---
+
 # Backpropagation.md
+
+## atomic notes
+
+- [[Training Loop]]
+- [[Micrograd]]
 
 ## The actual problem being solved
 
@@ -57,7 +65,7 @@ These questions are extremely important because neural networks contain millions
 
 Those measurements are called **gradients**.
 
-A gradient tells us:
+A [[Gradient|gradient]] tells us:
 
 > "If I change this value slightly, how much will the final loss change?"
 
@@ -67,7 +75,7 @@ This is the core problem that backpropagation solves.
 
 ## What backpropagation does
 
-Backpropagation is an algorithm that computes gradients for every value in a computation graph.
+Backpropagation is an algorithm that computes gradients for every value in a [[Computation Graph|computation graph]].
 
 Given a final loss, backpropagation calculates quantities such as:
 
@@ -122,115 +130,6 @@ The actual learning happens when we use those gradients to update the weights.
 
 ---
 
-## The training loop
-
-Training a neural network consists of repeatedly performing the following steps:
-
-```text
-1. Forward pass
-2. Compute loss
-3. Backpropagation
-4. Gradient descent update
-5. Repeat
-```
-
-Let's break down each step:
-
-### 1. Forward pass
-
-The network receives inputs and produces a prediction.
-
-Example:
-
-```text
-Input → Neural Network → Prediction
-```
-
-### 2. Compute loss
-
-We compare the prediction to the correct answer and calculate how wrong the network was.
-
-A larger loss means the prediction was worse.
-
-A smaller loss means the prediction was better.
-
-### 3. Backpropagation
-
-Backpropagation computes gradients for every parameter in the network.
-
-At this stage, nothing has been updated yet.
-
-We are only gathering information about how each parameter affects the loss.
-
-### 4. Gradient descent update
-
-Now we use the gradients to adjust the weights.
-
-Weights that increase the loss are pushed in the opposite direction.
-
-Weights that decrease the loss are adjusted accordingly.
-
-This is the step where actual learning occurs.
-
-### 5. Repeat
-
-The process is repeated thousands or millions of times.
-
-Over time, the network gradually finds better parameter values and the loss decreases.
-
----
-
-## Micrograd's purpose
-
-Micrograd is not primarily a neural network library.
-
-Its main purpose is to demonstrate how an **autograd engine** works.
-
-An autograd engine automatically computes gradients for arbitrary mathematical expressions.
-
-Micrograd does this by:
-
-1. Building a computation graph.
-2. Remembering how every value was created.
-3. Traversing the graph backwards.
-4. Computing gradients for every node.
-
-For example, if we have:
-
-```python
-a = 2
-b = 3
-
-c = a * b
-loss = c + 4
-```
-
-Micrograd stores the relationships between these values in a graph.
-
-Later, when we call backpropagation, it walks backward through that graph and computes gradients such as:
-
-```text
-dLoss/da
-dLoss/db
-dLoss/dc
-```
-
-Each value in the graph receives a `.grad` attribute.
-
-For example:
-
-```python
-a.grad
-b.grad
-c.grad
-```
-
-These gradients tell us how much each value influenced the final loss.
-
-This is the foundation of modern deep learning frameworks such as PyTorch, TensorFlow, and JAX. Micrograd is simply a minimal implementation designed to help you understand the underlying mechanics.
-
----
-
 ## Key takeaway
 
 The most important idea to remember is:
@@ -251,4 +150,3 @@ Once we know that answer for every parameter, we can use gradient descent to upd
 * [[Gradient Descent]]
 * [[Computation Graph]]
 * [[Chain Rule]]
-

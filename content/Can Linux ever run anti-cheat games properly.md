@@ -25,6 +25,8 @@ orgs:
 categories:
   - Workflow
   - Linux
+updated: 2026-08-05
+aliases: []
 ---
 
 # Can Linux ever run anti-cheat games properly

@@ -11,6 +11,8 @@ tags:
   - clippings
 categories:
   - Clippings
+updated: 2026-08-05
+aliases: []
 ---
 
 ![](https://miro.medium.com/v2/resize:fit:1200/format:webp/1*AHiGNvpa9IYFWFQscT3RGA.png)
@@ -175,7 +177,7 @@ Consider questions like: who owns maintaining this software going forward? What 
 
 ### Timeline and Components
 
-Give a rough task break-down, by owner, in day-sized estimates (e.g. “The compliance engineering team creates widget X: ~3 person-days”). Be realistic; use actual person-calendar-days and not theoretical “if we were 100% focused…” estimates; and include padding for integrations, risks, and meetings. Account for tasks required for all teams, not just your own.
+Give a rough task break-down, by owner, in day-sized estimates (e.g. “The compliance engineering team creates widget X: ~3 person-days”). Be realistic; use actual person-calendar-days and not theoretical “if we were 100% focused…” estimates; and include padding for integrations, risks, and [[Meetings|meetings]]. Account for tasks required for all teams, not just your own.
 
 ## No time for a spec? Tell a duck.
 
@@ -195,7 +197,7 @@ Talking to a rubber duck is less crazy than jumping into writing code.
 
 Writing is a skill that takes practice and discipline, but it’s worth the effort. Improving your communication skills is essential to becoming a clearer thinker and better leader. Your first tech spec will be slow going; you just need to do it; and then do another; and another. It gets easier.
 
-You know who’s good at writing things people pay money to read? Stephen King. The single most useful book I’ve read in my engineering career is his memoir *On Writing.* (#2 is Strunk and White’s *The Elements of Style*, followed by Kernighan and Ritchie’s *The C Programming Language*). King’s book is half painfully honest self-examination, and half bare-knuckles practical advice about the craft. While his topic is creative writing, I feel much of it applies to technical problem-solving. I especially resonated with:
+You know who’s good at writing things people pay money to read? Stephen King. The single most useful book I’ve read in my engineering career is his memoir *On Writing.* (#2 is Strunk and White’s *The Elements of Style*, followed by Kernighan and Ritchie’s *The C [[Programming]] Language*). King’s book is half painfully honest self-examination, and half bare-knuckles practical advice about the craft. While his topic is creative writing, I feel much of it applies to technical problem-solving. I especially resonated with:
 
 > Write with the door closed, rewrite with the door open. Your stuff starts out being just for you, in other words, but then it goes out. Once \[it’s out there\] it belongs to anyone who wants to read it. Or criticize it. If you’re very lucky … more will do want to do the former than the latter.
 

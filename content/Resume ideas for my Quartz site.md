@@ -70,6 +70,8 @@ orgs:
 categories:
   - Projects
   - Quartz
+updated: 2026-08-05
+aliases: []
 ---
 
 # Resume ideas for my Quartz site
