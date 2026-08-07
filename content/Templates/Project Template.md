@@ -1,35 +1,63 @@
 ---
-folder: Projects
+created: {{date}}
+updated: {{date}}
+categories:
+  - Projects
 tags:
-  - area/templates
-  - area/projects
   - project
-type:
-org:
-start:
-year:
-url:
-status:
+status: active
+aliases: []
+related: []
+repo:
 ---
 
 # {{title}}
 
-What is this?
+## Purpose
 
-Why am I building it / why does it matter?
+one paragraph: what this software does and who it is for.
 
-## What it does
+## Motivation
+
+why i'm building it. what i want to learn from it.
+
+## Architecture
+
+```text
+```
+
+- key components:
+- data flow:
+- failure modes:
+
+## Tech Stack
+
+- [[]]
+
+## Current Progress
+
+- [ ] 
+
+## Problems Encountered
+
+| problem | status | note |
+| --- | --- | --- |
+|  |  | [[]] |
+
+## Ideas
 
 - 
 
-## What I am working on
+## Roadmap
+
+- **now** — 
+- **next** — 
+- **later** — 
+
+## Future Improvements
 
 - 
 
-## What makes it interesting
+## Related Notes
 
-- 
-
-## Connected notes
-
-- 
+- [[]]

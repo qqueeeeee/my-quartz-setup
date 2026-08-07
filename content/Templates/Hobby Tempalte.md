@@ -1,5 +1,0 @@
----
-tags:
-  - area/templates
-  - hobbies
----

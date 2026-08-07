@@ -1,19 +1,35 @@
 ---
-categories:
-  - "[[Books]]"
-author: []
-cover:
-genre: []
-pages:
-isbn:
-isbn13:
-year:
-rating:
-topics: []
 created: {{date}}
-last:
-via: ""
+updated: {{date}}
+categories:
+  - Books
 tags:
-  - area/templates
-  - to-read
+  - book
+status: reading
+aliases: []
+related: []
+author:
+started:
+finished:
+rating:
 ---
+
+# {{title}}
+
+## Why I'm reading this
+
+## Major Ideas
+
+- 
+
+## Favorite Quotes
+
+> 
+
+## Action Items
+
+- [ ] 
+
+## Related Notes
+
+- [[]]
