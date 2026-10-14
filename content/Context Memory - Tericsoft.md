@@ -1,0 +1,1 @@
+This is kind of a monitoring app from what I understand? It's basically a helpful way to connect different bug reports or issues reported by people. the main thing for this platform are the 20+ connectors they are working on from what I understand,  It's quite interesting but I don't know much typescript so let's see how it is.

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Logistic Regression.md",
+                "file": "Tericflow - Tericsoft.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Logistic Regression"
+              "title": "Tericflow - Tericsoft"
             }
           }
         ]
@@ -170,8 +170,8 @@
             "state": {
               "type": "calendar",
               "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
+              "icon": "lucide-ghost",
+              "title": "calendar"
             }
           }
         ]
@@ -183,8 +183,6 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "obsidian-git:Open Git source control": false,
-      "templater-obsidian:Templater": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -192,13 +190,18 @@
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
       "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false,
+      "templater-obsidian:Templater": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
   "active": "d0432c59b2fd9b8f",
   "lastOpenFiles": [
-    "Clippings/Logistic Regression.md",
+    "Context Memory - Tericsoft.md",
+    "Vars - Tericsoft.md",
+    "Tericflow - Tericsoft.md",
     "Logistic Regression.md",
+    "Clippings/Logistic Regression.md",
     "Neural Networks.md",
     "Random Forest.md",
     "K-Nearest Neighbours (KNN).md",
@@ -220,9 +223,6 @@
     "Templates/Experiment Template.md",
     "Templates/Daily Log Template.md",
     "Templates/Bug Template.md",
-    "Binary Search.md",
-    "Education/Computer Science/ML/fundamentals/Computation Graph.md",
-    "Education/Computer Science/ML/fundamentals/Backpropagation.md",
     "Education/Computer Science/ML/fundamentals/Backpropagation.md~",
     "Education/Computer Science/ML/fundamentals/Computation Graph.md~",
     "Education/Computer Science/ML/fundamentals/Gradients.md~",

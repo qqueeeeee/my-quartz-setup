@@ -1,0 +1,1 @@
+It's a orchestration app/platform for agents, this is mostly for writing code, this let's the agents. This app let's the flow of programming, i.e the agents that write code work much better as it connects them fully together and improves the functionality. This is the most interesting one I saw so far, I like it quite a bit. 
