@@ -11,7 +11,6 @@ aliases: []
 ---
 
 # TEMPLATE_GUIDE
-
 how the `Templates/` folder works. the vault is atomic-notes-first: small notes, one idea
 each, wired together with links and gathered by MOCs. templates exist to make that cheap,
 not to add ceremony.

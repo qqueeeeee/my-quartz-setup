@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Tericflow - Tericsoft.md",
+                "file": "Context Memory - Tericsoft.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Tericflow - Tericsoft"
+              "title": "Context Memory - Tericsoft"
             }
           }
         ]
@@ -197,9 +197,19 @@
   },
   "active": "d0432c59b2fd9b8f",
   "lastOpenFiles": [
+    "Tericflow - Tericsoft.md",
+    "Boredom Tolerance - How to improve it..md",
+    "BFS.md",
+    "Templates/Tericsoft Template.md",
+    "Templates/Untitled.md",
+    "Templates/Work Template.md",
+    "Templates/Weekly Review Template.md",
+    "Templates/ADR Template.md",
+    "Templates/TEMPLATE_GUIDE.md",
+    "about.md",
+    "Templates/Bug Template.md",
     "Context Memory - Tericsoft.md",
     "Vars - Tericsoft.md",
-    "Tericflow - Tericsoft.md",
     "Logistic Regression.md",
     "Clippings/Logistic Regression.md",
     "Neural Networks.md",
@@ -210,19 +220,9 @@
     "Linear Regression.md",
     "Microsoft AI & ML Engineer - Day 2.md",
     "Templates/Study Note.md",
-    "Templates/TEMPLATE_GUIDE.md",
-    "Templates/ADR Template.md",
     "Templates/Atomic Concept Template.md",
     "Address Space Layout Randomization (ASLR).md",
-    "Templates/Weekly Review Template.md",
     "Templates/Technology Template.md",
-    "Templates/Research Paper Template.md",
-    "Templates/MOC Template.md",
-    "Templates/Lecture Template.md",
-    "Templates/Interview Question Template.md",
-    "Templates/Experiment Template.md",
-    "Templates/Daily Log Template.md",
-    "Templates/Bug Template.md",
     "Education/Computer Science/ML/fundamentals/Backpropagation.md~",
     "Education/Computer Science/ML/fundamentals/Computation Graph.md~",
     "Education/Computer Science/ML/fundamentals/Gradients.md~",
