@@ -55,16 +55,58 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Work/VarsHealth Backend.md",
+                "file": "Work/Issues in v3.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "VarsHealth Backend"
+              "title": "Issues in v3"
+            }
+          },
+          {
+            "id": "e84bef6ef4252716",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Building PathForge AI for the hackathon.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Building PathForge AI for the hackathon"
+            }
+          },
+          {
+            "id": "11d4c4691f92111d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "What local AI users actually want.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "What local AI users actually want"
+            }
+          },
+          {
+            "id": "b237a2793e9a58f0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "The quantization plan.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "The quantization plan"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -216,13 +258,23 @@
               "icon": "lucide-ghost",
               "title": "calendar"
             }
+          },
+          {
+            "id": "e890a39ece6d4654",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
+            }
           }
-        ]
+        ],
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -235,52 +287,57 @@
       "bases:Create new base": false,
       "obsidian-git:Open Git source control": false,
       "templater-obsidian:Templater": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "eb00db3ed2f6a9e8",
+  "active": "b237a2793e9a58f0",
   "lastOpenFiles": [
-    "Work/Vars - Tericsoft.md",
-    "Work/ElevenLabs.md",
-    "Work/Tericflow - Tericsoft.md",
-    "Work/Tericsoft.md",
-    "Work/Differences in v2 v3.md",
+    "Graphs.md",
+    "The quantization plan.md",
+    "The quantization plan.md.tmp.51033.3085a16e0d71",
+    "Attachments/quantization-workflow.png",
+    "Digital Garden.md",
+    "The quantization plan.md.tmp.51033.25bb900f6d18",
+    "Discipline of Perception.md",
+    "DFS.md",
+    "Computation Graph.md",
+    "Compiler.md",
+    "Companies.md",
+    "Collections.md",
+    "Boredom Tolerance.md",
+    "Books.md",
+    "BFS.md",
+    "Best local LLMs by hardware tier.md",
+    "What we can actually do with 10 H200s.md",
+    "The quantization plan.md.tmp.51033.149db9d70c89",
+    "Excalidraw/Drawing 2026-10-23 16.21.31.excalidraw.md",
+    "What local AI users actually want.md",
     "Work/Issues in v3.md",
-    "Work",
-    "Backend for Frontend.md",
-    "Arrays.md",
-    "Albums.md",
-    "quote.md",
-    "Python quiz and practice note.md",
-    "Microservices.md",
-    "Work/VarsHealth Backend.md",
-    "Gemini Live API.md",
+    "What we can actually do with 10 H200s.md.tmp.51033.9968c84f39df",
+    "Why local AI demos go viral.md",
+    "Why local AI demos go viral.md.tmp.48171.f859058a8899",
+    "What 500k B200 hours can buy.md",
+    "What 500k B200 hours can buy.md.tmp.48171.bffb5df79c5b",
+    "What local AI users actually want.md.tmp.48171.2af077aa5380",
+    "Levers for faster local inference.md",
+    "Levers for faster local inference.md.tmp.48171.f504fdb46d6d",
+    "Ternary and 1-bit LLMs.md",
+    "Ternary and 1-bit LLMs.md.tmp.48171.30a0749ed678",
+    "PTQ vs QAT.md",
+    "PTQ vs QAT.md.tmp.48171.04586dda2d9f",
+    "Running good LLMs locally.md",
+    "Pasted image 20261023131612.png",
+    "Pasted image 20261023131256.png",
+    "Pasted image 20261023131239.png",
+    "Building PathForge AI for the hackathon.md",
+    "Excalidraw/Drawing 2026-10-22 14.55.11.excalidraw.md",
+    "AI.md",
+    "Pasted image 20261021143323.png",
+    "Pasted image 20261021115351.png",
     "dms_capture_1792049399497.png",
     "dms_capture_1792049379668.png",
     "Pasted image 20261015122715.png",
-    "Pasted image 20261015122658.png",
-    "Pasted image 20261015122653.png",
-    "Pasted image 20261015122613.png",
-    "Context Memory - Tericsoft.md",
-    "Boredom Tolerance - How to improve it..md",
-    "BFS.md",
-    "Templates/Tericsoft Template.md",
-    "Templates/Untitled.md",
-    "Templates/Work Template.md",
-    "Templates/Weekly Review Template.md",
-    "Templates/ADR Template.md",
-    "Templates/TEMPLATE_GUIDE.md",
-    "about.md",
-    "Templates/Bug Template.md",
-    "Logistic Regression.md",
-    "Education/Computer Science/ML/fundamentals/Backpropagation.md~",
-    "Education/Computer Science/ML/fundamentals/Computation Graph.md~",
-    "Education/Computer Science/ML/fundamentals/Gradients.md~",
-    "Education/Computer Science/ML/fundamentals/Backpropagation & Gradients.md~",
-    "Education/Computer Science/ML/fundamentals",
-    "Education/Computer Science/ML",
-    "Education/Computer Science/Languages/Python",
-    "Education/Computer Science/Languages/C++",
-    "Education/Computer Science/Languages"
+    "Pasted image 20261015122658.png"
   ]
 }

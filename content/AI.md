@@ -6,7 +6,7 @@ tags:
 categories:
   - Index
 created: 2026-08-05
-updated: 2026-08-05
+updated: 2026-10-23
 aliases: []
 ---
 
@@ -27,6 +27,7 @@ map of content for everything i'm learning about machine learning and neural net
 - [[PathForge AI]]
 - [[RAG]]
 - [[Resume ideas for my Quartz site]]
+- [[Running good LLMs locally]]
 - [[SelfForge]]
 - [[SelfForge auth and backend cleanup]]
 - [[Switching from data science to software development]]

@@ -15,7 +15,7 @@ i was randomly scrolling YouTube and found this video: [Interview with Obsidian 
 that led me to someone's digital garden. a whole website built from their
 Obsidian notes.
 
-i remember just staring at the graph view. hundreds of nodes, but they weren't
+i remember loving the graph view so much. hundreds of nodes, but they weren't
 random. every connection existed because two ideas were actually related.
 
 that's the part i care about. not the graph as decoration. the graph as evidence
